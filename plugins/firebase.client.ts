@@ -4,8 +4,6 @@ import { getDatabase, ref as fbRef } from "firebase/database";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const firebaseConfig = useRuntimeConfig().public.firebase;
-  console.log("firebaseConfig", firebaseConfig);
-
   const app = initializeApp(firebaseConfig);
   const auth = getAuth();
   const db = getDatabase(app);

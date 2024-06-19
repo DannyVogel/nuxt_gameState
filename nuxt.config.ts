@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   tailwindcss: {
     viewer: false,
   },
-  modules: ["@nuxt/ui", "@nuxt/fonts", "@pinia/nuxt", "vue3-carousel-nuxt"],
+  modules: ["@nuxt/ui", "@nuxt/fonts", "@pinia/nuxt"],
   runtimeConfig: {
     IGDBClientId: "",
     IGDBClientSecret: "",

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Game } from "@/types/game.interfaces";
+import NotFound from "@/public/img/notFound.png";
 defineProps({
   game: {
     type: Object as () => Game,
@@ -11,7 +12,11 @@ defineProps({
 <template>
   <UCard class="w-full overflow-hidden">
     <template #header>
-      <img :src="game.image" :alt="game.name" class="object-cover" />
+      <img
+        :src="game.image || NotFound"
+        :alt="game.name"
+        class="object-cover"
+      />
     </template>
     <div class="flex flex-col gap-2">
       <h1

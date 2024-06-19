@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-const { search } = useSearch();
-
+const router = useRouter();
 const state = reactive({
   search: "",
 });
 const doSearch = async (e: Event) => {
-  console.log("Search for:", state.search);
-  const results = await search(state.search);
-  console.log("Results:", results);
+  router.push("/search/" + state.search);
 };
 </script>
 

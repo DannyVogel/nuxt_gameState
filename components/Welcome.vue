@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const userStore = useUserStore();
+</script>
 
 <template>
   <div class="flex flex-col items-center justify-center gap-20 mt-20">
@@ -7,7 +9,7 @@
       <h1
         class="text-6xl bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent"
       >
-        Kelevra
+        {{ userStore.user.name }}
       </h1>
     </div>
     <div class="flex justify-between gap-12 text-primary">

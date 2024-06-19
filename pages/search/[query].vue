@@ -34,8 +34,6 @@ onMounted(async () => {
         <template v-for="game in results">
           <GameCard :game="game" />
         </template>
-
-        <div class="grid grid-cols-1 gap-4"></div>
       </div>
     </template>
   </div>

@@ -7,7 +7,8 @@ const search = ref("");
     <UInput
       v-model="search"
       name="q"
-      placeholder="Search..."
+      placeholder="Find a game..."
+      size="xl"
       icon="i-heroicons-magnifying-glass-20-solid"
       autocomplete="off"
       :ui="{ icon: { trailing: { pointer: '' } } }"

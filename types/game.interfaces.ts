@@ -6,6 +6,5 @@ export interface Game {
   released: string;
   image: string;
   screenshots: string[];
-  stores: any[];
   platforms: string[];
 }

@@ -7,13 +7,13 @@ export const useSearch = () => {
         },
       });
       if (!response) {
-        return null;
+        return [];
       } else {
-        return response.body || null;
+        return response.body || [];
       }
     } catch (error) {
       console.error(error);
-      return null;
+      return [];
     }
   };
 

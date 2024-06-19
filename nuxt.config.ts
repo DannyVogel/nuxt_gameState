@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   tailwindcss: {
     viewer: false,
   },
-  modules: ["@nuxt/ui", "@nuxt/fonts"],
+  modules: ["@nuxt/ui", "@nuxt/fonts", "@pinia/nuxt"],
   runtimeConfig: {
     public: {
       firebase: {

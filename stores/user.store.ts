@@ -1,14 +1,27 @@
 import { defineStore } from "pinia";
+import type { UserGame } from "~/types/game.interfaces";
 
 export const useUserStore = defineStore({
   id: "userStore",
   state: () => ({
-    user: {
-      name: "Kelevra",
-      UID: "123456",
-      isLogged: false,
-      gameList: [],
-    },
+    name: "Kelevra",
+    UID: "",
+    isLogged: false,
+    gameList: [] as UserGame[],
   }),
-  actions: {},
+  getters: {
+    getGamesToPlay(state) {
+      return state.gameList.filter((game) => game.status === "toPlay");
+    },
+    getGamesPlayed(state) {
+      return state.gameList.filter((game) => game.status !== "toPlay");
+    },
+  },
+  actions: {
+    logOut() {
+      this.isLogged = false;
+      this.UID = "";
+      this.gameList = [];
+    },
+  },
 });

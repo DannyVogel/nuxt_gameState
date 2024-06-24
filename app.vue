@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const authState = useAuthState();
+</script>
+
 <template>
   <NuxtLayout>
     <NuxtRouteAnnouncer />

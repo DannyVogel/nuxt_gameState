@@ -8,3 +8,10 @@ export interface Game {
   screenshots: string[];
   platforms: string[];
 }
+
+export interface UserGame extends Game {
+  status: "toPlay" | "beat" | "dropped" | "playing";
+  comments: string;
+  monthPlayed: number;
+  yearPlayed: number;
+}

@@ -4,8 +4,10 @@ import {
   signOut,
 } from "firebase/auth";
 
-export const useAuth = async () => {
+export const useAuth = () => {
   const { $auth } = useNuxtApp();
+  const userStore = useUserStore();
+
   const logIn = async (email: string, password: string) => {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -52,6 +54,7 @@ export const useAuth = async () => {
   const logOut = async () => {
     try {
       await signOut($auth);
+      userStore.logOut();
     } catch (error: any) {
       const errorMessage = error.message;
       console.log(errorMessage);

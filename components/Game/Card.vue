@@ -15,7 +15,7 @@ defineProps({
       <img
         :src="game.image || NotFound"
         :alt="game.name"
-        class="object-cover"
+        class="object-cover min-h-40"
       />
     </template>
     <div class="flex flex-col gap-2">

@@ -1,11 +1,16 @@
 <script lang="ts" setup>
-import type { Game } from "@/types/game.interfaces";
+import type { UserGame } from "@/types/game.interfaces";
 import type { View } from "@/types/common.interfaces";
 import NotFound from "@/public/img/notFound.png";
 defineProps({
   game: {
-    type: Object as () => Game,
+    type: Object as () => UserGame,
     required: true,
+  },
+  view: {
+    type: String as () => View,
+    required: true,
+    validator: (value: View) => ["played", "toPlay"].includes(value),
   },
 });
 
@@ -31,7 +36,15 @@ const view = computed(() => route.name as View);
       >
         {{ game.name }}
       </h1>
-      <p class="text-sm">Release date: {{ game.released }}</p>
+      <p v-if="view === 'to-play'" class="text-sm">
+        Release date: {{ game.released }}
+      </p>
+      <div v-if="view === 'played'" class="flex gap-2">
+        <p class="text-xs">
+          Played: {{ game.monthPlayed + " - " + game.yearPlayed }}
+        </p>
+        <p class="text-xs">Status: {{ game.status }}</p>
+      </div>
     </div>
   </div>
   <UModal v-model="isOpen">

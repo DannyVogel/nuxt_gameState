@@ -13,7 +13,7 @@ const userStore = useUserStore();
       </h1>
     </div>
     <div class="flex justify-between gap-12 text-primary">
-      <div class="flex flex-col items-center gap-2">
+      <NuxtLink to="/to-play" class="flex flex-col items-center gap-2">
         <img
           class="w-8 h-8"
           src="~/public/icons/gamesToPlay.png"
@@ -24,8 +24,8 @@ const userStore = useUserStore();
           <p>Games</p>
           <p>to play</p>
         </div>
-      </div>
-      <div class="flex flex-col items-center gap-2">
+      </NuxtLink>
+      <NuxtLink to="/played" class="flex flex-col items-center gap-2">
         <img
           class="w-8 h-8"
           src="~/public/icons/gamesPlayed.png"
@@ -36,7 +36,7 @@ const userStore = useUserStore();
           <p>Games</p>
           <p>played</p>
         </div>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>

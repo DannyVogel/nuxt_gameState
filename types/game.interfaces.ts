@@ -15,3 +15,10 @@ export interface UserGame extends Game {
   monthPlayed: number;
   yearPlayed: number;
 }
+
+export type GameUserData = {
+  status: "toPlay" | "beat" | "dropped" | "playing";
+  comments: string;
+  monthPlayed: number;
+  yearPlayed: number;
+};

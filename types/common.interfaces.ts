@@ -42,3 +42,5 @@ interface RAWGGame {
 type RAWGGameList = {
   [id: string]: RAWGGame;
 };
+
+export type View = "to-play" | "played" | "search-query";

@@ -8,17 +8,14 @@ export const useAuthState = () => {
   onMounted(() => {
     onAuthStateChanged($auth, (user) => {
       if (user) {
-        console.log("user", user);
         const db = useDb();
         userStore.isLogged = true;
         userStore.UID = user.uid;
         db.getGameList(user.uid).then((list) => {
           userStore.gameList = list as UserGame[];
         });
-        console.log("User is logged in");
       } else {
         userStore.logOut();
-        console.log("User is logged out");
       }
     });
   });

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const authState = useAuthState();
+useAuthState();
+useDbState();
 </script>
 
 <template>
@@ -7,6 +8,7 @@ const authState = useAuthState();
     <NuxtRouteAnnouncer />
     <NuxtPage />
   </NuxtLayout>
+  <UNotifications />
 </template>
 
 <style>

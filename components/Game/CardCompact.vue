@@ -10,7 +10,7 @@ defineProps({
   view: {
     type: String as () => View,
     required: true,
-    validator: (value: View) => ["played", "toPlay"].includes(value),
+    validator: (value: View) => ["played", "to-play"].includes(value),
   },
 });
 

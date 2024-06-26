@@ -6,6 +6,9 @@ export default defineNuxtConfig({
     viewer: false,
   },
   modules: ["@nuxt/ui", "@nuxt/fonts", "@pinia/nuxt"],
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
   runtimeConfig: {
     IGDBClientId: "",
     IGDBClientSecret: "",

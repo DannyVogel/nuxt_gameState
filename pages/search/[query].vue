@@ -6,23 +6,24 @@ import type { View } from "@/types/common.interfaces";
 
 const route = useRoute();
 const { search } = useSearch();
-const isLoding = ref(true);
+const isLoading = ref(true);
 const results = ref<Game[]>([]);
 const view = computed(() => route.name as View);
 
 onMounted(async () => {
   results.value = await search(route.params.query as string);
-  isLoding.value = false;
+  isLoading.value = false;
 });
 </script>
 
 <template>
   <div class="min-h-full flex flex-col items-center justify-center">
     <atom-spinner
-      v-if="isLoding"
+      v-if="isLoading"
       :animation-duration="1000"
       :size="100"
       :color="'rgb(59 130 246 / 0.5)'"
+      class="mt-20"
     />
     <template v-else>
       <div v-if="results.length === 0">

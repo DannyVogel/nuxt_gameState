@@ -4,6 +4,7 @@ useDbState();
 </script>
 
 <template>
+  <NuxtPwaManifest />
   <NuxtLayout>
     <NuxtRouteAnnouncer />
     <NuxtPage />

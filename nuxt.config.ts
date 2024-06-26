@@ -54,6 +54,7 @@ export default defineNuxtConfig({
         },
       ],
     },
+    registerWebManifestInRouteRules: true,
     devOptions: {
       enabled: true,
       type: "module",

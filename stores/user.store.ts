@@ -24,4 +24,7 @@ export const useUserStore = defineStore({
       this.gameList = [];
     },
   },
+  persist: {
+    storage: persistedState.localStorage,
+  },
 });

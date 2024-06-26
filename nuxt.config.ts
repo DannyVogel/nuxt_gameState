@@ -28,12 +28,12 @@ export default defineNuxtConfig({
       display: "standalone",
       icons: [
         {
-          src: "/public/img/gameController.png",
+          src: "/img/gameController.png",
           sizes: "192x192",
           type: "image/png",
         },
         {
-          src: "/public/img/gameController.png",
+          src: "/img/gameController.png",
           sizes: "512x512",
           type: "image/png",
         },

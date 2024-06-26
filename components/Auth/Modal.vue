@@ -9,14 +9,14 @@ const isOpen = ref(false);
       <template #leading>
         <img
           v-if="userStore.isLogged"
-          src="~/public/icons/loggedInUser.png"
-          alt="Open Modal"
+          src="/icons/loggedInUser.png"
+          alt="Open Auth Modal"
           class="w-8 h-8 cursor-pointer"
         />
         <img
           v-else
-          src="~/public/icons/loggedOutUser.png"
-          alt="Open Modal"
+          src="/icons/loggedOutUser.png"
+          alt="Open Auth Modal"
           class="w-8 h-8 cursor-pointer"
         />
       </template>

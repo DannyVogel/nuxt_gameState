@@ -36,7 +36,7 @@ onMounted(async () => {
           {{ results.length }} Results for "{{ route.params.query }}"
         </h1>
         <template v-for="game in results">
-          <GameCardFull :game="game">
+          <GameCardFull :view="view" :game="game">
             <template #buttons>
               <ButtonGroup :view="view" :game="game" />
             </template>

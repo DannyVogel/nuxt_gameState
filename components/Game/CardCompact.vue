@@ -48,7 +48,7 @@ const view = computed(() => route.name as View);
     </div>
   </div>
   <UModal v-model="isOpen">
-    <GameCardFull :game="game">
+    <GameCardFull :view="view" :game="game">
       <template #buttons>
         <ButtonGroup :view="view" :game="game" />
       </template>

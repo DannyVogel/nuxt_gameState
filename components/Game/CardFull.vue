@@ -1,12 +1,22 @@
 <script lang="ts" setup>
-import type { Game } from "@/types/game.interfaces";
+import type { Game, UserGame } from "@/types/game.interfaces";
+import type { View } from "@/types/common.interfaces";
 import NotFound from "@/public/img/notFound.png";
 defineProps({
   game: {
-    type: Object as () => Game,
+    type: Object as () => Game | UserGame,
     required: true,
   },
+  view: {
+    type: String as () => View,
+    required: true,
+    validator: (value: View) =>
+      ["played", "to-play", "search-query"].includes(value),
+  },
 });
+
+const isUserGame = (game: Game | UserGame): game is UserGame =>
+  (game as UserGame).status !== undefined;
 </script>
 
 <template>
@@ -41,6 +51,15 @@ defineProps({
         </template>
       </div>
       <p class="text-sm">Released: {{ game.released }}</p>
+      <div
+        v-if="view === 'played' && isUserGame(game)"
+        class="flex flex-col gap-2"
+      >
+        <p class="text-sm">
+          Played: {{ game.monthPlayed + " - " + game.yearPlayed }}
+        </p>
+        <p class="text-sm">Comments: {{ game.comments }}</p>
+      </div>
       <p class="text-sm">
         <a
           :href="`https://www.igdb.com/games/${game.slug}`"

@@ -1,13 +1,23 @@
 <script lang="ts" setup>
+import type { GameUserData } from "~/types/game.interfaces";
+
 const emit = defineEmits(["submit"]);
-const gameUserData = reactive({
-  monthPlayed: new Date().getMonth() + 1,
-  yearPlayed: new Date().getFullYear(),
-  status: "playing",
-  comments: "",
+const props = defineProps({
+  state: {
+    type: Object as PropType<GameUserData>,
+    required: false,
+    default: null,
+  },
 });
 
-const statuses = ["Playing", "Beat", "Dropped"];
+const gameUserData = reactive({
+  monthPlayed: props.state.monthPlayed || new Date().getMonth() + 1,
+  yearPlayed: props.state.yearPlayed || new Date().getFullYear(),
+  status: props.state.status || "playing",
+  comments: props.state.comments || "",
+});
+
+const statuses = ["playing", "beat", "dropped"];
 
 const onSubmit = () => {
   emit("submit", gameUserData);

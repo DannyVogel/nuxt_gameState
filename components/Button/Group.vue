@@ -10,7 +10,7 @@ const props = defineProps({
       ["to-play", "played", "search-query"].includes(value),
   },
   game: {
-    type: Object as PropType<Game>,
+    type: Object as PropType<Game | UserGame>,
     required: true,
   },
 });
@@ -45,6 +45,12 @@ const handlePlayed = async (gameUserData: GameUserData) => {
   }
   toast.add({ title, color: "teal" });
 };
+
+const handleEdit = async (gameUserData: GameUserData) => {
+  const userGame = { ...props.game, ...gameUserData };
+  await addToList(userGame);
+  toast.add({ title: "Game data updated", color: "sky" });
+};
 </script>
 
 <template>
@@ -55,6 +61,7 @@ const handlePlayed = async (gameUserData: GameUserData) => {
     </template>
     <template v-else-if="view === 'played'">
       <ButtonRemove @remove="handleRemove" />
+      <ButtonEdit @edited="handleEdit" :game-user-data="(game as UserGame)" />
     </template>
     <template v-else-if="view === 'search-query'">
       <ButtonToPlay @to-play="handleToPlay" />

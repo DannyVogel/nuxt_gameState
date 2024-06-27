@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import loggedUser from "~/public/icons/loggedInUser.png";
+import loggedOutUser from "~/public/icons/loggedOutUser.png";
+
 const userStore = useUserStore();
 const isOpen = ref(false);
 </script>
@@ -8,14 +11,7 @@ const isOpen = ref(false);
     <UButton @click="isOpen = true" variant="ghost">
       <template #leading>
         <img
-          v-if="userStore.isLogged"
-          src="/icons/loggedInUser.png"
-          alt="Open Auth Modal"
-          class="w-8 h-8 cursor-pointer"
-        />
-        <img
-          v-else
-          src="/icons/loggedOutUser.png"
+          :src="userStore.isLogged ? loggedUser : loggedOutUser"
           alt="Open Auth Modal"
           class="w-8 h-8 cursor-pointer"
         />

@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { version } from "@/package.json";
+</script>
 
 <template>
   <div
@@ -28,5 +30,6 @@
         alt="papers with controller icon"
       />
     </NuxtLink>
+    <p class="absolute bottom-0 right-0 text-gray-700 text-xs">{{ version }}</p>
   </div>
 </template>

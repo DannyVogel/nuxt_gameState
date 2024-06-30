@@ -1,10 +1,19 @@
 <script setup lang="ts">
 useAuthState();
 useDbState();
+
+useHeadSafe({
+  title: "gameState",
+  meta: [
+    {
+      name: "description",
+      content: "A simple game tracker powered by IGDB",
+    },
+  ],
+});
 </script>
 
 <template>
-  <NuxtPwaManifest />
   <NuxtLayout>
     <NuxtRouteAnnouncer />
     <NuxtPage />

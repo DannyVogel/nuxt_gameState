@@ -22,11 +22,7 @@ const isUserGame = (game: Game | UserGame): game is UserGame =>
 <template>
   <UCard class="w-full overflow-hidden">
     <template #header>
-      <img
-        :src="game.image || NotFound"
-        :alt="game.name"
-        class="object-cover min-h-40"
-      />
+      <GameGallery :game="game" />
     </template>
     <div class="flex flex-col gap-2">
       <h1

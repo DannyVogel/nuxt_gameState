@@ -2,7 +2,7 @@
 
 <template>
   <div
-    class="fixed bottom-0 left-0 w-full flex justify-around items-center bg-slate-800 py-3"
+    class="fixed bottom-0 left-0 w-full flex justify-around items-center bg-slate-400 dark:bg-slate-800 py-3 bg-opacity-90"
   >
     <NuxtLink to="/to-play">
       <img
@@ -11,7 +11,10 @@
         alt="shopping bag with controller icon"
       />
     </NuxtLink>
-    <NuxtLink to="/" class="absolute bottom-6 bg-slate-800 p-2 rounded-full">
+    <NuxtLink
+      to="/"
+      class="absolute bottom-6 bg-slate-400 dark:bg-slate-800 p-2 rounded-full bg-opacity-90"
+    >
       <img
         class="w-10 h-10"
         src="~/public/icons/search.png"

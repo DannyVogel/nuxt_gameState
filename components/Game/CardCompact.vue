@@ -22,7 +22,7 @@ const view = computed(() => route.name as View);
 
 <template>
   <div
-    class="grid grid-cols-3 items-center gap-2 w-full bg-gray-700 rounded-lg overflow-hidden min-h-[88px] cursor-pointer"
+    class="grid grid-cols-3 items-center gap-2 w-full bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden min-h-[88px] cursor-pointer"
     @click="isOpen = true"
   >
     <img

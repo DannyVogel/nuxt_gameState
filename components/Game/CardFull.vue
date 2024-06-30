@@ -59,6 +59,7 @@ const isUserGame = (game: Game | UserGame): game is UserGame =>
       <p class="text-sm">
         <a
           :href="`https://www.igdb.com/games/${game.slug}`"
+          target="_blank"
           class="underline hover:text-primary"
           >Full details</a
         >

@@ -20,14 +20,14 @@ async function onSubmit(event: Event) {
 
 <template>
   <UForm :state="state" class="space-y-4 p-4" @submit="onSubmit">
-    <UFormGroup label="Email" name="email">
-      <UInput v-model="state.email" />
+    <UFormGroup size="xl" label="Email" name="email">
+      <UInput size="xl" v-model="state.email" />
     </UFormGroup>
 
-    <UFormGroup label="Password" name="password">
-      <UInput v-model="state.password" type="password" />
+    <UFormGroup size="xl" label="Password" name="password">
+      <UInput size="xl" v-model="state.password" type="password" />
     </UFormGroup>
 
-    <UButton type="submit"> Submit </UButton>
+    <UButton type="submit">Submit</UButton>
   </UForm>
 </template>

@@ -17,12 +17,6 @@ useDbState();
   font-family: "Tilt Warp", cursive, sans-serif;
 }
 
-input {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  font-size: 16px;
-}
-
 .page-enter-active,
 .page-leave-active {
   transition: all 0.3s;

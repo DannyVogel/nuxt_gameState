@@ -30,6 +30,10 @@ import { version } from "@/package.json";
         alt="papers with controller icon"
       />
     </NuxtLink>
-    <p class="absolute bottom-0 right-0 text-gray-700 text-xs">{{ version }}</p>
+    <p
+      class="absolute bottom-0 left-1/2 -translate-x-1/2 text-gray-700 text-xs"
+    >
+      {{ version }}
+    </p>
   </div>
 </template>

@@ -25,8 +25,9 @@ const view = computed(() => route.name as View);
     class="grid grid-cols-3 items-center gap-2 w-full bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden min-h-[88px] cursor-pointer"
     @click="isOpen = true"
   >
-    <img
+    <NuxtImg
       :src="game.image || NotFound"
+      loading="lazy"
       alt="game image"
       class="object-cover w-full h-full"
     />

@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@pinia-plugin-persistedstate/nuxt",
     "@nuxt/devtools",
+    "@nuxt/image",
   ],
   app: {
     pageTransition: { name: "page", mode: "out-in" },
@@ -19,6 +20,9 @@ export default defineNuxtConfig({
   },
   build: {
     transpile: ["pinia-plugin-persistedstate"],
+  },
+  image: {
+    domains: ["images.igdb.com", "media.rawg.io"],
   },
   runtimeConfig: {
     IGDBClientId: "",

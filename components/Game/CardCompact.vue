@@ -27,7 +27,6 @@ const view = computed(() => route.name as View);
   >
     <NuxtImg
       :src="game.image || NotFound"
-      loading="lazy"
       alt="game image"
       class="object-cover w-full h-full"
     />

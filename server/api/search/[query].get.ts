@@ -5,7 +5,7 @@ export default eventHandler(async (event) => {
   console.log("search game");
   const config = useRuntimeConfig();
   const IGDBClientId = config.IGDBClientId;
-  const query = decodeURIComponent(getRouterParam(event, "query"));
+  const query = decodeURIComponent(getRouterParam(event, "query") as string);
   const token = await getToken();
   console.log("query", query, "token", token);
 
@@ -28,7 +28,6 @@ export default eventHandler(async (event) => {
       message: error.message,
     });
   });
-  console.log("search response", response);
   if (!response) {
     throw createError({
       statusCode: 500,

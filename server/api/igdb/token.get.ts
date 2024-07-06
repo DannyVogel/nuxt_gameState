@@ -1,7 +1,7 @@
 import { setToken } from "~/server/services/tokenManager";
 
 export default eventHandler(async (event) => {
-  console.log("/api/auth/token.get.ts");
+  console.log("/api/igdb/token.get.ts");
   const config = useRuntimeConfig();
   const IGDBClientId = config.IGDBClientId;
   const IGDBClientSecret = config.IGDBClientSecret;

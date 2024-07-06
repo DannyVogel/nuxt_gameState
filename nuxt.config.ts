@@ -27,6 +27,15 @@ export default defineNuxtConfig({
   runtimeConfig: {
     IGDBClientId: "",
     IGDBClientSecret: "",
+    firebase: {
+      apiKey: "",
+      authDomain: "",
+      projectId: "",
+      appId: "",
+      databaseURL: "",
+      storageBucket: "",
+      messagingSenderId: "",
+    },
     public: {
       firebase: {
         apiKey: "",
@@ -39,4 +48,5 @@ export default defineNuxtConfig({
       },
     },
   },
+  compatibilityDate: "2024-07-06",
 });

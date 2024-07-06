@@ -11,10 +11,29 @@ export const useUserStore = defineStore({
   }),
   getters: {
     getGamesToPlay(state) {
-      return state.gameList.filter((game) => game.status === "toPlay");
+      return state.gameList
+        .filter((game) => game.status === "toPlay")
+        .sort((a, b) => {
+          return a.released.localeCompare(b.released);
+        });
     },
     getGamesPlayed(state) {
-      return state.gameList.filter((game) => game.status !== "toPlay");
+      return state.gameList
+        .filter((game) => game.status !== "toPlay")
+        .sort((a, b) => {
+          if (b.yearPlayed === a.yearPlayed) {
+            return b.monthPlayed - a.monthPlayed;
+          } else {
+            return b.yearPlayed - a.yearPlayed;
+          }
+        });
+    },
+    getYearsPlayed(state) {
+      return state.gameList
+        .filter((game) => game.status !== "toPlay")
+        .map((game) => game.yearPlayed)
+        .filter((year, index, self) => self.indexOf(year) === index)
+        .sort((a, b) => b - a);
     },
   },
   actions: {

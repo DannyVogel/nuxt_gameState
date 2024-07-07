@@ -4,26 +4,29 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../services/firebase";
+import { DbController } from "./db.controller";
 
 export class AuthController {
-  static async login(email: string, password: string) {
+  static async loginAndGetGameList(email: string, password: string) {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await AuthController.login(email, password);
+      const user = userCredential.user;
+      const gameList = await DbController.getGameList(user.uid);
       return {
         success: true,
-        user: userCredential.user,
+        user: user,
+        gameList: gameList,
       };
     } catch (error: any) {
-      console.log(error.message);
       return {
         success: false,
         errorMessage: error.message,
       };
     }
+  }
+
+  static async login(email: string, password: string) {
+    return await signInWithEmailAndPassword(auth, email, password);
   }
 
   static async register(email: string, password: string) {

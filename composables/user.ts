@@ -1,13 +1,15 @@
 export const useUser = () => {
   const setDisplayName = async (displayName: string) => {
     try {
-      const res = await $fetch("/api/user/username", {
+      const res = await $fetch("/api/user/displayname", {
         method: "POST",
         body: {
           displayName,
         },
       });
-      console.log("username res", res);
+      if (res.statusCode === 200) {
+        useUserStore().displayName = res.payload.displayName;
+      }
     } catch (error) {
       console.error(error);
     }

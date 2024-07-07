@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
+import type { LoginPayload } from "~/types/auth.interfaces";
 import type { UserGame } from "~/types/game.interfaces";
 
 export const useUserStore = defineStore({
   id: "userStore",
   state: () => ({
     name: "Kelevra",
+    email: "",
     UID: "",
     isLogged: false,
     gameList: [] as UserGame[],
@@ -37,6 +39,12 @@ export const useUserStore = defineStore({
     },
   },
   actions: {
+    setUser(userData: LoginPayload) {
+      this.UID = userData.uid;
+      this.email = userData.email;
+      this.gameList = userData.gameList;
+      this.isLogged = true;
+    },
     logOut() {
       this.isLogged = false;
       this.UID = "";

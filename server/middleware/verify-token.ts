@@ -2,10 +2,7 @@ import { verifyToken } from "../services/tokenManagers/auth";
 
 export default defineEventHandler(async (event) => {
   console.log("request path", event.path);
-  if (
-    event.path === "/api/game-list/add" ||
-    event.path === "/api/game-list/remove"
-  ) {
+  if (event.path.includes("/api/game-list")) {
     const token = getCookie(event, "token");
     if (token) {
       const decodedToken = await verifyToken(token);

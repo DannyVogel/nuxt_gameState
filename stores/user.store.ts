@@ -47,9 +47,7 @@ export const useUserStore = defineStore({
       this.isLogged = true;
     },
     logOut() {
-      this.isLogged = false;
-      this.UID = "";
-      this.gameList = [];
+      this.$reset();
     },
   },
   persist: {

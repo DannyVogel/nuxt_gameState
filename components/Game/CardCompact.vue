@@ -27,6 +27,9 @@ const view = computed(() => route.name as View);
   >
     <NuxtImg
       :src="game.image || NotFound"
+      preload
+      loading="lazy"
+      placeholder="/img/notFound.png"
       alt="game image"
       class="object-cover w-full h-full"
     />

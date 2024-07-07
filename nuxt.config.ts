@@ -37,6 +37,7 @@ export default defineNuxtConfig({
       messagingSenderId: "",
     },
     firebaseServiceAccount: "",
+    firebaseAdminId: "",
     public: {
       firebase: {
         apiKey: "",

@@ -1,11 +1,10 @@
-import { ref as fbRef, get, update, remove } from "firebase/database";
 import type { Game } from "~/types/game.interfaces";
-import { gameStateDB, db } from "../services/firebase";
+import { db } from "../services/firebase";
 
 export class DbController {
   static async getGameList(UID: string) {
-    const listRef = fbRef(db, `gameState/users/${UID}/gameList`);
-    const snapshot = await get(listRef);
+    const listRef = db.ref(`gameState/users/${UID}/gameList`);
+    const snapshot = await listRef.once("value");
     if (snapshot.exists()) {
       return Object.values(snapshot.val());
     } else {
@@ -14,13 +13,13 @@ export class DbController {
   }
 
   static async addToList(UID: string, game: Game) {
-    const updates: { [key: string]: Game } = {};
-    updates[`/users/${UID}/gameList/${game.id}`] = game;
-    update(gameStateDB, updates);
+    const updates: { [key: string]: any } = {};
+    updates[`gameState/users/${UID}/gameList/${game.id}`] = game;
+    db.ref().update(updates);
   }
 
   static async removeFromList(UID: string, gameID: Game["id"]) {
-    const gameRef = fbRef(db, `gameState/users/${UID}/gameList/${gameID}`);
-    remove(gameRef);
+    const gameRef = db.ref(`gameState/users/${UID}/gameList/${gameID}`);
+    gameRef.remove();
   }
 }

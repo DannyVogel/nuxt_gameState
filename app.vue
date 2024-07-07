@@ -1,7 +1,4 @@
 <script setup lang="ts">
-useAuthState();
-useDbState();
-
 useHeadSafe({
   title: "gameState",
   meta: [

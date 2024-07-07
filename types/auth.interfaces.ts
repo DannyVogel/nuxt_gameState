@@ -29,3 +29,7 @@ export interface LoginPayload {
 export interface GameListPayload {
   gameList: UserGame[];
 }
+
+export interface DisplayNamePayload {
+  displayName: string;
+}

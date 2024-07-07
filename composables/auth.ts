@@ -1,28 +1,20 @@
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-
 export const useAuth = () => {
-  const { $auth } = useNuxtApp();
   const userStore = useUserStore();
 
   const logIn = async (email: string, password: string) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        $auth,
-        email,
-        password
-      );
-      if (userCredential) {
-        return {
-          success: true,
-          user: userCredential.user,
-        };
+      const res = await $fetch("/api/auth/login", {
+        method: "POST",
+        body: {
+          email,
+          password,
+        },
+      });
+      if (res.statusCode === 200 && res.payload) {
+        userStore.setUser(res.payload);
       }
     } catch (error: any) {
-      console.log(error.message);
+      console.error(error.message);
       return {
         success: false,
         errorMessage: error.message,
@@ -32,28 +24,30 @@ export const useAuth = () => {
 
   const register = async (email: string, password: string) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        $auth,
-        email,
-        password
-      );
-      return {
-        success: true,
-        user: userCredential.user,
-      };
+      const res = await $fetch("/api/auth/register", {
+        method: "POST",
+        body: {
+          email,
+          password,
+        },
+      });
+      if (res.statusCode === 200 && res.payload) {
+        userStore.setUser(res.payload);
+      }
     } catch (error: any) {
-      const errorMessage = error.message;
-      console.log(errorMessage);
+      console.error(error.message);
       return {
         success: false,
-        errorMessage: errorMessage,
+        errorMessage: error.message,
       };
     }
   };
 
   const logOut = async () => {
     try {
-      await signOut($auth);
+      $fetch("/api/auth/logout", {
+        method: "POST",
+      });
       userStore.logOut();
     } catch (error: any) {
       const errorMessage = error.message;
@@ -63,19 +57,18 @@ export const useAuth = () => {
 
   const guestLogIn = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        $auth,
-        "guest@guest.com",
-        "123456"
-      );
-      if (userCredential) {
-        return {
-          success: true,
-          user: userCredential.user,
-        };
+      const res = await $fetch("/api/auth/login", {
+        method: "POST",
+        body: {
+          email: "guest@guest.com",
+          password: "123456",
+        },
+      });
+      if (res.statusCode === 200 && res.payload) {
+        userStore.setUser(res.payload);
       }
     } catch (error: any) {
-      console.log(error.message);
+      console.error(error.message);
       return {
         success: false,
         errorMessage: error.message,

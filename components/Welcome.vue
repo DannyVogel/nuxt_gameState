@@ -23,7 +23,7 @@ const gamesToPlay = computed(() => userStore.getGamesToPlay.length);
           alt="shopping bag with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ gamesPlayed }}</p>
+          <p>{{ gamesToPlay }}</p>
           <p>Games</p>
           <p>to play</p>
         </div>
@@ -35,7 +35,7 @@ const gamesToPlay = computed(() => userStore.getGamesToPlay.length);
           alt="papers with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ gamesToPlay }}</p>
+          <p>{{ gamesPlayed }}</p>
           <p>Games</p>
           <p>played</p>
         </div>

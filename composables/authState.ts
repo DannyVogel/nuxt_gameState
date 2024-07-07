@@ -6,17 +6,17 @@ export const useAuthState = () => {
   const userStore = useUserStore();
 
   onMounted(() => {
-    onAuthStateChanged($auth, (user) => {
-      if (user) {
-        const db = useDb();
-        userStore.isLogged = true;
-        userStore.UID = user.uid;
-        db.getGameList(user.uid).then((list) => {
-          userStore.gameList = list as UserGame[];
-        });
-      } else {
-        userStore.logOut();
-      }
-    });
+    // onAuthStateChanged($auth, (user) => {
+    //   if (user) {
+    //     const db = useDb();
+    //     userStore.isLogged = true;
+    //     userStore.UID = user.uid;
+    //     db.getGameList(user.uid).then((list) => {
+    //       userStore.gameList = list as UserGame[];
+    //     });
+    //   } else {
+    //     userStore.logOut();
+    //   }
+    // });
   });
 };

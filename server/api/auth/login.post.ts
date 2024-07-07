@@ -11,7 +11,6 @@ export default defineEventHandler(
       body.email,
       body.password
     );
-    console.log("res", res.user);
     if (res.success) {
       setCookie(event, "token", await res.user!.getIdToken(), {
         httpOnly: true,

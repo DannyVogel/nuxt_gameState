@@ -1,5 +1,5 @@
 export default eventHandler(async (event) => {
-  console.log("/api/auth/validate/token.get.ts");
+  console.log("/api/igdb/validate/token.get.ts");
   const token = getRouterParam(event, "token");
   const response = await $fetch("https://id.twitch.tv/oauth2/validate", {
     method: "GET",

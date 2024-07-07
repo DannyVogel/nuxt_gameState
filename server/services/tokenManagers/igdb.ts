@@ -1,4 +1,5 @@
 import { createStorage } from "unstorage";
+import { TokenObject, TokenResponse } from "~/types/auth.interfaces";
 
 const tokenStorage = createStorage<TokenObject>();
 
@@ -15,26 +16,26 @@ export const getToken = async () => {
   const storedTokenObj = await tokenStorage.getItem("token");
   if (!storedTokenObj) {
     console.log("no token");
-    const response = await $fetch("/api/auth/token");
+    const response = await $fetch("/api/igdb/token");
     if (response.statusCode === 200) {
       return response.body.access_token;
     }
   } else if (storedTokenObj.expiration_date < new Date()) {
     console.log("token expired");
-    const response = await $fetch("/api/auth/token");
+    const response = await $fetch("/api/igdb/token");
     if (response.statusCode === 200) {
       return response.body.access_token;
     }
   } else {
     console.log("we have a token");
     const response = await $fetch(
-      `/api/auth/validate/${storedTokenObj.access_token}`
+      `/api/igdb/validate/${storedTokenObj.access_token}`
     );
     if (response.status !== 401 || response.status !== 500) {
       return storedTokenObj.access_token;
     } else {
       console.log("invalid token");
-      const response = await $fetch("/api/auth/token");
+      const response = await $fetch("/api/igdb/token");
       if (response.statusCode === 200) {
         return response.body.access_token;
       }

@@ -1,36 +1,33 @@
-import { ref as fbRef, get, update, remove } from "firebase/database";
-import type { Game } from "~/types/game.interfaces";
+import type { Game, UserGame } from "~/types/game.interfaces";
 
 export const useDb = () => {
-  const { $db, $gameStateDB } = useNuxtApp();
   const userStore = useUserStore();
 
-  const getGameList = async (UID: string) => {
-    const listRef = fbRef($db, `gameState/users/${UID}/gameList`);
-    const snapshot = await get(listRef);
-    if (snapshot.exists()) {
-      return Object.values(snapshot.val());
-    } else {
-      return [];
+  const addToList = async (game: Game) => {
+    try {
+      const res = await $fetch("/api/game-list/add", {
+        method: "POST",
+        body: game,
+      });
+      if (res.payload) userStore.gameList = res.payload;
+    } catch (error) {
+      console.error("add to list error", error);
     }
   };
 
-  const addToList = async (game: Game) => {
-    const updates: { [key: string]: Game } = {};
-    updates[`/users/${userStore.UID}/gameList/${game.id}`] = game;
-    update($gameStateDB, updates);
-  };
-
   const removeFromList = async (gameID: Game["id"]) => {
-    const gameRef = fbRef(
-      $db,
-      `gameState/users/${userStore.UID}/gameList/${gameID}`
-    );
-    remove(gameRef);
+    try {
+      const res = await $fetch("/api/game-list/remove", {
+        method: "DELETE",
+        body: { id: gameID },
+      });
+      if (res.payload) userStore.gameList = res.payload;
+    } catch (error) {
+      console.error("remove from list error", error);
+    }
   };
 
   return {
-    getGameList,
     addToList,
     removeFromList,
   };

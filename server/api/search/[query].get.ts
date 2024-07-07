@@ -1,5 +1,5 @@
 import ClientGameResponse from "~/server/utils/gameState.class";
-import { getToken } from "~/server/services/tokenManager";
+import { getToken } from "~/server/services/tokenManagers/igdb";
 
 export default eventHandler(async (event) => {
   console.log("search game");

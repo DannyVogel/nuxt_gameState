@@ -1,4 +1,4 @@
-interface Genre {
+export interface Genre {
   games_count: number;
   id: number;
   image_background: string;
@@ -6,7 +6,7 @@ interface Genre {
   slug: string;
 }
 
-interface StoreDetails {
+export interface StoreDetails {
   domain: string;
   games_count: number;
   id: number;
@@ -15,13 +15,13 @@ interface StoreDetails {
   slug: string;
 }
 
-interface Store {
+export interface Store {
   id: number;
   store: StoreDetails;
   url: string;
 }
 
-interface RAWGGame {
+export interface RAWGGame {
   comments: string;
   genres: Genre[];
   id: number;

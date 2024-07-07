@@ -16,6 +16,7 @@
     "@pinia/nuxt": "^0.5.1",
     "epic-spinners": "^2.0.0",
     "firebase": "^10.12.2",
+    "firebase-admin": "^12.2.0",
     "pinia": "^2.1.7",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"

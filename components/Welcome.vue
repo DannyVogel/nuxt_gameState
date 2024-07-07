@@ -12,7 +12,7 @@ const gamesToPlay = computed(() => userStore.getGamesToPlay.length);
       <h1
         class="text-6xl bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent"
       >
-        {{ userStore.username }}
+        {{ userStore.displayName }}
       </h1>
     </div>
     <div class="flex justify-between gap-12 text-primary">

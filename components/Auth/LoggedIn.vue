@@ -7,7 +7,7 @@ const { setDisplayName } = useUser();
 <template>
   <div class="p-4 flex flex-col items-center justify-center gap-4">
     <div class="flex items-center gap-2">
-      <p>Hello {{ userStore.username }}</p>
+      <p>Hello {{ userStore.displayName }}</p>
       <UButton
         icon="i-heroicons-pencil-square"
         variant="ghost"

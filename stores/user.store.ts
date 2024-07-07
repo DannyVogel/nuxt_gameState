@@ -5,7 +5,7 @@ import type { UserGame } from "~/types/game.interfaces";
 export const useUserStore = defineStore({
   id: "userStore",
   state: () => ({
-    username: "",
+    displayName: "",
     email: "",
     UID: "",
     isLogged: false,
@@ -43,7 +43,7 @@ export const useUserStore = defineStore({
       this.UID = userData.uid;
       this.email = userData.email;
       this.gameList = userData.gameList;
-      this.username = userData.username;
+      this.displayName = userData.username;
       this.isLogged = true;
     },
     logOut() {

@@ -22,6 +22,7 @@ export interface NitroResponse<T> {
 export interface LoginPayload {
   uid: string;
   email: string;
+  username: string;
   gameList: UserGame[];
 }
 

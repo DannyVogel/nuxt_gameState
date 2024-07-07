@@ -7,7 +7,7 @@ export class DbController {
     const listRef = fbRef(db, `gameState/users/${UID}/gameList`);
     const snapshot = await get(listRef);
     if (snapshot.exists()) {
-      return snapshot.val();
+      return Object.values(snapshot.val());
     } else {
       return null;
     }

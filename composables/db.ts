@@ -1,4 +1,4 @@
-import type { Game } from "~/types/game.interfaces";
+import type { Game, UserGame } from "~/types/game.interfaces";
 
 export const useDb = () => {
   const userStore = useUserStore();
@@ -10,7 +10,6 @@ export const useDb = () => {
         body: game,
       });
       if (res.payload) userStore.gameList = res.payload;
-      console.log("add to list res", res);
     } catch (error) {
       console.error("add to list error", error);
     }
@@ -23,7 +22,6 @@ export const useDb = () => {
         body: { id: gameID },
       });
       if (res.payload) userStore.gameList = res.payload;
-      console.log("remove from list res", res);
     } catch (error) {
       console.error("remove from list error", error);
     }

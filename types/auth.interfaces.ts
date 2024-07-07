@@ -12,7 +12,7 @@ export interface TokenObject {
   token_type: string;
 }
 
-export interface AuthResponse<T> {
+export interface NitroResponse<T> {
   statusCode: number;
   statusMessage: string;
   payload: T | null;
@@ -22,5 +22,9 @@ export interface AuthResponse<T> {
 export interface LoginPayload {
   uid: string;
   email: string;
+  gameList: UserGame[];
+}
+
+export interface GameListPayload {
   gameList: UserGame[];
 }

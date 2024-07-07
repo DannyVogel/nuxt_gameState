@@ -1,4 +1,5 @@
 import { createStorage } from "unstorage";
+import { TokenObject, TokenResponse } from "~/types/auth.interfaces";
 
 const tokenStorage = createStorage<TokenObject>();
 

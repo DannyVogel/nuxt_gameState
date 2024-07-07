@@ -4,5 +4,5 @@ export default defineEventHandler(async (event) => {
   const game = await readBody(event);
   const { decodedToken } = event.context;
 
-  const res = await DbController.removeFromList(decodedToken.uid, game);
+  const res = await DbController.removeFromList(decodedToken.uid, game.id);
 });

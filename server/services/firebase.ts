@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import admin from "firebase-admin";
+import serviceAccount from "./service-account.json";
+import admin, { type ServiceAccount } from "firebase-admin";
 
 const firebase = useRuntimeConfig().firebase;
-const serviceAccount = useRuntimeConfig().firebaseServiceAccount;
 const adminId = useRuntimeConfig().firebaseAdminId;
 
 const firebaseConfig = {
@@ -18,7 +18,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const fbAdmin = admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(serviceAccount as ServiceAccount),
   databaseURL: firebase.databaseURL,
   databaseAuthVariableOverride: {
     uid: adminId,

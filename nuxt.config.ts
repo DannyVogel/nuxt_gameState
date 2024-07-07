@@ -36,19 +36,7 @@ export default defineNuxtConfig({
       storageBucket: "",
       messagingSenderId: "",
     },
-    firebaseServiceAccount: "",
     firebaseAdminId: "",
-    public: {
-      firebase: {
-        apiKey: "",
-        authDomain: "",
-        projectId: "",
-        appId: "",
-        databaseURL: "",
-        storageBucket: "",
-        messagingSenderId: "",
-      },
-    },
   },
   compatibilityDate: "2024-07-06",
 });

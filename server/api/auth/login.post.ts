@@ -1,10 +1,10 @@
 import { AuthController } from "~/server/controllers/auth.controller";
 import { DbController } from "~/server/controllers/db.controller";
 import { serverResponse } from "~/server/utils/response";
-import { AuthResponse, LoginPayload } from "~/types/auth.interfaces";
+import { NitroResponse, LoginPayload } from "~/types/auth.interfaces";
 
 export default defineEventHandler(
-  async (event): Promise<AuthResponse<LoginPayload>> => {
+  async (event): Promise<NitroResponse<LoginPayload>> => {
     console.log("/api/auth/login.post");
     const body = await readBody(event);
     const res = await AuthController.loginAndGetGameList(

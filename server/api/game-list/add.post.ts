@@ -13,6 +13,7 @@ export default defineEventHandler(
       )) as UserGame[];
       return serverResponse(200, "Ok", updatedList);
     } catch (error: any) {
+      console.error("Error adding game to list:", error);
       throw createError({
         statusCode: 500,
         statusMessage: "Internal Server Error",

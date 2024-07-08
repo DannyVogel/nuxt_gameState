@@ -6,28 +6,25 @@ export default defineEventHandler(async (event) => {
     event.path.includes("/api/game-list") ||
     event.path.includes("/api/user")
   ) {
-    const token = getCookie(event, "token");
-    if (token) {
-      const decodedToken = await verifyToken(token);
-      event.context = {
-        ...event.context,
-        decodedToken,
-      };
-    } else {
-      const newToken = await auth.currentUser?.getIdToken(true);
-      if (newToken) {
-        setCookie(event, "token", newToken, { httpOnly: true });
-        const decodedToken = await verifyToken(newToken);
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      if (token) {
+        setCookie(event, "token", token, { httpOnly: true });
+        const decodedToken = await verifyToken(token);
         event.context = {
           ...event.context,
           decodedToken,
         };
-      } else
-        throw createError({
-          statusCode: 401,
-          statusMessage: "Unauthorized",
-          message: "No token provided",
-        });
+      } else {
+        throw Error("No token provided");
+      }
+    } catch (error) {
+      console.error("Error getting token:", error);
+      throw createError({
+        statusCode: 401,
+        statusMessage: "Unauthorized",
+        message: "No token provided",
+      });
     }
   }
 });

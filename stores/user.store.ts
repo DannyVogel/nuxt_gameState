@@ -30,12 +30,10 @@ export const useUserStore = defineStore({
           }
         });
     },
-    getYearsPlayed(state) {
-      return state.gameList
-        .filter((game) => game.status !== "toPlay")
-        .map((game) => game.yearPlayed)
-        .filter((year, index, self) => self.indexOf(year) === index)
-        .sort((a, b) => b - a);
+    getYearsPlayed(): number[] {
+      return Array.from(
+        new Set(this.getGamesPlayed.map((game) => game.yearPlayed))
+      );
     },
   },
   actions: {

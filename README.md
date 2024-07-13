@@ -21,8 +21,10 @@ Full stack version of my original gameState project. Authentication and database
 
 ## To Do
 
+- Add to list error handling and toasts
 - Complete logged out homepage
-- Refactor and include game list filters
+- Include game list filters in games to play
+- Redesign login/logged in modal (use slideover?)
 - Paginate search results
 - Pagination for games in lists
 - Include videos in game details

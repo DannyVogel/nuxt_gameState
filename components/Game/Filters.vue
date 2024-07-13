@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { UserGame } from "~/types/game.interfaces";
+// @ts-ignore
+import { AtomSpinner } from "epic-spinners";
 
 const emit = defineEmits(["applyFilters", "clearFilters"]);
 
+const isOpen = ref(false);
+const isLoading = ref(false);
 const userStore = useUserStore();
 const gamesPlayed = ref<UserGame[]>(userStore.getGamesPlayed);
-const isOpen = ref(false);
 
 const statusOptions = [
   {
@@ -40,6 +43,7 @@ const filters = reactive({
 });
 
 const filterGames = () => {
+  isLoading.value = true;
   let filteredGames = userStore.getGamesPlayed;
   if (filters.status) {
     filteredGames = filteredGames.filter(
@@ -60,9 +64,11 @@ const filterGames = () => {
   gamesPlayed.value = filteredGames;
   emit("applyFilters", yearsPlayed.value, gamesPlayed.value);
   isOpen.value = false;
+  isLoading.value = false;
 };
 
 const clearFilters = () => {
+  isLoading.value = true;
   filters.status = null;
   filters.year = null;
   filters.comments = null;
@@ -70,6 +76,7 @@ const clearFilters = () => {
   gamesPlayed.value = userStore.getGamesPlayed;
   emit("clearFilters");
   isOpen.value = false;
+  isLoading.value = false;
 };
 </script>
 
@@ -134,6 +141,17 @@ const clearFilters = () => {
             @click="clearFilters"
           />
         </div>
+      </div>
+      <div
+        v-if="isLoading"
+        class="absolute h-full w-full bg-black bg-opacity-50 flex items-center"
+      >
+        <atom-spinner
+          :animation-duration="1000"
+          :size="100"
+          :color="'rgb(59 130 246 / 0.5)'"
+          class="mx-auto"
+        />
       </div>
     </USlideover>
   </div>

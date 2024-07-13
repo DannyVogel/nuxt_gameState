@@ -22,10 +22,21 @@ const statusOptions = [
   },
 ];
 const yearsPlayed = ref<number[]>(userStore.getYearsPlayed);
+const commentsOptions = [
+  {
+    label: "Yes",
+    value: true,
+  },
+  {
+    label: "No",
+    value: false,
+  },
+];
 
 const filters = reactive({
-  status: statusOptions[0].value,
-  year: yearsPlayed.value[0],
+  status: null,
+  year: null,
+  comments: null,
 });
 
 const filterGames = () => {
@@ -40,6 +51,9 @@ const filterGames = () => {
       (game) => game.yearPlayed === filters.year
     );
   }
+  if (filters.comments) {
+    filteredGames = filteredGames.filter((game) => game.comments);
+  }
   yearsPlayed.value = Array.from(
     new Set(filteredGames.map((game) => game.yearPlayed))
   );
@@ -49,8 +63,9 @@ const filterGames = () => {
 };
 
 const clearFilters = () => {
-  filters.status = statusOptions[0].value;
-  filters.year = yearsPlayed.value[0];
+  filters.status = null;
+  filters.year = null;
+  filters.comments = null;
   yearsPlayed.value = userStore.getYearsPlayed;
   gamesPlayed.value = userStore.getGamesPlayed;
   emit("clearFilters");
@@ -82,6 +97,7 @@ const clearFilters = () => {
             <p>Status:</p>
             <USelect
               v-model="filters.status"
+              placeholder="Select Status"
               :options="statusOptions"
               class="flex-1"
             />
@@ -90,7 +106,17 @@ const clearFilters = () => {
             <p>Year:</p>
             <USelect
               v-model="filters.year"
+              placeholder="Select Year"
               :options="yearsPlayed"
+              class="flex-1"
+            />
+          </div>
+          <div class="flex justify-between items-center gap-8">
+            <p>Comments:</p>
+            <USelect
+              v-model="filters.comments"
+              placeholder="Select Comments"
+              :options="commentsOptions"
               class="flex-1"
             />
           </div>

@@ -1,4 +1,5 @@
 import ClientGameResponse from "~/server/utils/gameState.class";
+import { DbController } from "~/server/controllers/db.controller";
 import { getToken } from "~/server/services/tokenManagers/igdb";
 
 export default eventHandler(async (event) => {
@@ -8,6 +9,11 @@ export default eventHandler(async (event) => {
   const query = decodeURIComponent(getRouterParam(event, "query") as string);
   const token = await getToken();
   console.log("query", query, "token", token);
+  await DbController.addLog({
+    type: "search",
+    query,
+    token: token?.substring(0, 10),
+  });
 
   const response = await $fetch<Promise<SearchResponse>>(
     "https://api.igdb.com/v4/games",

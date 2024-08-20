@@ -11,8 +11,8 @@ const props = defineProps({
 });
 
 const gameUserData = reactive({
-  monthPlayed: props.state.monthPlayed || new Date().getMonth() + 1,
-  yearPlayed: props.state.yearPlayed || new Date().getFullYear(),
+  monthPlayed: props.state.monthPlayed ? props.state.monthPlayed : new Date().getMonth() + 1,
+  yearPlayed: props.state.yearPlayed ? props.state.yearPlayed : new Date().getFullYear(),
   status: props.state.status || "playing",
   comments: props.state.comments || "",
 });

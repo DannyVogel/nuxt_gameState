@@ -11,31 +11,36 @@ const props = defineProps({
 });
 
 const gameUserData = reactive({
-  monthPlayed: props.state.monthPlayed ? props.state.monthPlayed : new Date().getMonth() + 1,
-  yearPlayed: props.state.yearPlayed ? props.state.yearPlayed : new Date().getFullYear(),
-  status: props.state.status || "playing",
-  comments: props.state.comments || "",
+  monthPlayed:
+    props.state.monthPlayed ?? (new Date().getMonth() + 1).toString(),
+  yearPlayed: props.state.yearPlayed ?? new Date().getFullYear().toString(),
+  status: props.state.status ?? "playing",
+  comments: props.state.comments ?? "",
 });
 
 const statuses = ["playing", "beat", "dropped"];
 
 const onSubmit = () => {
-  emit("submit", gameUserData);
+  const data = {
+    monthPlayed: gameUserData.monthPlayed.toString(),
+    yearPlayed: gameUserData.yearPlayed.toString(),
+    status: gameUserData.status,
+    comments: gameUserData.comments,
+  };
+  emit("submit", data);
 };
 </script>
 
 <template>
   <div class="p-4">
     <h3
-      class="text-lg text-center pb-4 bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent"
-    >
+      class="text-lg text-center pb-4 bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent">
       Add To Games Played
     </h3>
     <UForm
       :state="gameUserData"
       @submit="onSubmit"
-      class="flex flex-col justify-center gap-2"
-    >
+      class="flex flex-col justify-center gap-2">
       <div class="flex items-center justify-between gap-2 flex-nowrap">
         <p class="text-sm">Date played:</p>
         <div class="flex items-center justify-between gap-2">
@@ -46,8 +51,7 @@ const onSubmit = () => {
             id="monthPlayed"
             :min="1"
             :max="12"
-            placeholder="MM"
-          />
+            placeholder="MM" />
           /
           <UInput
             v-model="gameUserData.yearPlayed"
@@ -57,8 +61,7 @@ const onSubmit = () => {
             :min="1900"
             :max="new Date().getFullYear()"
             placeholder="YYYY"
-            required
-          />
+            required />
         </div>
       </div>
       <div class="flex justify-between gap-2">

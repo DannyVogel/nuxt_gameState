@@ -1,13 +1,19 @@
 <script lang="ts" setup>
-import type { GameUserData } from "~/types/game.interfaces";
+import type { Game, GameUserData, UserGame } from "~/types/game.interfaces";
 
 const emit = defineEmits(["played"]);
+defineProps({
+  state: {
+    type: Object as PropType<Game>,
+    required: false,
+    default: null,
+  },
+});
 
 const isOpen = ref(false);
-
 const handleSubmit = (gameUserData: GameUserData) => {
-  emit("played", gameUserData);
   isOpen.value = false;
+  emit("played", gameUserData);
 };
 </script>
 
@@ -20,6 +26,6 @@ const handleSubmit = (gameUserData: GameUserData) => {
     >Played</UButton
   >
   <UModal v-model="isOpen">
-    <GameUserData @submit="handleSubmit" />
+    <GameUserData @submit="handleSubmit" :state="(state as UserGame)" />
   </UModal>
 </template>

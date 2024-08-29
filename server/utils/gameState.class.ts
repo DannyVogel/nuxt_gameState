@@ -7,6 +7,10 @@ export default class ClientGameResponse {
   image: string;
   screenshots: string[];
   platforms: string[];
+  monthPlayed: string;
+  yearPlayed: string;
+  status: string;
+  comments: string;
 
   constructor(result: Game) {
     this.slug = result.slug ? result.slug : "";
@@ -29,5 +33,9 @@ export default class ClientGameResponse {
     this.platforms = result.platforms
       ? result.platforms.map((platform) => platform.name)
       : [];
+    this.monthPlayed = "";
+    this.yearPlayed = "";
+    this.status = "";
+    this.comments = "";
   }
 }

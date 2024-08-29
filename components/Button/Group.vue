@@ -57,7 +57,7 @@ const handleEdit = async (gameUserData: GameUserData) => {
   <div class="flex justify-between gap-4 px-2">
     <template v-if="view === 'to-play'">
       <ButtonRemove @remove="handleRemove" />
-      <ButtonPlayed @played="handlePlayed" />
+      <ButtonPlayed @played="handlePlayed" :state="game" />
     </template>
     <template v-else-if="view === 'played'">
       <ButtonRemove @remove="handleRemove" />
@@ -65,7 +65,7 @@ const handleEdit = async (gameUserData: GameUserData) => {
     </template>
     <template v-else-if="view === 'search-query'">
       <ButtonToPlay @to-play="handleToPlay" />
-      <ButtonPlayed @played="handlePlayed" />
+      <ButtonPlayed @played="handlePlayed" :state="game" />
     </template>
   </div>
 </template>

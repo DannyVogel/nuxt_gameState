@@ -10,8 +10,8 @@ defineProps({
 });
 const isOpen = ref(false);
 const handleSubmit = (gameUserData: GameUserData) => {
-  emit("edited", gameUserData);
   isOpen.value = false;
+  emit("edited", gameUserData);
 };
 </script>
 

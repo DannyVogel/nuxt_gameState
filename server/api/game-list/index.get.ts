@@ -4,7 +4,12 @@ export default defineEventHandler(async (event) => {
   const { decodedToken } = event.context;
   try {
     const res = await DbController.getGameList(decodedToken.uid);
-    return res;
+    return {
+      statusCode: 200,
+      statusMessage: "Ok",
+      payload: res || [],
+      message: "Game list retrieved",
+    };
   } catch (error: any) {
     console.error("Error getting game list:", error);
     throw createError({

@@ -1,4 +1,4 @@
-import type { Game } from "~/types/game.interfaces";
+import type { Game, UserGame } from "~/types/game.interfaces";
 import { db } from "../services/firebase";
 
 export class DbController {
@@ -6,7 +6,7 @@ export class DbController {
     const listRef = db.ref(`gameState/users/${UID}/gameList`);
     const snapshot = await listRef.once("value");
     if (snapshot.exists()) {
-      return Object.values(snapshot.val());
+      return Object.values(snapshot.val()) as UserGame[];
     } else {
       return null;
     }

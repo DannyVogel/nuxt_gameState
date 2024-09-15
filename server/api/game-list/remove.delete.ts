@@ -3,16 +3,19 @@ import { GameListPayload, NitroResponse } from "~/types/auth.interfaces";
 import { UserGame } from "~/types/game.interfaces";
 
 export default defineEventHandler(
-  async (event): Promise<NitroResponse<GameListPayload>> => {
+  async (event): Promise<NitroResponse<UserGame[]>> => {
     const game = await readBody(event);
     const { decodedToken } = event.context;
 
     try {
       await DbController.removeFromList(decodedToken.uid, game.id);
-      const updatedList = (await DbController.getGameList(
-        decodedToken.uid
-      )) as UserGame[];
-      return serverResponse(200, "Ok", updatedList);
+      const updatedList = await DbController.getGameList(decodedToken.uid);
+      return {
+        statusCode: 200,
+        statusMessage: "Ok",
+        payload: updatedList,
+        message: "Game removed from list",
+      };
     } catch (error: any) {
       console.error("Error removing game from list:", error);
       throw createError({

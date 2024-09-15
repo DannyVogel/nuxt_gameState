@@ -3,6 +3,15 @@ import type { Game, UserGame } from "~/types/game.interfaces";
 export const useDb = () => {
   const userStore = useUserStore();
 
+  const getGameList = async () => {
+    try {
+      const res = await $fetch("/api/game-list");
+      if (res.payload) userStore.gameList = res.payload;
+    } catch (error) {
+      console.error("get game list error", error);
+    }
+  };
+
   const addToList = async (game: Game) => {
     try {
       const res = await $fetch("/api/game-list/add", {
@@ -28,6 +37,7 @@ export const useDb = () => {
   };
 
   return {
+    getGameList,
     addToList,
     removeFromList,
   };

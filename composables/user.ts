@@ -7,7 +7,7 @@ export const useUser = () => {
           displayName,
         },
       });
-      if (res.statusCode === 200) {
+      if (res.statusCode === 200 && res.payload) {
         useUserStore().displayName = res.payload.displayName;
       }
     } catch (error) {

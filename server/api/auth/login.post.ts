@@ -5,7 +5,6 @@ import { NitroResponse, LoginPayload } from "~/types/auth.interfaces";
 
 export default defineEventHandler(
   async (event): Promise<NitroResponse<LoginPayload>> => {
-    console.log("/api/auth/login.post");
     const body = await readBody(event);
     const res = await AuthController.loginAndGetGameList(
       body.email,
@@ -15,12 +14,11 @@ export default defineEventHandler(
       setCookie(event, "token", await res.user!.getIdToken(), {
         httpOnly: true,
       });
-      const gameList = await DbController.getGameList(res.user!.uid);
       const payload = {
         uid: res.user!.uid,
         email: res.user!.email,
         username: res.user?.displayName,
-        gameList,
+        gameList: res.gameList,
       };
       return serverResponse(200, "OK", payload);
     } else {

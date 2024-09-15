@@ -48,7 +48,7 @@ export const useUserStore = defineStore({
       this.$reset();
     },
   },
-  persist: {
-    storage: persistedState.localStorage,
-  },
+  // persist: {
+  //   storage: persistedState.localStorage,
+  // },
 });

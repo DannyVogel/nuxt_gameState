@@ -1,25 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  css: ["@/assets/css/tailwind.css"],
   tailwindcss: {
     viewer: false,
   },
   modules: [
     "@nuxt/ui",
     "@nuxt/fonts",
-    "@pinia/nuxt",
-    "@pinia-plugin-persistedstate/nuxt",
     "@nuxt/devtools",
     "@nuxt/image",
+    "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
+    "@nuxtjs/tailwindcss",
   ],
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
       link: [{ rel: "manifest", href: "/site.webmanifest" }],
     },
-  },
-  build: {
-    transpile: ["pinia-plugin-persistedstate"],
   },
   image: {
     domains: ["images.igdb.com", "media.rawg.io"],

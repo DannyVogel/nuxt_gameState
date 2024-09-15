@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import type { LoginPayload } from "~/types/auth.interfaces";
-import type { UserGame } from "~/types/game.interfaces";
 
 export const useUserStore = defineStore(
   "user",
@@ -17,8 +16,6 @@ export const useUserStore = defineStore(
       email.value = userData.email;
       displayName.value = userData.username;
       isLogged.value = true;
-      const myTestStore = useMyTestStore();
-      myTestStore.setUser(userData);
     }
 
     function logOut() {

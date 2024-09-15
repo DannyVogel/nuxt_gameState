@@ -1,5 +1,6 @@
 export const useAuth = () => {
   const userStore = useUserStore();
+  const db = useDb();
 
   const logIn = async (email: string, password: string) => {
     try {
@@ -12,6 +13,7 @@ export const useAuth = () => {
       });
       if (res.statusCode === 200 && res.payload) {
         userStore.setUser(res.payload);
+        db.gameList.value = res.payload.gameList;
       }
     } catch (error: any) {
       console.error(error.message);
@@ -49,6 +51,7 @@ export const useAuth = () => {
         method: "POST",
       });
       userStore.logOut();
+      db.gameList.value = [];
     } catch (error: any) {
       const errorMessage = error.message;
       console.log(errorMessage);
@@ -66,6 +69,7 @@ export const useAuth = () => {
       });
       if (res.statusCode === 200 && res.payload) {
         userStore.setUser(res.payload);
+        db.gameList.value = res.payload.gameList;
       }
     } catch (error: any) {
       console.error(error.message);

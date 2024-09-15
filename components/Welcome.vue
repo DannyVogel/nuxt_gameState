@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 const userStore = useUserStore();
-
-const gamesPlayed = computed(() => userStore.getGamesPlayed.length);
-const gamesToPlay = computed(() => userStore.getGamesToPlay.length);
+const db = useDb();
 </script>
 
 <template>
@@ -23,7 +21,7 @@ const gamesToPlay = computed(() => userStore.getGamesToPlay.length);
           alt="shopping bag with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ gamesToPlay }}</p>
+          <p>{{ db.gamesToPlayCount }}</p>
           <p>Games</p>
           <p>to play</p>
         </div>
@@ -35,7 +33,7 @@ const gamesToPlay = computed(() => userStore.getGamesToPlay.length);
           alt="papers with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ gamesPlayed }}</p>
+          <p>{{ db.gamesPlayedCount }}</p>
           <p>Games</p>
           <p>played</p>
         </div>

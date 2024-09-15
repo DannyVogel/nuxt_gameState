@@ -7,8 +7,8 @@ const emit = defineEmits(["applyFilters", "clearFilters"]);
 
 const isOpen = ref(false);
 const isLoading = ref(false);
-const userStore = useUserStore();
-const gamesPlayed = ref<UserGame[]>(userStore.getGamesPlayed);
+const db = useDb();
+const gamesPlayed = ref<UserGame[]>(db.getGamesPlayed.value);
 
 const statusOptions = [
   {
@@ -24,7 +24,7 @@ const statusOptions = [
     value: "dropped",
   },
 ];
-const yearsPlayed = ref<number[]>(userStore.getYearsPlayed);
+const yearsPlayed = ref<number[]>(db.getYearsPlayed.value);
 const commentsOptions = [
   {
     label: "Yes",
@@ -44,7 +44,7 @@ const filters = reactive({
 
 const filterGames = () => {
   isLoading.value = true;
-  let filteredGames = userStore.getGamesPlayed;
+  let filteredGames = db.getGamesPlayed.value;
   if (filters.status) {
     filteredGames = filteredGames.filter(
       (game) => game.status === filters.status
@@ -72,8 +72,8 @@ const clearFilters = () => {
   filters.status = null;
   filters.year = null;
   filters.comments = null;
-  yearsPlayed.value = userStore.getYearsPlayed;
-  gamesPlayed.value = userStore.getGamesPlayed;
+  yearsPlayed.value = db.getYearsPlayed.value;
+  gamesPlayed.value = db.getGamesPlayed.value;
   emit("clearFilters");
   isOpen.value = false;
   isLoading.value = false;

@@ -1,7 +1,13 @@
 <script lang="ts" setup>
+const emit = defineEmits(["close"]);
 const userStore = useUserStore();
 const fbAuth = useFBAuth();
 const { setDisplayName } = useUser();
+
+const handleLogout = async () => {
+  emit("close");
+  await fbAuth.logout();
+};
 </script>
 
 <template>
@@ -14,6 +20,6 @@ const { setDisplayName } = useUser();
         @click="setDisplayName('Kelevra')"
       />
     </div>
-    <UButton @click="fbAuth.logout" color="red">Log out</UButton>
+    <UButton @click="handleLogout" color="red">Log out</UButton>
   </div>
 </template>

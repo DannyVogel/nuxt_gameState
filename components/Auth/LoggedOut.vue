@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const emit = defineEmits(["close"]);
 const fbAuth = useFBAuth();
 
 const state = reactive({

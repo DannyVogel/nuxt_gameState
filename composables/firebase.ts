@@ -11,6 +11,11 @@ export const useFBAuth = () => {
   watch(user, async (newUser) => {
     if (newUser) {
       db.getGameList();
+      userStore.setUser({
+        uid: newUser.uid,
+        email: newUser.email || "",
+        username: newUser.displayName || "",
+      });
       const token = await newUser.getIdToken();
       authToken.value = token;
       console.log("User is logged in");
@@ -44,8 +49,10 @@ export const useFBAuth = () => {
 
   const logout = async () => {
     await signOut(auth);
+    userStore.logOut();
+    db.gameList.value = [];
     user.value = null;
-    authToken.value = null; // Clear the cookie
+    authToken.value = null;
   };
 
   return {

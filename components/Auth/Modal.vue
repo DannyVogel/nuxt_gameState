@@ -19,7 +19,7 @@ const isOpen = ref(false);
     </UButton>
   </div>
   <UModal v-model="isOpen">
-    <AuthLoggedIn v-if="userStore.isLogged" />
-    <AuthLoggedOut v-else />
+    <AuthLoggedIn v-if="userStore.isLogged" @close="isOpen = false" />
+    <AuthLoggedOut v-else @close="isOpen = false" />
   </UModal>
 </template>

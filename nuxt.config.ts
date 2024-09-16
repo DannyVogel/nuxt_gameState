@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     "@nuxt/devtools",
     "@nuxt/image",
     "@pinia/nuxt",
-    "pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/tailwindcss",
     "nuxt-vuefire",
   ],

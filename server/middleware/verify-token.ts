@@ -1,5 +1,4 @@
 import { verifyToken } from "../services/tokenManagers/auth";
-import { auth } from "../services/firebase";
 
 export default defineEventHandler(async (event) => {
   if (
@@ -7,9 +6,8 @@ export default defineEventHandler(async (event) => {
     event.path.includes("/api/user")
   ) {
     try {
-      const token = await auth.currentUser?.getIdToken();
+      const token = getCookie(event, "authToken");
       if (token) {
-        setCookie(event, "token", token, { httpOnly: true });
         const decodedToken = await verifyToken(token);
         event.context = {
           ...event.context,

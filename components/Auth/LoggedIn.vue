@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const userStore = useUserStore();
-const auth = useAuth();
+const fbAuth = useFBAuth();
 const { setDisplayName } = useUser();
 </script>
 
@@ -14,6 +14,6 @@ const { setDisplayName } = useUser();
         @click="setDisplayName('Kelevra')"
       />
     </div>
-    <UButton @click="auth.logOut" color="red">Log out</UButton>
+    <UButton @click="fbAuth.logout" color="red">Log out</UButton>
   </div>
 </template>

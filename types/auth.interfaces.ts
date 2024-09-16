@@ -23,7 +23,6 @@ export interface LoginPayload {
   uid: string;
   email: string;
   username: string;
-  gameList: UserGame[];
 }
 
 export interface GameListPayload {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const auth = useAuth();
+const fbAuth = useFBAuth();
 
 const state = reactive({
   email: "",
@@ -12,7 +12,7 @@ async function onSubmit(event: Event) {
     errorMessage.value = "Please fill in all fields";
     return;
   }
-  await auth.logIn(state.email, state.password);
+  await fbAuth.login(state.email, state.password);
   state.email = "";
   state.password = "";
 }

@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/tailwindcss",
+    "nuxt-vuefire",
   ],
   app: {
     pageTransition: { name: "page", mode: "out-in" },
@@ -20,6 +21,18 @@ export default defineNuxtConfig({
   },
   image: {
     domains: ["images.igdb.com", "media.rawg.io"],
+  },
+  vuefire: {
+    auth: {
+      enabled: true,
+    },
+    config: {
+      apiKey: "",
+      authDomain: "",
+      projectId: "",
+      appId: "",
+      // there could be other properties depending on the project
+    },
   },
   runtimeConfig: {
     IGDBClientId: "",

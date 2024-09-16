@@ -11,11 +11,13 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@firebase/app-types": "^0.9.2",
     "@nuxt/fonts": "^0.7.0",
     "@pinia/nuxt": "^0.5.4",
     "epic-spinners": "^2.0.0",
     "firebase": "^10.12.2",
-    "firebase-admin": "^12.2.0",
+    "firebase-admin": "^12.5.0",
+    "firebase-functions": "^5.1.1",
     "pinia": "^2.2.2",
     "pinia-plugin-persistedstate": "^4.0.1",
     "vue": "^3.4.29",
@@ -26,6 +28,7 @@
     "@nuxt/image": "^1.7.0",
     "@nuxt/ui": "^2.18.4",
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "nuxt": "^3.13.1"
+    "nuxt": "^3.13.1",
+    "nuxt-vuefire": "^1.0.4"
   }
 }

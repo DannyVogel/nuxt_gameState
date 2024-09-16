@@ -2,6 +2,7 @@
 import type { View } from "@/types/common.interfaces";
 import type { Game, UserGame, GameUserData } from "~/types/game.interfaces";
 
+const emit = defineEmits(["close"]);
 const props = defineProps({
   view: {
     type: String as PropType<View>,
@@ -19,6 +20,7 @@ const toast = useToast();
 const { addToList, removeFromList } = useDb();
 
 const handleRemove = async () => {
+  emit("close");
   await removeFromList(props.game.id);
   toast.add({ title: "Game removed", color: "rose" });
 };
@@ -30,6 +32,7 @@ const handleToPlay = async () => {
     title: `${userGame.name} is waiting to be played`,
     color: "orange",
   });
+  emit("close");
 };
 
 const handlePlayed = async (gameUserData: GameUserData) => {
@@ -44,9 +47,11 @@ const handlePlayed = async (gameUserData: GameUserData) => {
     title += " is being played";
   }
   toast.add({ title, color: "teal" });
+  emit("close");
 };
 
 const handleEdit = async (gameUserData: GameUserData) => {
+  emit("close");
   const userGame = { ...props.game, ...gameUserData };
   await addToList(userGame);
   toast.add({ title: "Game data updated", color: "sky" });

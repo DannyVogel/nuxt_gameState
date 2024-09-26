@@ -15,9 +15,7 @@
     "@nuxt/fonts": "^0.7.0",
     "@pinia/nuxt": "^0.5.4",
     "epic-spinners": "^2.0.0",
-    "firebase": "^10.12.2",
     "firebase-admin": "^12.5.0",
-    "firebase-functions": "^5.1.1",
     "pinia": "^2.2.2",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
@@ -27,7 +25,7 @@
     "@nuxt/image": "^1.7.0",
     "@nuxt/ui": "^2.18.4",
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "nuxt": "^3.13.1",
-    "nuxt-vuefire": "^1.0.4"
+    "nuxt": "^3.13.2",
+    "nuxt-auth-utils": "^0.3.9"
   }
 }

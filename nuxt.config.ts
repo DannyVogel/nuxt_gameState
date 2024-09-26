@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
-    "nuxt-vuefire",
+    "nuxt-auth-utils",
   ],
   app: {
     pageTransition: { name: "page", mode: "out-in" },
@@ -21,31 +21,16 @@ export default defineNuxtConfig({
   image: {
     domains: ["images.igdb.com", "media.rawg.io"],
   },
-  vuefire: {
-    auth: {
-      enabled: true,
-    },
-    config: {
-      apiKey: "",
-      authDomain: "",
-      projectId: "",
-      appId: "",
-      // there could be other properties depending on the project
+  $development: {
+    runtimeConfig: {
+      googleRedirectURL: "http://localhost:3000/api/auth/google",
     },
   },
   runtimeConfig: {
     IGDBClientId: "",
     IGDBClientSecret: "",
     firebaseAdminId: "",
-    firebase: {
-      apiKey: "",
-      authDomain: "",
-      projectId: "",
-      appId: "",
-      databaseURL: "",
-      storageBucket: "",
-      messagingSenderId: "",
-    },
+    databaseURL: "",
   },
   compatibilityDate: "2024-07-06",
 });

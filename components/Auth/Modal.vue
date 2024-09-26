@@ -2,7 +2,8 @@
 import loggedUser from "~/public/icons/loggedInUser.png";
 import loggedOutUser from "~/public/icons/loggedOutUser.png";
 
-const userStore = useUserStore();
+const { loggedIn } = useUserSession();
+
 const isOpen = ref(false);
 </script>
 
@@ -11,7 +12,7 @@ const isOpen = ref(false);
     <UButton @click="isOpen = true" variant="ghost">
       <template #leading>
         <img
-          :src="userStore.isLogged ? loggedUser : loggedOutUser"
+          :src="loggedIn ? loggedUser : loggedOutUser"
           alt="Open Auth Modal"
           class="w-8 h-8 cursor-pointer"
         />
@@ -19,7 +20,7 @@ const isOpen = ref(false);
     </UButton>
   </div>
   <UModal v-model="isOpen">
-    <AuthLoggedIn v-if="userStore.isLogged" @close="isOpen = false" />
+    <AuthLoggedIn v-if="loggedIn" @close="isOpen = false" />
     <AuthLoggedOut v-else @close="isOpen = false" />
   </UModal>
 </template>

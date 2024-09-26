@@ -1,5 +1,4 @@
 <script setup lang="ts">
-useFBAuth();
 useHeadSafe({
   title: "gameState",
   meta: [

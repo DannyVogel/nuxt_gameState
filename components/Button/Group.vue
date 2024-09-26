@@ -17,17 +17,17 @@ const props = defineProps({
 });
 
 const toast = useToast();
-const { addToList, removeFromList } = useDb();
+const listStore = useListStore();
 
 const handleRemove = async () => {
   emit("close");
-  await removeFromList(props.game.id);
+  await listStore.removeFromList(props.game.id);
   toast.add({ title: "Game removed", color: "rose" });
 };
 
 const handleToPlay = async () => {
   const userGame = { ...props.game, status: "toPlay" };
-  await addToList(userGame);
+  await listStore.addToList(userGame);
   toast.add({
     title: `${userGame.name} is waiting to be played`,
     color: "orange",
@@ -37,7 +37,7 @@ const handleToPlay = async () => {
 
 const handlePlayed = async (gameUserData: GameUserData) => {
   const userGame = { ...props.game, ...gameUserData };
-  await addToList(userGame);
+  await listStore.addToList(userGame);
   let title = userGame.name;
   if (userGame.status === "beat") {
     title += " has been beaten";
@@ -53,7 +53,7 @@ const handlePlayed = async (gameUserData: GameUserData) => {
 const handleEdit = async (gameUserData: GameUserData) => {
   emit("close");
   const userGame = { ...props.game, ...gameUserData };
-  await addToList(userGame);
+  await listStore.addToList(userGame);
   toast.add({ title: "Game data updated", color: "sky" });
 };
 </script>

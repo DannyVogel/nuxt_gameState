@@ -2,14 +2,16 @@
 
 ## Description
 
-Full stack version of my original gameState project. Authentication and database is now handled on the backend via Firebase. Using the Twitch IGDB API on the backend, users can search for games and add them to their played or to play lists, complete with screenshots, status and comments.
+Full stack, SSR version of my original gameState project. OAuth authentication with Google sign-in and Firebase Realtime Database. Using the Twitch IGDB API on the backend, users can search for games and add them to their played or to play lists, complete with screenshots, status and comments.
 
 ## Technologies
 
-- Nuxt (Vue)
+- Nuxt 3
 - Tailwind CSS
-- Firebase
+- Nuxt UI
+- OAuth
 - Twitch IGDB API
+- Firebase Realtime Database
 
 ## Features
 

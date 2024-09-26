@@ -1,14 +1,21 @@
 import { DbController } from "~/server/controllers/db.controller";
-import { GameListPayload, NitroResponse } from "~/types/auth.interfaces";
+import { NitroResponse } from "~/types/auth.interfaces";
 import { UserGame } from "~/types/game.interfaces";
 
 export default defineEventHandler(
   async (event): Promise<NitroResponse<UserGame[]>> => {
-    const game = await readBody(event);
-    const { decodedToken } = event.context;
     try {
-      await DbController.addToList(decodedToken.uid, game);
-      const updatedList = await DbController.getGameList(decodedToken.uid);
+      const game = await readBody(event);
+      const session = await requireUserSession(event).catch((error) => {
+        console.error("Error requiring user session:", error);
+        throw createError({
+          statusCode: 401,
+          statusMessage: "Unauthorized",
+          message: "User not logged in",
+        });
+      });
+      await DbController.addToList(session.user.sub, game);
+      const updatedList = await DbController.getGameList(session.user.sub);
       return {
         statusCode: 200,
         statusMessage: "Ok",

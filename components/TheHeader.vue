@@ -8,6 +8,6 @@
     >
       <NuxtLink to="/"> <span class="italic">game</span>State </NuxtLink>
     </h1>
-    <AuthModal />
+    <LazyAuthModal />
   </div>
 </template>

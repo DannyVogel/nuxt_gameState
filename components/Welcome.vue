@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const userStore = useUserStore();
-const db = useDb();
+const listStore = useListStore();
 </script>
 
 <template>
@@ -10,7 +10,7 @@ const db = useDb();
       <h1
         class="text-6xl bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent"
       >
-        {{ userStore.displayName }}
+        {{ userStore.displayName || userStore.firstName }}
       </h1>
     </div>
     <div class="flex justify-between gap-12 text-primary">
@@ -21,7 +21,7 @@ const db = useDb();
           alt="shopping bag with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ db.gamesToPlayCount }}</p>
+          <p>{{ listStore.gamesToPlayCount }}</p>
           <p>Games</p>
           <p>to play</p>
         </div>
@@ -33,7 +33,7 @@ const db = useDb();
           alt="papers with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ db.gamesPlayedCount }}</p>
+          <p>{{ listStore.gamesPlayedCount }}</p>
           <p>Games</p>
           <p>played</p>
         </div>

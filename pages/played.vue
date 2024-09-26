@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import type { UserGame } from "~/types/game.interfaces";
 
-const db = useDb();
-const yearsPlayed = ref<number[]>(db.getYearsPlayed.value);
-const gamesPlayed = ref<UserGame[]>(db.getGamesPlayed.value);
+const listStore = useListStore();
+
+const yearsPlayed = ref<number[]>(listStore.yearsPlayed);
+const gamesPlayed = ref<UserGame[]>(listStore.gamesPlayed);
 
 const applyFilters = (years: number[], games: UserGame[]) => {
   yearsPlayed.value = years;
@@ -11,9 +12,17 @@ const applyFilters = (years: number[], games: UserGame[]) => {
 };
 
 const clearFilters = () => {
-  yearsPlayed.value = db.getYearsPlayed.value;
-  gamesPlayed.value = db.getGamesPlayed.value;
+  yearsPlayed.value = listStore.yearsPlayed;
+  gamesPlayed.value = listStore.gamesPlayed;
 };
+
+watch(
+  listStore.gamesPlayed,
+  () => {
+    gamesPlayed.value = listStore.gamesPlayed;
+  },
+  { deep: true }
+);
 </script>
 
 <template>

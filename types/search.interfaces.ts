@@ -13,6 +13,11 @@ interface Screenshot {
   image_id: string;
 }
 
+interface Artwork {
+  id: number;
+  image_id: string;
+}
+
 interface Game {
   id: number;
   first_release_date: number;
@@ -20,6 +25,7 @@ interface Game {
   name: string;
   platforms: Platform[];
   screenshots: Screenshot[];
+  artworks: Artwork[];
   slug: string;
 }
 

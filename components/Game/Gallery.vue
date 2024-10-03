@@ -46,12 +46,7 @@ const loopImages = (nextClickedonLast: boolean) => {
     :ui="{ item: 'basis-full' }"
   >
     <template #default="{ item }">
-      <NuxtImg
-        :src="item"
-        draggable="false"
-        preload
-        placeholder="/img/notFound.png"
-      />
+      <NuxtImg :src="item" draggable="false" preload placeholder />
     </template>
 
     <template #prev="{ onClick, disabled }">

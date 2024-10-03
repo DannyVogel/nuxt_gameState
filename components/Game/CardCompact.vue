@@ -26,10 +26,10 @@ const view = computed(() => route.name as View);
     @click="isOpen = true"
   >
     <NuxtImg
-      :src="game.image || NotFound"
+      :src="game.image || game.screenshots[0] || NotFound"
       preload
       loading="lazy"
-      placeholder="/img/notFound.png"
+      placeholder
       alt="game image"
       class="object-cover w-full h-full"
     />

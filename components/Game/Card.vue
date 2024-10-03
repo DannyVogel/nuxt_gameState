@@ -13,7 +13,7 @@ defineProps({
   <UCard class="w-full overflow-hidden">
     <template #header>
       <img
-        :src="game.image || NotFound"
+        :src="game.image || game.screenshots[0] || NotFound"
         :alt="game.name"
         class="object-cover min-h-40"
       />

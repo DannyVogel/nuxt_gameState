@@ -24,12 +24,14 @@ export default class ClientGameResponse {
       result.screenshots && result.screenshots.length > 0
         ? `https://images.igdb.com/igdb/image/upload/t_screenshot_big/${result.screenshots[0].image_id}.jpg`
         : "";
-    this.screenshots = result.screenshots
-      ? result.screenshots.map(
-          (screenshot) =>
-            `https://images.igdb.com/igdb/image/upload/t_screenshot_big/${screenshot.image_id}.jpg`
-        )
-      : [];
+
+    const artworkUrls = getImageUrls(result.artworks, "artwork");
+    const screenshotUrls = getImageUrls(result.screenshots, "screenshot");
+    this.image =
+      result.screenshots && result.screenshots.length > 0
+        ? `https://images.igdb.com/igdb/image/upload/t_screenshot_big/${result.screenshots[0].image_id}.jpg`
+        : "";
+    this.screenshots = [...artworkUrls, ...screenshotUrls];
     this.platforms = result.platforms
       ? result.platforms.map((platform) => platform.name)
       : [];
@@ -39,3 +41,11 @@ export default class ClientGameResponse {
     this.comments = "";
   }
 }
+
+const getImageUrls = (images: any[], type: string) =>
+  images
+    ? images.map(
+        (img) =>
+          `https://images.igdb.com/igdb/image/upload/t_screenshot_big/${img.image_id}.jpg`
+      )
+    : [];

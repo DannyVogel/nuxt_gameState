@@ -2,7 +2,7 @@
 import type { UserGame } from "@/types/game.interfaces";
 import type { View } from "@/types/common.interfaces";
 import NotFound from "@/public/img/notFound.png";
-defineProps({
+const props = defineProps({
   game: {
     type: Object as () => UserGame,
     required: true,
@@ -18,6 +18,12 @@ const route = useRoute();
 const isOpen = ref(false);
 
 const view = computed(() => route.name as View);
+const imgSrc = computed(() => {
+  if (props.game.image) return props.game.image;
+  if (props.game.screenshots && props.game.screenshots.length > 0)
+    return props.game.screenshots[0];
+  return NotFound;
+});
 </script>
 
 <template>
@@ -26,7 +32,7 @@ const view = computed(() => route.name as View);
     @click="isOpen = true"
   >
     <NuxtImg
-      :src="game.image || game.screenshots[0] || NotFound"
+      :src="imgSrc"
       preload
       loading="lazy"
       placeholder

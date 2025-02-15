@@ -1,4 +1,5 @@
-import type { Game } from "~/types/game.interfaces";
+import type { NitroResponse } from "~/types/auth.interfaces";
+import type { Game, UserGame } from "~/types/game.interfaces";
 
 export const useGameList = () => {
   const fetch = useRequestFetch();
@@ -61,6 +62,13 @@ export const useGameList = () => {
     return res.payload;
   };
 
+  const getGameById = async (gameId: string) => {
+    const res = await fetch<NitroResponse<UserGame>>(
+      `/api/game-list/${gameId}`
+    );
+    return res.payload;
+  };
+
   return {
     yearsPlayed,
     getGamesCount,
@@ -70,5 +78,6 @@ export const useGameList = () => {
     getGamesPlayedCount,
     addToList,
     removeFromList,
+    getGameById,
   };
 };

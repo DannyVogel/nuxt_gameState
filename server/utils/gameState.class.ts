@@ -1,20 +1,20 @@
 export default class ClientGameResponse {
-  slug: string;
-  name: string;
+  slug: string | null;
+  name: string | null;
   id: number;
   genres: string[];
   released: string;
-  image: string;
+  image: string | null;
   screenshots: string[];
   platforms: string[];
-  monthPlayed: string;
-  yearPlayed: string;
-  status: string;
-  comments: string;
+  monthPlayed: string | null;
+  yearPlayed: string | null;
+  status: string | null;
+  comments: string | null;
 
   constructor(result: Game) {
-    this.slug = result.slug ? result.slug : "";
-    this.name = result.name ? result.name : "";
+    this.slug = result.slug ? result.slug : null;
+    this.name = result.name ? result.name : null;
     this.id = result.id;
     this.genres = result.genres ? result.genres.map((genre) => genre.name) : [];
     this.released = result.first_release_date
@@ -23,22 +23,18 @@ export default class ClientGameResponse {
     this.image =
       result.screenshots && result.screenshots.length > 0
         ? `https://images.igdb.com/igdb/image/upload/t_screenshot_big/${result.screenshots[0].image_id}.jpg`
-        : "";
+        : null;
 
     const artworkUrls = getImageUrls(result.artworks, "artwork");
     const screenshotUrls = getImageUrls(result.screenshots, "screenshot");
-    this.image =
-      result.screenshots && result.screenshots.length > 0
-        ? `https://images.igdb.com/igdb/image/upload/t_screenshot_big/${result.screenshots[0].image_id}.jpg`
-        : "";
     this.screenshots = [...artworkUrls, ...screenshotUrls];
     this.platforms = result.platforms
       ? result.platforms.map((platform) => platform.name)
       : [];
-    this.monthPlayed = "";
-    this.yearPlayed = "";
-    this.status = "";
-    this.comments = "";
+    this.monthPlayed = null;
+    this.yearPlayed = null;
+    this.status = null;
+    this.comments = null;
   }
 }
 

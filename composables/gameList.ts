@@ -17,16 +17,10 @@ export const useGameList = () => {
     const res = await fetch(
       `/api/game-list?list=toPlay&page=${page}&limit=${limit}&sort=${sort}`
     );
-    // Return both the list and counts for better pagination control
     return {
       games: res.payload.gameList,
       total: res.payload.counts.gamesToPlay,
     };
-  };
-
-  const getGamesToPlayCount = async () => {
-    const res = await fetch("/api/game-list");
-    return res.payload.counts.gamesToPlay;
   };
 
   const getGamesPlayed = async (
@@ -59,17 +53,6 @@ export const useGameList = () => {
     };
   };
 
-  const getGamesPlayedCount = async () => {
-    const res = await fetch("/api/game-list");
-    return res.payload.counts.gamesPlayed;
-  };
-
-  const yearsPlayed = async () => {
-    const gameList = await getGamesPlayed();
-    if (!gameList) return [];
-    return Array.from(new Set(gameList.games.map((game) => game.yearPlayed)));
-  };
-
   const addToList = async (game: Game) => {
     const res = await fetch("/api/game-list/add", {
       method: "POST",
@@ -94,14 +77,11 @@ export const useGameList = () => {
   };
 
   return {
-    yearsPlayed,
     getGamesCount,
     getGamesToPlay,
-    getGamesToPlayCount,
     getGamesPlayed,
-    getGamesPlayedCount,
+    getGameById,
     addToList,
     removeFromList,
-    getGameById,
   };
 };

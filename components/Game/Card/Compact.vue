@@ -2,6 +2,8 @@
 import type { UserGame, Game } from "@/types/game.interfaces";
 import type { View } from "@/types/common.interfaces";
 import NotFound from "@/public/img/notFound.png";
+
+const emit = defineEmits(["close"]);
 const props = defineProps({
   game: {
     type: Object as () => UserGame | Game,
@@ -24,6 +26,11 @@ const imgSrc = computed(() => {
     return props.game.screenshots[0];
   return NotFound;
 });
+
+const handleClose = () => {
+  isOpen.value = false;
+  emit("close");
+};
 </script>
 
 <template>
@@ -59,7 +66,7 @@ const imgSrc = computed(() => {
   <UModal v-model="isOpen">
     <GameCardFull :view="view" :id="game.id">
       <template #buttons>
-        <ButtonGroup :view="view" :game="game" @close="isOpen = false" />
+        <ButtonGroup :view="view" :game="game" @close="handleClose" />
       </template>
     </GameCardFull>
   </UModal>

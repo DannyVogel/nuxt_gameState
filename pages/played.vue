@@ -125,7 +125,7 @@ const clearFilters = async () => {
                 (game) => game.yearPlayed === year
               )"
             >
-              <GameCardCompact view="played" :game="game" />
+              <GameCardCompact view="played" :game="game" @close="fetchGames" />
             </template>
           </div>
         </div>

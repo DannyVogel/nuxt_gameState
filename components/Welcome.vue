@@ -2,7 +2,7 @@
 const { user } = useUserSession();
 const listStore = useGameList();
 
-const { data: gamesCountData } = await useAsyncData(
+const { data: gamesCount } = await useAsyncData(
   "getGamesCount",
   () => listStore.getGamesCount(),
   {
@@ -32,7 +32,7 @@ const { data: gamesCountData } = await useAsyncData(
           alt="shopping bag with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ gamesCountData.gamesToPlay }}</p>
+          <p>{{ gamesCount.gamesToPlay }}</p>
           <p>Games</p>
           <p>to play</p>
         </div>
@@ -44,7 +44,7 @@ const { data: gamesCountData } = await useAsyncData(
           alt="papers with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ gamesCountData.gamesPlayed }}</p>
+          <p>{{ gamesCount.gamesPlayed }}</p>
           <p>Games</p>
           <p>played</p>
         </div>

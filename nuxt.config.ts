@@ -8,8 +8,8 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/devtools",
     "@nuxt/image",
-    "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
+    "@vueuse/nuxt",
     "nuxt-auth-utils",
   ],
   app: {
@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     IGDBClientSecret: "",
     firebaseAdminId: "",
     databaseURL: "",
+    googleApplicationCredentials: "",
     session: {
       maxAge: 60 * 60 * 24 * 7,
     },

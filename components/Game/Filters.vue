@@ -7,7 +7,7 @@ const emit = defineEmits(["applyFilters", "clearFilters"]);
 
 const isOpen = ref(false);
 const isLoading = ref(false);
-const listStore = useListStore();
+const listStore = useGameList();
 const gamesPlayed = ref<UserGame[]>(listStore.gamesPlayed);
 
 const statusOptions = [

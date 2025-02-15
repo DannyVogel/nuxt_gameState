@@ -6,7 +6,10 @@ export default oauthGoogleEventHandler({
   },
   async onSuccess(event, { user, tokens }) {
     await setUserSession(event, {
-      user,
+      user: {
+        ...user,
+        displayName: user.given_name || user.email,
+      },
       secure: tokens.id_token,
       loggedInAt: new Date(),
     });

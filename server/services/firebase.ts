@@ -1,10 +1,12 @@
-import serviceAccount from "./service-account.json";
 import admin, { type ServiceAccount } from "firebase-admin";
 
-const { firebaseAdminId, databaseURL } = useRuntimeConfig();
+const { firebaseAdminId, databaseURL, googleApplicationCredentials } =
+  useRuntimeConfig();
 
 export const fbAdmin = admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount as ServiceAccount),
+  credential: admin.credential.cert(
+    googleApplicationCredentials as ServiceAccount
+  ),
   databaseURL: databaseURL,
   databaseAuthVariableOverride: {
     uid: firebaseAdminId,

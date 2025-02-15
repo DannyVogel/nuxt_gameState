@@ -1,24 +1,18 @@
 <script lang="ts" setup>
 const emit = defineEmits(["close"]);
-const userStore = useUserStore();
-// const { setDisplayName } = useUser();
 
 const handleLogout = async () => {
   emit("close");
   useUserSession().clear();
-  userStore.logOut();
 };
+
+const { user, loggedIn } = useUserSession();
 </script>
 
 <template>
   <div class="p-4 flex flex-col items-center justify-center gap-4 min-h-full">
     <div class="flex items-center gap-2">
-      <p class="text-2xl">Hello {{ userStore.firstName }}</p>
-      <!-- <UButton
-        icon="i-heroicons-pencil-square"
-        variant="ghost"
-        @click="setDisplayName('Kelevra')"
-      /> -->
+      <p v-if="loggedIn" class="text-2xl">Hello {{ user?.displayName }}</p>
     </div>
     <UButton
       @click="handleLogout"

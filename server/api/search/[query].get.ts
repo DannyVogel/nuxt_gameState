@@ -49,7 +49,9 @@ export default eventHandler(async (event) => {
       const games = response.map((result) => new ClientGameResponse(result));
       return {
         statusCode: 200,
-        body: games,
+        statusMessage: "Ok",
+        payload: games,
+        message: "Games retrieved",
       };
     }
   }

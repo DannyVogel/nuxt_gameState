@@ -8,10 +8,15 @@ export const useGameList = () => {
     return res.payload.counts;
   };
 
-  const getGamesToPlay = async () => {
-    // TODO: Add pagination functionality with infinite scroll
-    const res = await fetch("/api/game-list?list=toPlay&page=1&limit=30");
-    return res.payload.gameList;
+  const getGamesToPlay = async (page: number = 1, limit: number = 10) => {
+    const res = await fetch(
+      `/api/game-list?list=toPlay&page=${page}&limit=${limit}`
+    );
+    // Return both the list and counts for better pagination control
+    return {
+      games: res.payload.gameList,
+      total: res.payload.counts.gamesToPlay,
+    };
   };
 
   const getGamesToPlayCount = async () => {

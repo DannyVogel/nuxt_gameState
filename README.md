@@ -25,10 +25,6 @@ Full stack, SSR version of my original gameState project. OAuth authentication w
 ## To Do
 
 - Add to list error handling and toasts
-- Infinite scroll for search results
-- Paginate search results
-- Game list update on edit
-- Include game list filters in games to play or only sorting switcher
 - Include videos in game details
 - Add user game ratings
 - Add user game reviews?

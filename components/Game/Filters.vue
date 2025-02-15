@@ -10,7 +10,6 @@ const listStore = useGameList();
 
 // Initialize with empty arrays since data will be loaded by parent
 const gamesPlayed = ref<UserGame[]>([]);
-const yearsPlayed = ref<number[]>([]);
 
 // Define filter types with proper typing for USelect compatibility
 interface Filters {
@@ -77,20 +76,6 @@ const clearFilters = () => {
   isOpen.value = false;
   isLoading.value = false;
 };
-
-// Accept props for years and games
-const props = defineProps<{
-  availableYears: number[];
-}>();
-
-// Watch props to update local refs
-watch(
-  () => props.availableYears,
-  (newYears) => {
-    yearsPlayed.value = newYears;
-  },
-  { immediate: true }
-);
 </script>
 
 <template>
@@ -124,11 +109,13 @@ watch(
           </div>
           <div class="flex justify-between items-center gap-8">
             <p>Year:</p>
-            <USelect
+            <UInput
               v-model="filters.year"
-              placeholder="Select Year"
-              :options="yearsPlayed"
+              type="number"
+              placeholder="Enter year"
               class="flex-1"
+              :min="1900"
+              :max="new Date().getFullYear()"
             />
           </div>
           <div class="flex justify-between items-center gap-8">

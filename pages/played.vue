@@ -107,7 +107,6 @@ const clearFilters = async () => {
     <div class="flex flex-col items-center">
       <h3 class="text-2xl font-bold text-center text-primary">Games Played</h3>
       <GameFilters
-        :available-years="gamesPlayed?.yearsPlayed || []"
         @apply-filters="applyFilters"
         @clear-filters="clearFilters"
       />

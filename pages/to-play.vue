@@ -22,9 +22,7 @@ const {
   },
   {
     transform: (games: Game[]): Game[] => {
-      // If it's the first page, return as is
       if (page.value === 1) return games;
-      // Otherwise, append to existing games
       return [...(gamesToPlay.value || []), ...games];
     },
     default() {
@@ -33,17 +31,13 @@ const {
   }
 );
 
-// Load more games
 const loadMore = async () => {
   if (status.value === "pending") return;
-  // Check if we've loaded all games
   if (gamesToPlay.value?.length >= total.value) return;
-
   page.value++;
   await fetchGames();
 };
 
-// Setup infinite scroll
 useInfiniteScroll(el, loadMore, {
   distance: 10,
   canLoadMore: () => gamesToPlay.value?.length < total.value,
@@ -59,7 +53,6 @@ useInfiniteScroll(el, loadMore, {
       </template>
     </div>
 
-    <!-- Scroll observer and loading indicator -->
     <div ref="el" class="py-4">
       <div v-if="status === 'pending'" class="text-center">
         <span class="animate-pulse">Loading...</span>

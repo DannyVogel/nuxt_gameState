@@ -9,6 +9,7 @@ export default oauthGoogleEventHandler({
       user,
       secure: tokens.id_token,
       loggedInAt: new Date(),
+      displayName: user.given_name || user.email,
     });
     return sendRedirect(event, "/");
   },

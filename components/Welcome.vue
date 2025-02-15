@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-const userStore = useUserStore();
 const listStore = useListStore();
+const { user } = useUserSession();
 </script>
 
 <template>
@@ -10,7 +10,7 @@ const listStore = useListStore();
       <h1
         class="text-6xl bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent"
       >
-        {{ userStore.displayName || userStore.firstName }}
+        {{ user?.displayName }}
       </h1>
     </div>
     <div class="flex justify-between gap-12 text-primary">

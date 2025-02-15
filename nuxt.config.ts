@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/devtools",
     "@nuxt/image",
-    "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
     "nuxt-auth-utils",
   ],

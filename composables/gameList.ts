@@ -33,7 +33,8 @@ export const useGameList = () => {
     page: number = 1,
     limit: number = 10,
     status?: string | null,
-    year?: number | null
+    year?: number | null,
+    hasComments?: boolean | null
   ) => {
     const queryParams = new URLSearchParams({
       list: "played",
@@ -46,6 +47,9 @@ export const useGameList = () => {
     }
     if (year) {
       queryParams.append("year", year.toString());
+    }
+    if (hasComments) {
+      queryParams.append("hasComments", "true");
     }
 
     const res = await fetch(`/api/game-list?${queryParams.toString()}`);

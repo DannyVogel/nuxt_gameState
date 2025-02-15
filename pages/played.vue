@@ -23,7 +23,8 @@ const {
       page.value,
       limit,
       currentFilters.value.status,
-      currentFilters.value.year
+      currentFilters.value.year,
+      currentFilters.value.comments
     );
 
     total.value = response.total;

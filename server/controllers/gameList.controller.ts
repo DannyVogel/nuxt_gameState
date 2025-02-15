@@ -48,7 +48,9 @@ export class GameListController {
   static applyFilters(
     games: UserGame[],
     status?: string,
-    search?: string
+    search?: string,
+    year?: number,
+    hasComments?: boolean
   ): UserGame[] {
     let filtered = [...games];
 
@@ -61,6 +63,17 @@ export class GameListController {
       filtered = filtered.filter((game) =>
         game.name.toLowerCase().includes(searchLower)
       );
+    }
+
+    if (year) {
+      filtered = filtered.filter((game) => Number(game.yearPlayed) === year);
+    }
+
+    if (hasComments !== undefined) {
+      filtered = filtered.filter((game) => {
+        const hasGameComments = Boolean(game.comments && game.comments.trim());
+        return hasComments ? hasGameComments : !hasGameComments;
+      });
     }
 
     return filtered;

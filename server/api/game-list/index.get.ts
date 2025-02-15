@@ -8,6 +8,8 @@ type QueryParams = {
   status?: string;
   search?: string;
   sort?: string;
+  year?: string;
+  hasComments?: string;
 };
 
 export default defineEventHandler(async (event) => {
@@ -27,6 +29,10 @@ export default defineEventHandler(async (event) => {
     const status = query.status;
     const search = query.search;
     const sort = (query.sort?.toUpperCase() || "DESC") as "ASC" | "DESC";
+    const year = query.year ? parseInt(query.year) : undefined;
+    const hasComments = query.hasComments
+      ? query.hasComments === "true"
+      : undefined;
 
     const fullList = (await DbController.getGameList(session.user.sub)) || [];
 
@@ -34,7 +40,9 @@ export default defineEventHandler(async (event) => {
     filteredList = GameListController.applyFilters(
       filteredList,
       status,
-      search
+      search,
+      year,
+      hasComments
     );
 
     const { items: paginatedList, pagination } =

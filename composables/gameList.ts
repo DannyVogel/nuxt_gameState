@@ -24,9 +24,14 @@ export const useGameList = () => {
     return res.payload.counts.gamesToPlay;
   };
 
-  const getGamesPlayed = async () => {
-    const res = await fetch("/api/game-list?list=played");
-    return res.payload.gameList;
+  const getGamesPlayed = async (page: number = 1, limit: number = 10) => {
+    const res = await fetch(
+      `/api/game-list?list=played&page=${page}&limit=${limit}`
+    );
+    return {
+      games: res.payload.gameList,
+      total: res.payload.counts.gamesPlayed,
+    };
   };
 
   const getGamesPlayedCount = async () => {

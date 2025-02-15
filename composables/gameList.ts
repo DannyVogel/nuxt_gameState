@@ -9,9 +9,13 @@ export const useGameList = () => {
     return res.payload.counts;
   };
 
-  const getGamesToPlay = async (page: number = 1, limit: number = 10) => {
+  const getGamesToPlay = async (
+    page: number = 1,
+    limit: number = 10,
+    sort: "ASC" | "DESC" = "DESC"
+  ) => {
     const res = await fetch(
-      `/api/game-list?list=toPlay&page=${page}&limit=${limit}`
+      `/api/game-list?list=toPlay&page=${page}&limit=${limit}&sort=${sort}`
     );
     // Return both the list and counts for better pagination control
     return {

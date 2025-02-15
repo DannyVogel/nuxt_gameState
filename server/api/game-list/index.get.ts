@@ -1,6 +1,15 @@
 import { DbController } from "~/server/controllers/db.controller";
 import { GameListController } from "~/server/controllers/gameList.controller";
 
+type QueryParams = {
+  page?: string;
+  limit?: string;
+  list?: "toPlay" | "played";
+  status?: string;
+  search?: string;
+  sort?: string;
+};
+
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event).catch((error) => {
     console.error("Error requiring user session:", error);
@@ -10,18 +19,18 @@ export default defineEventHandler(async (event) => {
       message: "User not logged in",
     });
   });
-
   try {
-    const query = getQuery(event);
-    const page = parseInt(query.page as string) || 1;
-    const limit = parseInt(query.limit as string) || 10;
-    const list = query.list as "toPlay" | "played";
-    const status = query.status as string;
-    const search = query.search as string;
+    const query = getQuery(event) as QueryParams;
+    const page = parseInt(query.page || "1");
+    const limit = parseInt(query.limit || "10");
+    const list = query.list || "toPlay";
+    const status = query.status;
+    const search = query.search;
+    const sort = (query.sort?.toUpperCase() || "DESC") as "ASC" | "DESC";
 
     const fullList = (await DbController.getGameList(session.user.sub)) || [];
 
-    let filteredList = GameListController.filterByList(fullList, list);
+    let filteredList = GameListController.filterByList(fullList, list, sort);
     filteredList = GameListController.applyFilters(
       filteredList,
       status,

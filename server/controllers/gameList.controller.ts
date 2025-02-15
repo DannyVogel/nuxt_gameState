@@ -3,22 +3,31 @@ import { UserGame } from "~/types/game.interfaces";
 export class GameListController {
   static filterByList(
     games: UserGame[],
-    list: "toPlay" | "played"
+    list: "toPlay" | "played",
+    sort: "ASC" | "DESC" = "DESC"
   ): UserGame[] {
     if (list === "toPlay") {
-      return this.filterAndSortToPlay(games);
+      return this.filterAndSortToPlay(games, sort);
     } else if (list === "played") {
       return this.filterAndSortPlayed(games);
     }
     return games;
   }
 
-  private static filterAndSortToPlay(games: UserGame[]): UserGame[] {
+  private static filterAndSortToPlay(
+    games: UserGame[],
+    sort: "ASC" | "DESC" = "DESC"
+  ): UserGame[] {
     const filtered = games.filter((game) => game.status === "toPlay");
     return filtered.sort((a, b) => {
-      if (a.released === "TBA") return 1;
-      if (b.released === "TBA") return -1;
-      return new Date(a.released).getTime() - new Date(b.released).getTime();
+      if (a.released === "TBA" && b.released === "TBA") return 0;
+      if (a.released === "TBA") return sort === "DESC" ? -1 : 1;
+      if (b.released === "TBA") return sort === "DESC" ? 1 : -1;
+      const dateA = new Date(a.released || 0);
+      const dateB = new Date(b.released || 0);
+      return sort === "DESC"
+        ? dateB.getTime() - dateA.getTime()
+        : dateA.getTime() - dateB.getTime();
     });
   }
 

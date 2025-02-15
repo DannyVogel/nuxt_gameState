@@ -18,18 +18,17 @@ Full stack, SSR version of my original gameState project. OAuth authentication w
 - User authentication
 - Search for games
 - Add games to played or to play lists
+- Infinite scroll for list pages
 - View screenshots; add status and comments to games
 - Mobile first design
 
 ## To Do
 
 - Add to list error handling and toasts
-- Game data update on edit
-- Complete logged out homepage
-- Include game list filters in games to play or only sorting switcher
-- Redesign login/logged in modal (use slideover?)
+- Infinite scroll for search results
 - Paginate search results
-- Pagination for games in lists
+- Game list update on edit
+- Include game list filters in games to play or only sorting switcher
 - Include videos in game details
 - Add user game ratings
 - Add user game reviews?

@@ -1,6 +1,17 @@
 <script lang="ts" setup>
-const listStore = useListStore();
 const { user } = useUserSession();
+const listStore = useGameList();
+
+const { data: gamesCountData } = await useAsyncData(
+  "getGamesCount",
+  () => listStore.getGamesCount(),
+  {
+    default: () => ({
+      gamesToPlay: 0,
+      gamesPlayed: 0,
+    }),
+  }
+);
 </script>
 
 <template>
@@ -21,7 +32,7 @@ const { user } = useUserSession();
           alt="shopping bag with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ listStore.gamesToPlayCount }}</p>
+          <p>{{ gamesCountData.gamesToPlay }}</p>
           <p>Games</p>
           <p>to play</p>
         </div>
@@ -33,7 +44,7 @@ const { user } = useUserSession();
           alt="papers with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ listStore.gamesPlayedCount }}</p>
+          <p>{{ gamesCountData.gamesPlayed }}</p>
           <p>Games</p>
           <p>played</p>
         </div>

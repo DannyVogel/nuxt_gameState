@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     "@nuxt/devtools",
     "@nuxt/image",
     "@nuxtjs/tailwindcss",
+    "@vueuse/nuxt",
     "nuxt-auth-utils",
   ],
   app: {

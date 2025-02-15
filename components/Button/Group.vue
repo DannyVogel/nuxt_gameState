@@ -17,7 +17,7 @@ const props = defineProps({
 });
 
 const toast = useToast();
-const listStore = useListStore();
+const listStore = useGameList();
 
 const handleRemove = async () => {
   emit("close");

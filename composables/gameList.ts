@@ -1,30 +1,31 @@
 import type { Game } from "~/types/game.interfaces";
 
 export const useGameList = () => {
+  const fetch = useRequestFetch();
+
   const getGamesCount = async () => {
-    const res = await $fetch("/api/game-list?page=1&limit=1");
+    const res = await fetch("/api/game-list?page=1&limit=1");
     return res.payload.counts;
   };
 
   const getGamesToPlay = async () => {
     // TODO: Add pagination functionality with infinite scroll
-    const res = await $fetch("/api/game-list?list=toPlay&page=1&limit=30");
+    const res = await fetch("/api/game-list?list=toPlay&page=1&limit=30");
     return res.payload.gameList;
   };
 
   const getGamesToPlayCount = async () => {
-    const res = await $fetch("/api/game-list");
+    const res = await fetch("/api/game-list");
     return res.payload.counts.gamesToPlay;
   };
 
   const getGamesPlayed = async () => {
-    const res = await $fetch("/api/game-list?list=played");
-    console.log("getGamesPlayed", res);
+    const res = await fetch("/api/game-list?list=played");
     return res.payload.gameList;
   };
 
   const getGamesPlayedCount = async () => {
-    const res = await $fetch("/api/game-list");
+    const res = await fetch("/api/game-list");
     return res.payload.counts.gamesPlayed;
   };
 
@@ -35,7 +36,7 @@ export const useGameList = () => {
   };
 
   const addToList = async (game: Game) => {
-    const res = await $fetch("/api/game-list/add", {
+    const res = await fetch("/api/game-list/add", {
       method: "POST",
       body: game,
     });
@@ -43,7 +44,7 @@ export const useGameList = () => {
   };
 
   const removeFromList = async (gameID: Game["id"]) => {
-    const res = await $fetch("/api/game-list/remove", {
+    const res = await fetch("/api/game-list/remove", {
       method: "DELETE",
       body: { id: gameID },
     });

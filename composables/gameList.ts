@@ -42,7 +42,7 @@ export const useGameList = () => {
   const yearsPlayed = async () => {
     const gameList = await getGamesPlayed();
     if (!gameList) return [];
-    return Array.from(new Set(gameList.map((game) => game.yearPlayed)));
+    return Array.from(new Set(gameList.games.map((game) => game.yearPlayed)));
   };
 
   const addToList = async (game: Game) => {

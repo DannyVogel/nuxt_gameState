@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     IGDBClientSecret: "",
     firebaseAdminId: "",
     databaseURL: "",
+    googleApplicationCredentials: "",
     session: {
       maxAge: 60 * 60 * 24 * 7,
     },

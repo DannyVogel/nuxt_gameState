@@ -1,41 +1,44 @@
 <script lang="ts" setup>
 import type { UserGame } from "~/types/game.interfaces";
 
-const listStore = useListStore();
+const listStore = useGameList();
 
-const yearsPlayed = ref<number[]>(listStore.yearsPlayed);
-const gamesPlayed = ref<UserGame[]>(listStore.gamesPlayed);
-
-const applyFilters = (years: number[], games: UserGame[]) => {
-  yearsPlayed.value = years;
-  gamesPlayed.value = games;
-};
-
-const clearFilters = () => {
-  yearsPlayed.value = listStore.yearsPlayed;
-  gamesPlayed.value = listStore.gamesPlayed;
-};
-
-watch(
-  listStore.gamesPlayed,
-  () => {
-    gamesPlayed.value = listStore.gamesPlayed;
+const { data: gamesPlayed } = await useAsyncData(
+  "getGamesPlayed",
+  async () => {
+    const gamesPlayed = await listStore.getGamesPlayed();
+    const yearsPlayed = Array.from(
+      new Set(gamesPlayed.map((game) => game.yearPlayed))
+    );
+    return { gamesPlayed, yearsPlayed };
   },
-  { deep: true }
+  {
+    default: () => ({
+      gamesPlayed: [],
+      yearsPlayed: [],
+    }),
+  }
 );
+
+// const applyFilters = (years: number[], games: UserGame[]) => {
+//   yearsPlayed.value = years;
+//   gamesPlayed.value = games;
+// };
+
+// const clearFilters = () => {
+//   yearsPlayed.value = listStore.yearsPlayed;
+//   gamesPlayed.value = listStore.gamesPlayed;
+// };
 </script>
 
 <template>
   <div>
     <div class="flex flex-col items-center">
       <h3 class="text-2xl font-bold text-center text-primary">Games Played</h3>
-      <GameFilters
-        @apply-filters="applyFilters"
-        @clear-filters="clearFilters"
-      />
+      <GameFilters />
     </div>
     <div class="flex flex-col">
-      <template v-for="year in yearsPlayed">
+      <template v-for="year in gamesPlayed.yearsPlayed">
         <div class="mt-7 flex flex-col gap-2">
           <h4
             class="w-fit text-xl font-bold text-primary bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent"
@@ -44,7 +47,7 @@ watch(
           </h4>
           <div class="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3">
             <template
-              v-for="game in gamesPlayed.filter(
+              v-for="game in gamesPlayed.gamesPlayed.filter(
                 (game) => game.yearPlayed === year
               )"
             >

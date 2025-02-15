@@ -1,4 +1,5 @@
-import type { Game } from "~/types/game.interfaces";
+import type { NitroResponse } from "~/types/auth.interfaces";
+import type { Game, UserGame } from "~/types/game.interfaces";
 
 export const useGameList = () => {
   const fetch = useRequestFetch();
@@ -8,9 +9,13 @@ export const useGameList = () => {
     return res.payload.counts;
   };
 
-  const getGamesToPlay = async (page: number = 1, limit: number = 10) => {
+  const getGamesToPlay = async (
+    page: number = 1,
+    limit: number = 10,
+    sort: "ASC" | "DESC" = "DESC"
+  ) => {
     const res = await fetch(
-      `/api/game-list?list=toPlay&page=${page}&limit=${limit}`
+      `/api/game-list?list=toPlay&page=${page}&limit=${limit}&sort=${sort}`
     );
     // Return both the list and counts for better pagination control
     return {
@@ -24,13 +29,29 @@ export const useGameList = () => {
     return res.payload.counts.gamesToPlay;
   };
 
-  const getGamesPlayed = async (page: number = 1, limit: number = 10) => {
-    const res = await fetch(
-      `/api/game-list?list=played&page=${page}&limit=${limit}`
-    );
+  const getGamesPlayed = async (
+    page: number = 1,
+    limit: number = 10,
+    status?: string | null,
+    year?: number | null
+  ) => {
+    const queryParams = new URLSearchParams({
+      list: "played",
+      page: page.toString(),
+      limit: limit.toString(),
+    });
+
+    if (status) {
+      queryParams.append("status", status);
+    }
+    if (year) {
+      queryParams.append("year", year.toString());
+    }
+
+    const res = await fetch(`/api/game-list?${queryParams.toString()}`);
     return {
       games: res.payload.gameList,
-      total: res.payload.counts.gamesPlayed,
+      total: res.payload.pagination.total,
     };
   };
 
@@ -61,6 +82,13 @@ export const useGameList = () => {
     return res.payload;
   };
 
+  const getGameById = async (gameId: string) => {
+    const res = await fetch<NitroResponse<UserGame>>(
+      `/api/game-list/${gameId}`
+    );
+    return res.payload;
+  };
+
   return {
     yearsPlayed,
     getGamesCount,
@@ -70,5 +98,6 @@ export const useGameList = () => {
     getGamesPlayedCount,
     addToList,
     removeFromList,
+    getGameById,
   };
 };

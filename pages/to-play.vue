@@ -5,6 +5,7 @@ const page = ref(1);
 const limit = 10;
 const el = ref<HTMLElement | null>(null);
 const total = ref(0);
+const sort = ref<"ASC" | "DESC">("ASC");
 
 const {
   data: gamesToPlay,
@@ -15,7 +16,8 @@ const {
   async () => {
     const { games, total: totalGames } = await listStore.getGamesToPlay(
       page.value,
-      limit
+      limit,
+      sort.value
     );
     total.value = totalGames;
     return games || [];
@@ -28,8 +30,15 @@ const {
     default() {
       return [];
     },
+    watch: [sort],
   }
 );
+
+const toggleSort = async () => {
+  gamesToPlay.value = [];
+  page.value = 1;
+  sort.value = sort.value === "DESC" ? "ASC" : "DESC";
+};
 
 const loadMore = async () => {
   if (status.value === "pending") return;
@@ -46,7 +55,15 @@ useInfiniteScroll(el, loadMore, {
 
 <template>
   <div>
-    <h3 class="text-2xl font-bold text-center text-primary">Games To Play</h3>
+    <div class="flex flex-col justify-between items-center">
+      <h3 class="text-2xl font-bold text-primary">Games To Play</h3>
+      <UButton
+        @click="toggleSort"
+        icon="i-heroicons-arrows-up-down"
+        :class="{ 'rotate-180': sort === 'ASC' }"
+        variant="ghost"
+      />
+    </div>
     <div class="mt-10 grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3">
       <template v-for="game in gamesToPlay">
         <GameCardCompact view="to-play" :game="game" />

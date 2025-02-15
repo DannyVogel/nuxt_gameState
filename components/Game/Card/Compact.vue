@@ -57,7 +57,7 @@ const imgSrc = computed(() => {
     </div>
   </div>
   <UModal v-model="isOpen">
-    <GameCardFull :view="view" :game="game">
+    <GameCardFull :view="view" :id="game.id">
       <template #buttons>
         <ButtonGroup :view="view" :game="game" @close="isOpen = false" />
       </template>

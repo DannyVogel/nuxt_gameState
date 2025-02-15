@@ -37,11 +37,11 @@ await useFetch(`/api/search/${route.params.query}`, {
         {{ resultsText }}
       </h1>
       <template v-for="game in results">
-        <GameCardFull :view="view" :game="game">
+        <SearchResult :view="view" :game="game">
           <template #buttons>
             <ButtonGroup :view="view" :game="game" />
           </template>
-        </GameCardFull>
+        </SearchResult>
       </template>
     </div>
   </div>

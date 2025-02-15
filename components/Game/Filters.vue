@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { UserGame } from "~/types/game.interfaces";
-// @ts-ignore
 import { AtomSpinner } from "epic-spinners";
 
 const emit = defineEmits(["applyFilters", "clearFilters"]);
@@ -8,7 +7,17 @@ const emit = defineEmits(["applyFilters", "clearFilters"]);
 const isOpen = ref(false);
 const isLoading = ref(false);
 const listStore = useGameList();
-const gamesPlayed = ref<UserGame[]>(listStore.gamesPlayed);
+
+// Initialize with empty arrays since data will be loaded by parent
+const gamesPlayed = ref<UserGame[]>([]);
+const yearsPlayed = ref<number[]>([]);
+
+// Define filter types with proper typing for USelect compatibility
+interface Filters {
+  status: string | undefined;
+  year: number | undefined;
+  comments: string | undefined;
+}
 
 const statusOptions = [
   {
@@ -24,60 +33,64 @@ const statusOptions = [
     value: "dropped",
   },
 ];
-const yearsPlayed = ref<number[]>(listStore.yearsPlayed);
+
 const commentsOptions = [
   {
     label: "Yes",
-    value: true,
+    value: "true",
   },
   {
     label: "No",
-    value: false,
+    value: "false",
   },
 ];
 
-const filters = reactive({
-  status: null,
-  year: null,
-  comments: null,
+const filters = reactive<Filters>({
+  status: undefined,
+  year: undefined,
+  comments: undefined,
 });
 
-const filterGames = () => {
+const filterGames = async () => {
   isLoading.value = true;
-  let filteredGames = listStore.gamesPlayed;
-  if (filters.status) {
-    filteredGames = filteredGames.filter(
-      (game) => game.status === filters.status
-    );
+  try {
+    // Convert undefined to null for the API and convert comments back to boolean
+    emit("applyFilters", {
+      status: filters.status || null,
+      year: filters.year || null,
+      comments: filters.comments ? filters.comments === "true" : null,
+    });
+    isOpen.value = false;
+  } catch (error) {
+    console.error("Error filtering games:", error);
+  } finally {
+    isLoading.value = false;
   }
-  if (filters.year) {
-    filteredGames = filteredGames.filter(
-      (game) => game.yearPlayed === filters.year
-    );
-  }
-  if (filters.comments) {
-    filteredGames = filteredGames.filter((game) => game.comments);
-  }
-  yearsPlayed.value = Array.from(
-    new Set(filteredGames.map((game) => game.yearPlayed))
-  );
-  gamesPlayed.value = filteredGames;
-  emit("applyFilters", yearsPlayed.value, gamesPlayed.value);
-  isOpen.value = false;
-  isLoading.value = false;
 };
 
 const clearFilters = () => {
   isLoading.value = true;
-  filters.status = null;
-  filters.year = null;
-  filters.comments = null;
-  yearsPlayed.value = listStore.yearsPlayed;
-  gamesPlayed.value = listStore.gamesPlayed;
+  filters.status = undefined;
+  filters.year = undefined;
+  filters.comments = undefined;
   emit("clearFilters");
   isOpen.value = false;
   isLoading.value = false;
 };
+
+// Accept props for years and games
+const props = defineProps<{
+  availableYears: number[];
+}>();
+
+// Watch props to update local refs
+watch(
+  () => props.availableYears,
+  (newYears) => {
+    yearsPlayed.value = newYears;
+  },
+  { immediate: true }
+);
 </script>
 
 <template>

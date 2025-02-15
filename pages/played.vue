@@ -6,6 +6,11 @@ const page = ref(1);
 const limit = 10;
 const el = ref<HTMLElement | null>(null);
 const total = ref(0);
+const currentFilters = ref({
+  status: null as string | null,
+  year: null as number | null,
+  comments: null as boolean | null,
+});
 
 const {
   data: gamesPlayed,
@@ -14,16 +19,19 @@ const {
 } = useAsyncData(
   "getGamesPlayed",
   async () => {
-    const { games, total: totalGames } = await listStore.getGamesPlayed(
+    const response = await listStore.getGamesPlayed(
       page.value,
-      limit
+      limit,
+      currentFilters.value.status,
+      currentFilters.value.year
     );
-    total.value = totalGames;
+
+    total.value = response.total;
 
     const yearsPlayed = Array.from(
-      new Set(games.map((game) => game.yearPlayed))
+      new Set(response.games.map((game) => game.yearPlayed))
     );
-    return { games, yearsPlayed };
+    return { games: response.games, yearsPlayed };
   },
   {
     transform: (data: {
@@ -52,32 +60,56 @@ const {
 
 const loadMore = async () => {
   if (status.value === "pending") return;
-  if (gamesPlayed.value?.games.length >= total.value) return;
+  if (
+    !gamesPlayed.value?.games ||
+    gamesPlayed.value.games.length >= total.value
+  )
+    return;
   page.value++;
   await fetchGames();
 };
 
 useInfiniteScroll(el, loadMore, {
   distance: 10,
-  canLoadMore: () => gamesPlayed.value?.games.length < total.value,
+  canLoadMore: () => {
+    return (
+      status.value !== "pending" &&
+      gamesPlayed.value?.games &&
+      gamesPlayed.value.games.length < total.value
+    );
+  },
 });
 
-// const applyFilters = (years: number[], games: UserGame[]) => {
-//   yearsPlayed.value = years;
-//   gamesPlayed.value = games;
-// };
+const applyFilters = async (filters: {
+  status: string | null;
+  year: number | null;
+  comments: boolean | null;
+}) => {
+  currentFilters.value = filters;
+  page.value = 1;
+  await fetchGames();
+};
 
-// const clearFilters = () => {
-//   yearsPlayed.value = listStore.yearsPlayed;
-//   gamesPlayed.value = listStore.gamesPlayed;
-// };
+const clearFilters = async () => {
+  currentFilters.value = {
+    status: null,
+    year: null,
+    comments: null,
+  };
+  page.value = 1;
+  await fetchGames();
+};
 </script>
 
 <template>
   <div>
     <div class="flex flex-col items-center">
       <h3 class="text-2xl font-bold text-center text-primary">Games Played</h3>
-      <GameFilters />
+      <GameFilters
+        :available-years="gamesPlayed?.yearsPlayed || []"
+        @apply-filters="applyFilters"
+        @clear-filters="clearFilters"
+      />
     </div>
     <div class="flex flex-col">
       <template v-for="year in gamesPlayed?.yearsPlayed">

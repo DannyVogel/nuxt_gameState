@@ -29,13 +29,29 @@ export const useGameList = () => {
     return res.payload.counts.gamesToPlay;
   };
 
-  const getGamesPlayed = async (page: number = 1, limit: number = 10) => {
-    const res = await fetch(
-      `/api/game-list?list=played&page=${page}&limit=${limit}`
-    );
+  const getGamesPlayed = async (
+    page: number = 1,
+    limit: number = 10,
+    status?: string | null,
+    year?: number | null
+  ) => {
+    const queryParams = new URLSearchParams({
+      list: "played",
+      page: page.toString(),
+      limit: limit.toString(),
+    });
+
+    if (status) {
+      queryParams.append("status", status);
+    }
+    if (year) {
+      queryParams.append("year", year.toString());
+    }
+
+    const res = await fetch(`/api/game-list?${queryParams.toString()}`);
     return {
       games: res.payload.gameList,
-      total: res.payload.counts.gamesPlayed,
+      total: res.payload.pagination.total,
     };
   };
 

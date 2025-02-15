@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { UserGame } from "@/types/game.interfaces";
+import type { UserGame, Game } from "@/types/game.interfaces";
 import type { View } from "@/types/common.interfaces";
 import NotFound from "@/public/img/notFound.png";
 const props = defineProps({
   game: {
-    type: Object as () => UserGame,
+    type: Object as () => UserGame | Game,
     required: true,
   },
   view: {
@@ -48,7 +48,7 @@ const imgSrc = computed(() => {
       <p v-if="view === 'to-play'" class="text-sm">
         Release date: {{ game.released }}
       </p>
-      <div v-if="view === 'played'" class="flex gap-2">
+      <div v-if="view === 'played' && 'monthPlayed' in game" class="flex gap-2">
         <p class="text-xs">
           Played: {{ game.monthPlayed + " - " + game.yearPlayed }}
         </p>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { UserGame } from "~/types/game.interfaces";
+import { AtomSpinner } from "epic-spinners";
 
 const listStore = useGameList();
 const page = ref(1);
@@ -56,6 +57,7 @@ const {
     default() {
       return { games: [], yearsPlayed: [] };
     },
+    lazy: true,
   }
 );
 
@@ -111,7 +113,11 @@ const clearFilters = async () => {
         @clear-filters="clearFilters"
       />
     </div>
-    <div class="flex flex-col">
+
+    <div
+      v-if="status === 'success' || gamesPlayed?.games.length > 0"
+      class="flex flex-col"
+    >
       <template v-for="year in gamesPlayed?.yearsPlayed">
         <div class="mt-7 flex flex-col gap-2">
           <h4
@@ -132,15 +138,22 @@ const clearFilters = async () => {
       </template>
     </div>
 
+    <div
+      v-if="status === 'pending'"
+      class="flex justify-center items-center mt-10"
+    >
+      <atom-spinner
+        :animation-duration="1000"
+        :size="50"
+        :color="'rgb(59 130 246 / 0.5)'"
+        class="mx-auto"
+      />
+    </div>
+
     <div ref="el" class="py-4">
-      <div v-if="status === 'pending'" class="text-center">
-        <span class="animate-pulse">Loading...</span>
-      </div>
-      <div
-        v-else-if="gamesPlayed?.games.length >= total"
-        class="text-center text-gray-500"
-      >
-        <span>No more games</span>
+      <div v-if="status === 'success'" class="text-center text-gray-500">
+        <span v-if="gamesPlayed?.games.length >= total">No more games</span>
+        <span v-else>No games found</span>
       </div>
     </div>
   </div>

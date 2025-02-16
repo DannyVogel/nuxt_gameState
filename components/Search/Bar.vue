@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// @ts-ignore
 import { AtomSpinner } from "epic-spinners";
 
 const router = useRouter();

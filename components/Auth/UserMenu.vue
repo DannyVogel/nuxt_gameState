@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 const emit = defineEmits(["close"]);
 
-const handleLogout = async () => {
+const handleLogout = () => {
   emit("close");
   useUserSession().clear();
+  navigateTo("/");
 };
 
 const { user, loggedIn } = useUserSession();

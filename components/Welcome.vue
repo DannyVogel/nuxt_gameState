@@ -10,6 +10,7 @@ const { data: gamesCount } = await useAsyncData(
       gamesToPlay: 0,
       gamesPlayed: 0,
     }),
+    lazy: true,
   }
 );
 </script>

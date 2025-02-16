@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { user } = useUserSession();
+const { user, loggedIn } = useUserSession();
 const listStore = useGameList();
 
 const { data: gamesCount } = await useAsyncData(
@@ -11,19 +11,26 @@ const { data: gamesCount } = await useAsyncData(
       gamesPlayed: 0,
     }),
     lazy: true,
+    watch: [loggedIn],
   }
 );
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-12 mt-14">
+  <div class="flex flex-col items-center justify-center gap-12 mt-10">
     <div class="flex flex-col items-center gap-4">
-      <h3 class="text-4xl text-primary">Welcome back</h3>
+      <h3 class="text-4xl text-primary">
+        Welcome {{ loggedIn ? "back" : "" }}
+      </h3>
       <h1
+        v-if="loggedIn"
         class="text-6xl bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent"
       >
         {{ user?.displayName }}
       </h1>
+      <p v-else class="text-center text-primary max-w-xs px-4">
+        Search for your favorite games and add them to your lists
+      </p>
     </div>
     <div class="flex justify-between gap-12 text-primary">
       <NuxtLink to="/to-play" class="flex flex-col items-center gap-2">
@@ -33,7 +40,7 @@ const { data: gamesCount } = await useAsyncData(
           alt="shopping bag with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ gamesCount.gamesToPlay }}</p>
+          <p v-if="loggedIn">{{ gamesCount.gamesToPlay }}</p>
           <p>Games</p>
           <p>to play</p>
         </div>
@@ -45,11 +52,17 @@ const { data: gamesCount } = await useAsyncData(
           alt="papers with controller icon"
         />
         <div class="flex flex-col items-center">
-          <p>{{ gamesCount.gamesPlayed }}</p>
+          <p v-if="loggedIn">{{ gamesCount.gamesPlayed }}</p>
           <p>Games</p>
           <p>played</p>
         </div>
       </NuxtLink>
     </div>
+    <p v-if="!loggedIn" class="text-center text-primary max-w-xs px-4">
+      <NuxtLink to="/api/auth/google" external class="underline text-white"
+        >Login</NuxtLink
+      >
+      to start tracking your games!
+    </p>
   </div>
 </template>

@@ -13,6 +13,7 @@
   "dependencies": {
     "@firebase/app-types": "^0.9.3",
     "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/ph": "^1.2.2",
     "@nuxt/fonts": "^0.7.2",
     "epic-spinners": "^2.0.0",
     "firebase-admin": "^12.7.0",

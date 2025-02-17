@@ -37,6 +37,13 @@ const {
   }
 );
 
+const updateGames = async () => {
+  const response = await listStore.updateGames(
+    gamesToPlay.value.map((game) => game.id)
+  );
+  gamesToPlay.value = response.games;
+};
+
 const toggleSort = async () => {
   gamesToPlay.value = [];
   page.value = 1;

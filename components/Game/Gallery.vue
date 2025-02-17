@@ -30,6 +30,7 @@ const loopImages = (nextClickedonLast: boolean) => {
 <template>
   <div class="relative aspect-video bg-gray-900/50">
     <UCarousel
+      v-if="game.screenshots.length > 0"
       ref="carouselRef"
       :items="game.screenshots"
       :prev-button="{

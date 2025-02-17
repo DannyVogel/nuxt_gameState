@@ -17,55 +17,81 @@ defineProps({
 
 const isUserGame = (game: Game | UserGame): game is UserGame =>
   (game as UserGame).status !== undefined;
+
+const isReleased = (date: string) => {
+  return new Date(date) <= new Date();
+};
 </script>
 
 <template>
-  <UCard class="w-full overflow-hidden">
+  <UCard
+    class="w-full overflow-hidden backdrop-blur-sm bg-black/30 hover:bg-black/40 transition-all duration-300"
+  >
     <template #header>
       <GameGallery :game="game" />
     </template>
-    <div class="flex flex-col gap-2">
-      <h1
-        class="bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent text-lg font-bold text-center"
-      >
+    <div class="flex flex-col gap-4 px-4">
+      <h1 class="text-2xl font-bold text-white drop-shadow-lg">
         {{ game.name }}
       </h1>
       <div class="flex gap-2 flex-wrap">
         <template v-for="platform in game.platforms">
           <div
-            class="rounded-lg border border-white max-w-fit px-2 py-1 text-nowrap"
+            class="rounded-full bg-white/10 backdrop-blur-sm border border-white/20 max-w-fit px-3 py-1 text-nowrap hover:bg-white/20 transition-colors duration-200"
           >
-            <p class="text-xs">{{ platformShortName(platform) }}</p>
+            <p class="text-xs font-medium">{{ platformShortName(platform) }}</p>
           </div>
         </template>
         <template v-for="genre in game.genres">
           <div
-            class="rounded-lg border border-white max-w-fit px-2 py-1 text-nowrap"
+            class="rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 max-w-fit px-3 py-1 text-nowrap hover:bg-primary/20 transition-colors duration-200"
           >
-            <p class="text-xs">{{ genre }}</p>
+            <p class="text-xs font-medium">{{ genre }}</p>
           </div>
         </template>
       </div>
-      <p class="text-sm">Released: {{ game.released }}</p>
-      <div
-        v-if="view === 'played' && isUserGame(game)"
-        class="flex flex-col gap-2"
-      >
-        <p class="text-sm">
-          Played: {{ game.monthPlayed + " - " + game.yearPlayed }}
-        </p>
-        <p class="text-sm">Comments: {{ game.comments }}</p>
-      </div>
-      <p class="text-sm">
+
+      <div class="space-y-2">
+        <div class="flex items-center gap-2 text-sm text-gray-300">
+          <UIcon name="i-ph-calendar-blank" />
+          <span
+            >{{ isReleased(game.released) ? "Released" : "Releases" }}:
+            {{ game.released }}</span
+          >
+        </div>
+
+        <div v-if="view === 'played' && isUserGame(game)" class="space-y-2">
+          <div class="flex items-center gap-2 text-sm text-gray-300">
+            <UIcon name="i-ph-game-controller" />
+            <span
+              >Played: {{ game.monthPlayed + " - " + game.yearPlayed }}</span
+            >
+          </div>
+
+          <div
+            v-if="game.comments"
+            class="flex items-start gap-2 text-sm text-gray-300"
+          >
+            <UIcon name="i-ph-chat-circle" class="mt-1 flex-shrink-0" />
+            <p>{{ game.comments }}</p>
+          </div>
+        </div>
+
         <a
           :href="`https://www.igdb.com/games/${game.slug}`"
           target="_blank"
-          class="underline hover:text-primary"
-          >Full details</a
+          class="inline-flex items-center gap-2 text-sm text-primary hover:text-primary-500 transition-colors duration-200"
         >
-      </p>
+          <span>View on IGDB</span>
+          <UIcon name="i-ph-arrow-up-right" />
+        </a>
+      </div>
     </div>
-    <template #footer> <slot name="buttons" /> </template>
+    <template #footer>
+      <div class="px-4">
+        <slot name="buttons" />
+      </div>
+    </template>
   </UCard>
 </template>
 

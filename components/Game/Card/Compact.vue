@@ -63,11 +63,15 @@ const isReleased = (date: string) => {
         <UIcon name="i-ph-calendar-blank" class="flex-shrink-0" />
         <span>{{ game.released }}</span>
       </div>
-      <div v-if="view === 'played' && 'monthPlayed' in game" class="flex gap-2">
-        <p class="text-xs">
-          Played: {{ game.monthPlayed + " - " + game.yearPlayed }}
-        </p>
-        <p class="text-xs">Status: {{ game.status }}</p>
+      <div
+        v-if="view === 'played' && 'monthPlayed' in game"
+        class="flex items-center gap-2 text-xs"
+      >
+        <div class="flex items-center gap-1">
+          <UIcon name="i-ph-calendar-blank" class="flex-shrink-0" />
+          <p>{{ game.monthPlayed + " - " + game.yearPlayed }}</p>
+        </div>
+        <p>Status: {{ game.status }}</p>
       </div>
     </div>
   </div>

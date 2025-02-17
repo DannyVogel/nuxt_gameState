@@ -1,4 +1,4 @@
-export class ParsedGame {
+export class GameDTO {
   slug: string | null;
   name: string | null;
   id: number;
@@ -29,7 +29,7 @@ export class ParsedGame {
       : [];
   }
 }
-export class ClientGameResponse extends ParsedGame {
+export class UserGameDTO extends GameDTO {
   monthPlayed: string | null;
   yearPlayed: string | null;
   status: string | null;

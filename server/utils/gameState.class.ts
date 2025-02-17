@@ -1,4 +1,4 @@
-export default class ClientGameResponse {
+export class ParsedGame {
   slug: string | null;
   name: string | null;
   id: number;
@@ -7,10 +7,6 @@ export default class ClientGameResponse {
   image: string | null;
   screenshots: string[];
   platforms: string[];
-  monthPlayed: string | null;
-  yearPlayed: string | null;
-  status: string | null;
-  comments: string | null;
 
   constructor(result: Game) {
     this.slug = result.slug ? result.slug : null;
@@ -31,6 +27,16 @@ export default class ClientGameResponse {
     this.platforms = result.platforms
       ? result.platforms.map((platform) => platform.name)
       : [];
+  }
+}
+export class ClientGameResponse extends ParsedGame {
+  monthPlayed: string | null;
+  yearPlayed: string | null;
+  status: string | null;
+  comments: string | null;
+
+  constructor(result: Game) {
+    super(result);
     this.monthPlayed = null;
     this.yearPlayed = null;
     this.status = null;

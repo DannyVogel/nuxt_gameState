@@ -95,6 +95,14 @@ export const useGameList = () => {
     };
   };
 
+  const restoreData = async () => {
+    const res = await fetch("/api/game-list/fix", {
+      method: "POST",
+      body: [], // Import and place backup JSON data here when available
+    });
+    return res.payload;
+  };
+
   return {
     getGamesCount,
     getGamesToPlay,
@@ -103,5 +111,6 @@ export const useGameList = () => {
     addToList,
     removeFromList,
     updateGames,
+    restoreData,
   };
 };

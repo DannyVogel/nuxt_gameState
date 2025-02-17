@@ -1,4 +1,4 @@
-import ClientGameResponse from "~/server/utils/gameState.class";
+import { UserGameDTO } from "~/server/utils/gameState.class";
 import { DbController } from "~/server/controllers/db.controller";
 import { getToken } from "~/server/services/tokenManagers/igdb";
 
@@ -46,7 +46,7 @@ export default eventHandler(async (event) => {
     if (response.length === 0) {
       throw createError({ statusCode: 404, message: "No game found" });
     } else if (response.length > 0) {
-      const games = response.map((result) => new ClientGameResponse(result));
+      const games = response.map((result) => new UserGameDTO(result));
       return {
         statusCode: 200,
         statusMessage: "Ok",

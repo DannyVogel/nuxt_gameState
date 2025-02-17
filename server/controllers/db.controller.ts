@@ -38,4 +38,15 @@ export class DbController {
       console.log("failed to add log", error);
     }
   }
+
+  static async updateList(UID: string, game: Game) {
+    const gameRef = db.ref(`gameState/users/${UID}/gameList/${game.id}`);
+    const snapshot = await gameRef.once("value");
+    const existingData = snapshot.val() || {};
+    const mergedGame = { ...existingData, ...game };
+
+    const updates: { [key: string]: any } = {};
+    updates[`gameState/users/${UID}/gameList/${game.id}`] = mergedGame;
+    await db.ref().update(updates);
+  }
 }

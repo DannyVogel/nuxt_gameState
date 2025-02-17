@@ -2,6 +2,7 @@ import { getToken } from "~/server/services/tokenManagers/igdb";
 import { GameDTO } from "~/server/utils/gameState.class";
 import { DbController } from "~/server/controllers/db.controller";
 import type { Game } from "~/types/game.interfaces";
+import { GameListController } from "~/server/controllers/gameList.controller";
 
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event).catch((error) => {
@@ -59,10 +60,33 @@ export default defineEventHandler(async (event) => {
       games.forEach((game) => {
         DbController.updateList(session.user.sub, game as Game);
       });
+      const fullList = (await DbController.getGameList(session.user.sub)) || [];
+
+      let filteredList = GameListController.filterByList(
+        fullList,
+        "toPlay",
+        "DESC"
+      );
+
+      const { items: paginatedList, pagination } =
+        GameListController.getPaginatedResults(filteredList, 1, 10);
+
+      const payload = {
+        gameList: paginatedList,
+        pagination,
+        counts: {
+          gamesToPlay: fullList.filter((game) => game.status === "toPlay")
+            .length,
+          gamesPlayed: fullList.filter((game) =>
+            ["beat", "dropped", "playing"].includes(game.status)
+          ).length,
+        },
+      };
+
       return {
         statusCode: 200,
         statusMessage: "Ok",
-        payload: games,
+        payload,
         message: "Games updated",
       };
     }

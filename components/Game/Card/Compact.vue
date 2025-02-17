@@ -31,6 +31,10 @@ const handleClose = () => {
   isOpen.value = false;
   emit("close");
 };
+
+const isReleased = (date: string) => {
+  return new Date(date) <= new Date();
+};
 </script>
 
 <template>
@@ -38,23 +42,27 @@ const handleClose = () => {
     class="grid grid-cols-3 items-center gap-2 w-full bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden h-[88px] sm:min-h-[88px] cursor-pointer"
     @click="isOpen = true"
   >
-    <NuxtImg
-      :src="imgSrc"
-      preload
-      loading="lazy"
-      placeholder
-      alt="game image"
-      class="object-cover w-full h-full"
-    />
+    <div class="relative h-full aspect-video bg-gray-900/50 flex-shrink-0">
+      <NuxtImg
+        :src="imgSrc"
+        preload
+        loading="lazy"
+        placeholder
+        alt="game image"
+        class="h-full w-full object-cover"
+      />
+    </div>
+
     <div class="col-span-2 flex flex-col gap-2">
       <h1
         class="bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent truncate"
       >
         {{ game.name }}
       </h1>
-      <p v-if="view === 'to-play'" class="text-sm">
-        Release date: {{ game.released }}
-      </p>
+      <div v-if="view === 'to-play'" class="flex items-center gap-1 text-sm">
+        <UIcon name="i-ph-calendar-blank" class="flex-shrink-0" />
+        <span>{{ game.released }}</span>
+      </div>
       <div v-if="view === 'played' && 'monthPlayed' in game" class="flex gap-2">
         <p class="text-xs">
           Played: {{ game.monthPlayed + " - " + game.yearPlayed }}
@@ -63,6 +71,7 @@ const handleClose = () => {
       </div>
     </div>
   </div>
+
   <UModal v-model="isOpen">
     <GameCardFull :view="view" :id="game.id">
       <template #buttons>
@@ -71,3 +80,9 @@ const handleClose = () => {
     </GameCardFull>
   </UModal>
 </template>
+
+<style scoped>
+.group {
+  isolation: isolate;
+}
+</style>

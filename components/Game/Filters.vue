@@ -6,12 +6,7 @@ const emit = defineEmits(["applyFilters", "clearFilters"]);
 
 const isOpen = ref(false);
 const isLoading = ref(false);
-const listStore = useGameList();
 
-// Initialize with empty arrays since data will be loaded by parent
-const gamesPlayed = ref<UserGame[]>([]);
-
-// Define filter types with proper typing for USelect compatibility
 interface Filters {
   status: string | undefined;
   year: number | undefined;
@@ -50,7 +45,6 @@ const filters = reactive<Filters>({
   comments: undefined,
 });
 
-// Add this computed property after the filters reactive object
 const hasActiveFilters = computed(() => {
   return (
     filters.status !== undefined ||
@@ -62,7 +56,6 @@ const hasActiveFilters = computed(() => {
 const filterGames = async () => {
   isLoading.value = true;
   try {
-    // Convert undefined to null for the API and convert comments back to boolean
     emit("applyFilters", {
       status: filters.status || null,
       year: filters.year || null,
@@ -105,7 +98,7 @@ const clearFilters = () => {
   </div>
 
   <USlideover v-model="isOpen">
-    <div class="p-4 flex-1">
+    <div class="p-6 flex-1 backdrop-blur-sm bg-black/30">
       <UButton
         color="gray"
         variant="ghost"
@@ -116,55 +109,75 @@ const clearFilters = () => {
         padded
         @click="isOpen = false"
       />
-      <h3 class="mb-10 text-2xl font-bold text-center text-primary">Filters</h3>
-      <div class="mb-10 flex flex-col gap-4">
-        <div class="flex justify-between items-center gap-4">
-          <p>Status:</p>
+      <h3 class="text-xl font-bold text-white mb-6 text-center">Filters</h3>
+
+      <div class="space-y-4">
+        <div class="flex flex-col gap-2">
+          <label class="text-sm text-gray-300 flex items-center gap-2">
+            <UIcon name="i-ph-flag" class="flex-shrink-0" />
+            <span>Status</span>
+          </label>
           <USelect
             v-model="filters.status"
             placeholder="Select Status"
             :options="statusOptions"
-            class="flex-1"
+            class="focus:border-primary/50"
           />
         </div>
-        <div class="flex justify-between items-center gap-8">
-          <p>Year:</p>
+
+        <div class="flex flex-col gap-2">
+          <label class="text-sm text-gray-300 flex items-center gap-2">
+            <UIcon name="i-ph-calendar" class="flex-shrink-0" />
+            <span>Year</span>
+          </label>
           <UInput
             v-model="filters.year"
             type="number"
             placeholder="Enter year"
-            class="flex-1"
             :min="1900"
             :max="new Date().getFullYear()"
+            class="focus:border-primary/50"
           />
         </div>
-        <div class="flex justify-between items-center gap-8">
-          <p>Comments:</p>
+
+        <div class="flex flex-col gap-2">
+          <label class="text-sm text-gray-300 flex items-center gap-2">
+            <UIcon name="i-ph-chat-circle" class="flex-shrink-0" />
+            <span>Comments</span>
+          </label>
           <USelect
             v-model="filters.comments"
             placeholder="Select Comments"
             :options="commentsOptions"
-            class="flex-1"
+            class="focus:border-primary/50"
           />
         </div>
       </div>
-      <div class="flex justify-around gap-4">
+
+      <div class="flex gap-2 mt-6">
         <UButton
-          label="Apply"
-          class="flex-1 justify-center"
+          color="primary"
+          class="flex-1 justify-center bg-primary/80 hover:bg-primary transition-colors duration-200"
           @click="filterGames"
-        />
+        >
+          <UIcon name="i-ph-funnel" class="mr-1" />
+          Apply Filters
+        </UButton>
         <UButton
-          label="Clear"
+          color="gray"
           variant="outline"
           class="flex-1 justify-center"
           @click="clearFilters"
-        />
+        >
+          <UIcon name="i-ph-x" class="mr-1" />
+          Clear
+        </UButton>
       </div>
     </div>
+
     <div
       v-if="isLoading"
-      class="absolute h-full w-full bg-black bg-opacity-50 flex items-center"
+      class="absolute inset-0 bg-black/50 flex items-center backdrop-blur-sm"
     >
       <atom-spinner
         :animation-duration="1000"

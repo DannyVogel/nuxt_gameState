@@ -22,3 +22,17 @@ export type GameUserData = {
   monthPlayed: number;
   yearPlayed: number;
 };
+
+export interface GameListPayload {
+  gameList: UserGame[];
+  pagination: {
+    total: number;
+    page: number;
+    pageSize: number;
+    pageCount: number;
+  };
+  counts: {
+    gamesToPlay: number;
+    gamesPlayed: number;
+  };
+}

@@ -71,7 +71,10 @@ const isReleased = (date: string) => {
           <UIcon name="i-ph-calendar-blank" class="flex-shrink-0" />
           <p>{{ game.monthPlayed + " - " + game.yearPlayed }}</p>
         </div>
-        <p>Status: {{ game.status }}</p>
+        <div class="flex items-center gap-1">
+          <UIcon name="i-ph-game-controller" class="flex-shrink-0" />
+          <p>{{ game.status }}</p>
+        </div>
       </div>
     </div>
   </div>

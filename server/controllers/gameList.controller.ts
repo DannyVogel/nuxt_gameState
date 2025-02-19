@@ -3,15 +3,16 @@ import { UserGame } from "~/types/game.interfaces";
 export class GameListController {
   static filterByList(
     games: UserGame[],
-    list: "toPlay" | "played",
+    list: "toPlay" | "played" | "all" = "all",
     sort: "ASC" | "DESC" = "DESC"
   ): UserGame[] {
     if (list === "toPlay") {
       return this.filterAndSortToPlay(games, sort);
     } else if (list === "played") {
       return this.filterAndSortPlayed(games);
+    } else {
+      return games;
     }
-    return games;
   }
 
   private static filterAndSortToPlay(

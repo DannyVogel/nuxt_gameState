@@ -2,7 +2,7 @@
 import type { UserGame } from "~/types/game.interfaces";
 import { AtomSpinner } from "epic-spinners";
 
-const listStore = useGameList();
+const { getGamesPlayed } = useGameList();
 const page = ref(1);
 const limit = 10;
 const el = ref<HTMLElement | null>(null);
@@ -20,7 +20,7 @@ const {
 } = useAsyncData(
   "getGamesPlayed",
   async () => {
-    const response = await listStore.getGamesPlayed(
+    const response = await getGamesPlayed(
       page.value,
       limit,
       currentFilters.value.status,

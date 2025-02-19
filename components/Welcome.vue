@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 const { user, loggedIn } = useUserSession();
-const listStore = useGameList();
+const { getGamesCount } = useGameList();
 
 const { data: gamesCount } = await useAsyncData(
   "getGamesCount",
-  () => listStore.getGamesCount(),
+  () => getGamesCount(),
   {
     default: () => ({
       gamesToPlay: 0,

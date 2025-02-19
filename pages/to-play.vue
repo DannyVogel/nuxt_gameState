@@ -2,7 +2,7 @@
 import type { Game } from "~/types/game.interfaces";
 import { AtomSpinner } from "epic-spinners";
 
-const listStore = useGameList();
+const { getGamesToPlay, updateGames } = useGameList();
 const page = ref(1);
 const limit = 10;
 const el = ref<HTMLElement | null>(null);
@@ -16,7 +16,7 @@ const {
 } = useAsyncData(
   "getGamesToPlay",
   async () => {
-    const { games, total: totalGames } = await listStore.getGamesToPlay(
+    const { games, total: totalGames } = await getGamesToPlay(
       page.value,
       limit,
       sort.value
@@ -37,10 +37,8 @@ const {
   }
 );
 
-const updateGames = async () => {
-  const response = await listStore.updateGames(
-    gamesToPlay.value.map((game) => game.id)
-  );
+const runGameUpdate = async () => {
+  const response = await updateGames(gamesToPlay.value.map((game) => game.id));
   gamesToPlay.value = response.games;
 };
 

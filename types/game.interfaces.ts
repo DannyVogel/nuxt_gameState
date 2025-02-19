@@ -4,8 +4,8 @@ export interface Game {
   id: number;
   genres: string[];
   released: string;
-  image: string;
-  screenshots: string[];
+  imageId: string;
+  screenshotIds: string[];
   platforms: string[];
 }
 

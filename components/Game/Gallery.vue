@@ -11,6 +11,13 @@ defineProps({
 
 const carouselRef = ref<CarouselRef | null>(null);
 
+// Add a loading state
+const imageLoaded = ref(false);
+
+const handleImageLoad = () => {
+  imageLoaded.value = true;
+};
+
 watchEffect(() => {
   if (carouselRef.value && !carouselRef.value.next) {
     carouselRef.value.page = 1;
@@ -30,9 +37,9 @@ const loopImages = (nextClickedonLast: boolean) => {
 <template>
   <div class="relative aspect-video bg-gray-900/50">
     <UCarousel
-      v-if="game.screenshots.length > 0"
+      v-if="game.screenshotIds.length > 0"
       ref="carouselRef"
-      :items="game.screenshots"
+      :items="game.screenshotIds"
       :prev-button="{
         color: 'gray',
         icon: 'i-heroicons-chevron-left-20-solid',
@@ -51,14 +58,14 @@ const loopImages = (nextClickedonLast: boolean) => {
       }"
     >
       <template #default="{ item }">
-        <div class="w-full h-full">
+        <div class="relative w-full h-full">
           <NuxtImg
-            :src="item"
+            :src="getImageScreenshot(item)"
             draggable="false"
             preload
-            placeholder
+            :placeholder="[16, 9]"
             class="w-full h-full object-cover"
-            loading="lazy"
+            @load="handleImageLoad"
           />
         </div>
       </template>

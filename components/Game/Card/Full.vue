@@ -42,89 +42,85 @@ const platformList = computed(() => {
 </script>
 
 <template>
-  <Transition name="fade">
-    <UCard
+  <UCard
+    class="w-full overflow-hidden backdrop-blur-sm bg-black/30 hover:bg-black/40 transition-all duration-300"
+  >
+    <template #header>
+      <GameGallery v-if="status === 'success' && game" :game="game" />
+    </template>
+    <div
       v-if="status === 'pending'"
-      class="w-full overflow-hidden backdrop-blur-sm bg-black/30"
+      class="min-h-[300px] flex items-center justify-center"
     >
       <atom-spinner
         :animation-duration="1000"
-        :size="50"
+        :size="100"
         :color="'rgb(59 130 246 / 0.5)'"
         class="mx-auto"
       />
-    </UCard>
-    <UCard
-      v-else-if="status === 'success' && game"
-      class="w-full overflow-hidden backdrop-blur-sm bg-black/30 hover:bg-black/40 transition-all duration-300"
-    >
-      <template #header>
-        <GameGallery :game="game" />
-      </template>
-
-      <div class="flex flex-col gap-2 px-4">
-        <h1 class="text-2xl font-bold text-white drop-shadow-lg">
-          {{ game.name }}
-        </h1>
-        <div class="flex gap-2 flex-wrap">
-          <template v-for="genre in game.genres">
-            <div
-              class="rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 max-w-fit px-3 py-1 text-nowrap hover:bg-primary/20 transition-colors duration-200"
-            >
-              <p class="text-sm font-medium">{{ genre }}</p>
-            </div>
-          </template>
-        </div>
-
-        <div class="space-y-2">
-          <div class="flex items-center gap-2 text-sm">
-            <UIcon name="i-ph-game-controller" class="flex-shrink-0" />
-            <p class="text-sm font-medium">{{ platformList }}</p>
-          </div>
-          <div class="flex items-center gap-2 text-sm text-gray-300">
-            <UIcon name="i-ph-calendar-blank" />
-            <span>
-              {{
-                new Date(game.released).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })
-              }}
-            </span>
-          </div>
-          <div v-if="view === 'played' && isUserGame(game)" class="space-y-2">
-            <div class="flex items-center gap-2 text-sm text-gray-300">
-              <UIcon name="i-ph-trophy" class="flex-shrink-0" />
-              <span>{{ game.monthPlayed + " - " + game.yearPlayed }}</span>
-            </div>
-            <div
-              v-if="game.comments"
-              class="flex items-start gap-2 text-sm text-gray-300"
-            >
-              <UIcon name="i-ph-chat-circle" class="mt-1 flex-shrink-0" />
-              <p>{{ game.comments }}</p>
-            </div>
-          </div>
-
-          <a
-            :href="`https://www.igdb.com/games/${game.slug}`"
-            target="_blank"
-            class="inline-flex items-center gap-2 text-sm text-primary hover:text-primary-500 transition-colors duration-200"
+    </div>
+    <div v-if="status === 'success' && game" class="flex flex-col gap-2 px-4">
+      <h1 class="text-2xl font-bold text-white drop-shadow-lg">
+        {{ game.name }}
+      </h1>
+      <div class="flex gap-2 flex-wrap">
+        <template v-for="genre in game.genres">
+          <div
+            class="rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 max-w-fit px-3 py-1 text-nowrap hover:bg-primary/20 transition-colors duration-200"
           >
-            <span>View on IGDB</span>
-            <UIcon name="i-ph-arrow-up-right" />
-          </a>
-        </div>
+            <p class="text-sm font-medium">{{ genre }}</p>
+          </div>
+        </template>
       </div>
 
-      <template #footer>
-        <div class="px-4">
-          <slot name="buttons" />
+      <div class="space-y-2">
+        <div class="flex items-center gap-2 text-sm">
+          <UIcon name="i-ph-game-controller" class="flex-shrink-0" />
+          <p class="text-sm font-medium">{{ platformList }}</p>
         </div>
-      </template>
-    </UCard>
-  </Transition>
+        <div class="flex items-center gap-2 text-sm text-gray-300">
+          <UIcon name="i-ph-calendar-blank" />
+          <span>
+            {{
+              new Date(game.released).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            }}
+          </span>
+        </div>
+        <div v-if="view === 'played' && isUserGame(game)" class="space-y-2">
+          <div class="flex items-center gap-2 text-sm text-gray-300">
+            <UIcon name="i-ph-trophy" class="flex-shrink-0" />
+            <span>{{ game.monthPlayed + " - " + game.yearPlayed }}</span>
+          </div>
+          <div
+            v-if="game.comments"
+            class="flex items-start gap-2 text-sm text-gray-300"
+          >
+            <UIcon name="i-ph-chat-circle" class="mt-1 flex-shrink-0" />
+            <p>{{ game.comments }}</p>
+          </div>
+        </div>
+
+        <a
+          :href="`https://www.igdb.com/games/${game.slug}`"
+          target="_blank"
+          class="inline-flex items-center gap-2 text-sm text-primary hover:text-primary-500 transition-colors duration-200"
+        >
+          <span>View on IGDB</span>
+          <UIcon name="i-ph-arrow-up-right" />
+        </a>
+      </div>
+    </div>
+
+    <template #footer>
+      <div v-if="status === 'success' && game" class="px-4">
+        <slot name="buttons" />
+      </div>
+    </template>
+  </UCard>
 </template>
 
 <style scoped>

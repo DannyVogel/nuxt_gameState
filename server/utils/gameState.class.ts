@@ -4,8 +4,8 @@ export class GameDTO {
   id: number;
   genres: string[];
   released: string;
-  image: string | null;
-  screenshots: string[];
+  imageId: string | null;
+  screenshotIds: string[];
   platforms: string[];
 
   constructor(result: Game) {
@@ -16,14 +16,14 @@ export class GameDTO {
     this.released = result.first_release_date
       ? new Date(result.first_release_date * 1000).toISOString().split("T")[0]
       : "TBA";
-    this.image =
+    this.imageId =
       result.screenshots && result.screenshots.length > 0
-        ? `https://images.igdb.com/igdb/image/upload/t_screenshot_big/${result.screenshots[0].image_id}.jpg`
+        ? result.screenshots[0].image_id
         : null;
-
-    const artworkUrls = getImageUrls(result.artworks, "artwork");
-    const screenshotUrls = getImageUrls(result.screenshots, "screenshot");
-    this.screenshots = [...artworkUrls, ...screenshotUrls];
+    this.screenshotIds = [
+      ...getImageIds(result.screenshots),
+      ...getImageIds(result.artworks),
+    ];
     this.platforms = result.platforms
       ? result.platforms.map((platform) => platform.name)
       : [];
@@ -51,3 +51,6 @@ const getImageUrls = (images: any[], type: string) =>
           `https://images.igdb.com/igdb/image/upload/t_screenshot_big/${img.image_id}.jpg`
       )
     : [];
+
+const getImageIds = (images: any[]) =>
+  images ? images.map((img) => img.image_id) : [];

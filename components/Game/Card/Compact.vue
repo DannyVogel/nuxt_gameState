@@ -21,9 +21,9 @@ const isOpen = ref(false);
 
 const view = computed(() => route.name as View);
 const imgSrc = computed(() => {
-  if (props.game.image) return props.game.image;
-  if (props.game.screenshots && props.game.screenshots.length > 0)
-    return props.game.screenshots[0];
+  if (props.game.imageId) return getImageThumbnail(props.game.imageId);
+  if (props.game.screenshotIds && props.game.screenshotIds.length > 0)
+    return getImageThumbnail(props.game.screenshotIds[0]);
   return NotFound;
 });
 
@@ -50,6 +50,7 @@ const isReleased = (date: string) => {
         placeholder
         alt="game image"
         class="h-full w-full object-cover"
+        @error="() => (imgSrc = NotFound)"
       />
     </div>
 

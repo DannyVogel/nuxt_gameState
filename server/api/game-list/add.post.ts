@@ -15,11 +15,10 @@ export default defineEventHandler(
         });
       });
       await DbController.addToList(session.user.sub, game);
-      const updatedList = await DbController.getGameList(session.user.sub);
       return {
         statusCode: 200,
         statusMessage: "Ok",
-        payload: updatedList || [],
+        payload: null,
         message: "Game added to list",
       };
     } catch (error: any) {

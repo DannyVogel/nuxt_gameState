@@ -16,11 +16,10 @@ export default defineEventHandler(
       });
 
       await DbController.removeFromList(session.user.sub, game.id);
-      const updatedList = await DbController.getGameList(session.user.sub);
       return {
         statusCode: 200,
         statusMessage: "Ok",
-        payload: updatedList,
+        payload: null,
         message: "Game removed from list",
       };
     } catch (error: any) {

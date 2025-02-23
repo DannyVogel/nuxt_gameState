@@ -20,9 +20,9 @@ const toast = useToast();
 const { removeFromList, addToList } = useGameList();
 
 const handleRemove = async () => {
-  emit("close");
-  await removeFromList(props.game.id);
+  const res = await removeFromList(props.game.id);
   toast.add({ title: "Game removed", color: "rose" });
+  emit("close");
 };
 
 const handleToPlay = async () => {
@@ -51,10 +51,10 @@ const handlePlayed = async (gameUserData: GameUserData) => {
 };
 
 const handleEdit = async (gameUserData: GameUserData) => {
-  emit("close");
   const userGame = { ...props.game, ...gameUserData };
   await addToList(userGame);
   toast.add({ title: "Game data updated", color: "sky" });
+  emit("close");
 };
 </script>
 

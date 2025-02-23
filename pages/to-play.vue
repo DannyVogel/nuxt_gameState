@@ -55,6 +55,12 @@ const loadMore = async () => {
   await fetchGames();
 };
 
+const resetAndRefetch = async () => {
+  gamesToPlay.value = [];
+  page.value = 1;
+  await fetchGames();
+};
+
 useInfiniteScroll(el, loadMore, {
   distance: 10,
   canLoadMore: () => gamesToPlay.value?.length < total.value,
@@ -78,7 +84,7 @@ useInfiniteScroll(el, loadMore, {
       class="mt-10 grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3"
     >
       <template v-for="game in gamesToPlay">
-        <GameCardCompact view="to-play" :game="game" @close="fetchGames" />
+        <GameCardCompact view="to-play" :game="game" @close="resetAndRefetch" />
       </template>
     </div>
 

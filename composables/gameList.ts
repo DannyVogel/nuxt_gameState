@@ -58,7 +58,7 @@ export const useGameList = () => {
       method: "POST",
       body: game,
     });
-    return res.payload;
+    return res;
   };
 
   const removeFromList = async (gameID: Game["id"]) => {
@@ -66,7 +66,7 @@ export const useGameList = () => {
       method: "DELETE",
       body: { id: gameID },
     });
-    return res.payload;
+    return res;
   };
 
   const getGameById = async (gameId: string) => {

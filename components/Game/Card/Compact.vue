@@ -50,7 +50,7 @@ const isReleased = (date: string) => {
         placeholder
         alt="game image"
         class="h-full w-full object-cover"
-        @error="() => (imgSrc = NotFound)"
+        @error="$event.target.src = NotFound"
       />
     </div>
 

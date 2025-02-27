@@ -12,11 +12,9 @@ export default defineEventHandler(async (event) => {
   });
 
   try {
-    // Get the user's full game list
     const fullGameList =
       (await DbController.getGameList(session.user.sub)) || [];
 
-    // Generate stats from the game list
     const gameStats = StatsController.generateGameStats(fullGameList);
 
     return {

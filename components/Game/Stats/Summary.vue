@@ -21,12 +21,28 @@ defineProps({
     </h3>
     <div class="flex justify-around">
       <div class="flex flex-col items-center">
+        <div class="flex items-center justify-center mb-2">
+          <UIcon name="i-ph-game-controller" class="text-primary text-2xl" />
+        </div>
         <span class="text-sm text-gray-300 mb-1">Total Games</span>
         <span class="text-2xl font-bold text-white">{{ totalGames }}</span>
       </div>
+
       <div class="flex flex-col items-center">
+        <div class="flex items-center justify-center mb-2">
+          <UIcon name="i-ph-trophy" class="text-yellow-500 text-2xl" />
+        </div>
         <span class="text-sm text-gray-300 mb-1">Completion Rate</span>
-        <span class="text-2xl font-bold text-white">{{ completionRate }}%</span>
+        <div class="flex items-center">
+          <span class="text-2xl font-bold text-white"
+            >{{ completionRate }}%</span
+          >
+          <UIcon
+            v-if="completionRate >= 75"
+            name="i-ph-star-fill"
+            class="text-yellow-500 ml-1"
+          />
+        </div>
       </div>
     </div>
   </div>

@@ -8,7 +8,6 @@ const {
   refresh: refetchStats,
 } = useAsyncData("game-stats", () => getGameStats());
 
-// Computed property for user-friendly error message
 const errorMessage = computed(() => {
   if (!error.value) return null;
   return error.value.message || "Failed to load game statistics";
@@ -42,7 +41,6 @@ const errorMessage = computed(() => {
   </div>
 
   <div v-else-if="stats" class="space-y-6">
-    <!-- Summary and Status Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <GameStatsSummary
         :total-games="stats.totalGames"
@@ -54,16 +52,11 @@ const errorMessage = computed(() => {
       />
     </div>
 
-    <!-- Genres and Platforms Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <GameStatsGenres :genres="stats.mostPlayedGenres" />
-      <GameStatsPlatforms :platforms="stats.mostPlayedPlatforms" />
+      <GameStatsActivity :recent-activity="stats.recentActivity" />
     </div>
 
-    <!-- Recent Activity Card -->
-    <GameStatsActivity :recent-activity="stats.recentActivity" />
-
-    <!-- Yearly Breakdown Card -->
     <GameStatsYearlyBreakdown :yearly-breakdown="stats.yearlyBreakdown" />
   </div>
 

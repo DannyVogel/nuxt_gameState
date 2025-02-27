@@ -3,7 +3,7 @@ import type { GameStats } from "~/types/game.interfaces";
 
 type StatusBreakdown = GameStats["statusBreakdown"];
 
-const props = defineProps({
+defineProps({
   statusBreakdown: {
     type: Object as () => StatusBreakdown,
     required: true,

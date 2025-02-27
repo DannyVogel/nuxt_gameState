@@ -14,7 +14,6 @@ const props = defineProps({
   },
 });
 
-// Improved pie chart calculations
 const segments = computed(() => {
   const total = props.totalGames;
   if (total === 0) return [];
@@ -26,20 +25,16 @@ const segments = computed(() => {
     { name: "dropped", value: props.statusBreakdown.dropped, color: "#ef4444" },
   ];
 
-  // Filter out zero-value segments
   const nonZeroCategories = categories.filter((cat) => cat.value > 0);
 
-  // Calculate the SVG pie chart segments
   let cumulativeAngle = 0;
   return nonZeroCategories.map((category) => {
     const percentage = (category.value / total) * 100;
     const startAngle = cumulativeAngle;
-    cumulativeAngle += percentage * 3.6; // Convert percentage to degrees (360 degrees / 100)
+    cumulativeAngle += percentage * 3.6;
 
-    // Determine if the arc should be drawn the long way around (large-arc-flag)
     const largeArcFlag = percentage > 50 ? 1 : 0;
 
-    // Calculate SVG arc path for a larger radius (40 instead of 25)
     const startRadians = ((startAngle - 90) * Math.PI) / 180;
     const endRadians = ((startAngle + percentage * 3.6 - 90) * Math.PI) / 180;
 
@@ -48,7 +43,6 @@ const segments = computed(() => {
     const endX = 50 + 40 * Math.cos(endRadians);
     const endY = 50 + 40 * Math.sin(endRadians);
 
-    // Create SVG path
     const path = `M 50 50 L ${startX} ${startY} A 40 40 0 ${largeArcFlag} 1 ${endX} ${endY} Z`;
 
     return {
@@ -64,7 +58,6 @@ const segments = computed(() => {
 
 <template>
   <div class="w-28 h-28 relative">
-    <!-- Empty circle when no games -->
     <svg v-if="totalGames === 0" viewBox="0 0 100 100" class="w-full h-full">
       <circle
         r="40"
@@ -81,7 +74,6 @@ const segments = computed(() => {
       </text>
     </svg>
 
-    <!-- Actual pie chart -->
     <svg v-else viewBox="0 0 100 100" class="w-full h-full">
       <path
         v-for="segment in segments"
@@ -89,7 +81,6 @@ const segments = computed(() => {
         :d="segment.path"
         :fill="segment.color"
       />
-      <!-- Center circle for donut effect if desired -->
       <circle
         v-if="segments.length > 0"
         r="20"

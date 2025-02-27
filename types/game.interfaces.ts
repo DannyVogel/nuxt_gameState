@@ -36,3 +36,33 @@ export interface GameListPayload {
     gamesPlayed: number;
   };
 }
+
+export interface GameStats {
+  totalGames: number;
+  statusBreakdown: {
+    beat: number;
+    playing: number;
+    toPlay: number;
+    dropped: number;
+  };
+  genreBreakdown: {
+    [genre: string]: number;
+  };
+  platformBreakdown: {
+    [platform: string]: number;
+  };
+  completionRate: number; // Percentage of games beat vs total played
+  yearlyBreakdown: Array<{ year: string; count: number }>;
+  mostPlayedGenres: {
+    genre: string;
+    count: number;
+  }[];
+  mostPlayedPlatforms: {
+    platform: string;
+    count: number;
+  }[];
+  recentActivity: {
+    monthYear: string;
+    count: number;
+  }[];
+}

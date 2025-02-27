@@ -17,11 +17,11 @@ const { data: gamesCount } = await useAsyncData(
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-12 mt-10">
+  <div
+    class="flex flex-col items-center justify-center gap-12 mt-10 text-primary"
+  >
     <div class="flex flex-col items-center gap-4">
-      <h3 class="text-4xl text-primary">
-        Welcome {{ loggedIn ? "back" : "" }}
-      </h3>
+      <h3 class="text-4xl">Welcome {{ loggedIn ? "back" : "" }}</h3>
       <h1
         v-if="loggedIn"
         class="text-6xl bg-gradient-to-l from-fuchsia-500 via-red-600 to-orange-400 bg-clip-text text-transparent"
@@ -32,7 +32,7 @@ const { data: gamesCount } = await useAsyncData(
         Search for your favorite games and add them to your lists
       </p>
     </div>
-    <div class="flex justify-between gap-12 text-primary">
+    <div class="flex justify-between gap-8 text-primary">
       <NuxtLink to="/to-play" class="flex flex-col items-center gap-2">
         <img
           class="w-8 h-8"
@@ -58,6 +58,12 @@ const { data: gamesCount } = await useAsyncData(
         </div>
       </NuxtLink>
     </div>
+    <NuxtLink to="/stats" class="flex items-center gap-2">
+      <UIcon name="i-ph-chart-bar-duotone" class="w-8 h-8 text-white" />
+      <div class="flex flex-col items-center">
+        <p>Game Stats</p>
+      </div>
+    </NuxtLink>
     <p v-if="!loggedIn" class="text-center text-primary max-w-xs px-4">
       <NuxtLink to="/api/auth/google" external class="underline text-white"
         >Login</NuxtLink

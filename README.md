@@ -20,6 +20,7 @@ Full stack, SSR version of my original gameState project. OAuth authentication w
 - Add games to played or to play lists
 - Infinite scroll for list pages
 - View screenshots; add status and comments to games
+- Game stats page
 - Mobile first design
 
 ## To Do

@@ -70,7 +70,7 @@ useInfiniteScroll(el, loadMore, {
 <template>
   <div>
     <div class="flex flex-col justify-between items-center">
-      <h3 class="text-2xl font-bold text-primary">Games To Play</h3>
+      <h3 class="text-2xl text-center">Games To Play</h3>
       <UButton
         @click="toggleSort"
         icon="i-heroicons-arrows-up-down"

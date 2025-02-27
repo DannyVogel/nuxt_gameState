@@ -52,9 +52,7 @@ export interface GameStats {
     [platform: string]: number;
   };
   completionRate: number; // Percentage of games beat vs total played
-  yearlyBreakdown: {
-    [year: number]: number;
-  };
+  yearlyBreakdown: Array<{ year: string; count: number }>;
   mostPlayedGenres: {
     genre: string;
     count: number;

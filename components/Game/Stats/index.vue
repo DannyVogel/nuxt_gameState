@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { AtomSpinner } from "epic-spinners";
+
 const { getGameStats } = useGameList();
 
 const {
@@ -17,11 +19,14 @@ const errorMessage = computed(() => {
 <template>
   <div
     v-if="status === 'pending'"
-    class="flex justify-center items-center py-10"
+    class="flex justify-center items-center mt-10"
   >
-    <div
-      class="w-10 h-10 border-4 border-gray-200 border-l-primary rounded-full animate-spin"
-    ></div>
+    <atom-spinner
+      :animation-duration="1000"
+      :size="50"
+      :color="'rgb(59 130 246 / 0.5)'"
+      class="mx-auto"
+    />
   </div>
 
   <div

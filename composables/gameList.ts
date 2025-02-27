@@ -1,5 +1,10 @@
 import type { NitroResponse } from "~/types/auth.interfaces";
-import type { Game, UserGame, GameListPayload } from "~/types/game.interfaces";
+import type {
+  Game,
+  UserGame,
+  GameListPayload,
+  GameStats,
+} from "~/types/game.interfaces";
 
 export const useGameList = () => {
   const fetch = useRequestFetch();
@@ -103,6 +108,16 @@ export const useGameList = () => {
     return res.payload;
   };
 
+  const getGameStats = async () => {
+    const response = await fetch<NitroResponse<GameStats>>(
+      "/api/game-list/stats"
+    );
+    if (response && response.payload) {
+      return response.payload;
+    }
+    throw new Error("Failed to retrieve game stats");
+  };
+
   return {
     getGamesCount,
     getGamesToPlay,
@@ -112,5 +127,6 @@ export const useGameList = () => {
     removeFromList,
     updateGames,
     restoreData,
+    getGameStats,
   };
 };

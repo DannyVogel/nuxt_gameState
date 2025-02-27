@@ -5,6 +5,14 @@ import loggedOutUser from "~/public/icons/loggedOutUser.png";
 const { loggedIn } = useUserSession();
 
 const isOpen = ref(false);
+
+watch(
+  () => useRoute().query,
+  (newQuery) => {
+    if (newQuery.auth) isOpen.value = true;
+  },
+  { immediate: true }
+);
 </script>
 
 <template>

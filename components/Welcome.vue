@@ -59,13 +59,19 @@ const { data: gamesCount } = await useAsyncData(
       </NuxtLink>
     </div>
     <NuxtLink v-if="loggedIn" to="/stats" class="flex items-center gap-2">
-      <UIcon name="i-ph-chart-bar-duotone" class="w-8 h-8 text-white" />
+      <UIcon
+        name="i-ph-chart-bar-duotone"
+        class="w-8 h-8 text-gray-600 dark:text-white"
+      />
       <div class="flex flex-col items-center">
         <p>Game Stats</p>
       </div>
     </NuxtLink>
     <p v-if="!loggedIn" class="text-center text-primary max-w-xs px-4">
-      <NuxtLink to="/api/auth/google" external class="underline text-white"
+      <NuxtLink
+        to="/api/auth/google"
+        external
+        class="underline text-black dark:text-white"
         >Login</NuxtLink
       >
       to start tracking your games!

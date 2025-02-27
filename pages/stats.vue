@@ -4,11 +4,7 @@
 
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6">Game Collection Stats</h1>
-    <p class="text-lg mb-8">
-      View statistics and insights about your game collection.
-    </p>
-
+    <h3 class="text-2xl text-center mb-6">Game Stats</h3>
     <GameStats />
   </div>
 </template>

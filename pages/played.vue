@@ -107,7 +107,7 @@ const clearFilters = async () => {
 <template>
   <div>
     <div class="flex flex-col items-center">
-      <h3 class="text-2xl font-bold text-center text-primary">Games Played</h3>
+      <h3 class="text-2xl text-center">Games Played</h3>
       <GameFilters
         @apply-filters="applyFilters"
         @clear-filters="clearFilters"

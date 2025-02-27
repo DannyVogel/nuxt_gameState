@@ -4,7 +4,6 @@ export class StatsController {
   static generateGameStats(games: UserGame[]): GameStats {
     const totalGames = games.length;
 
-    // Status breakdown
     const statusBreakdown = {
       beat: games.filter((game) => game.status === "beat").length,
       playing: games.filter((game) => game.status === "playing").length,
@@ -12,7 +11,6 @@ export class StatsController {
       dropped: games.filter((game) => game.status === "dropped").length,
     };
 
-    // Genre breakdown
     const genreBreakdown: { [genre: string]: number } = {};
     games.forEach((game) => {
       if (game.genres && Array.isArray(game.genres)) {
@@ -24,7 +22,6 @@ export class StatsController {
       }
     });
 
-    // Platform breakdown
     const platformBreakdown: { [platform: string]: number } = {};
     games.forEach((game) => {
       if (game.platforms && Array.isArray(game.platforms)) {
@@ -37,7 +34,6 @@ export class StatsController {
       }
     });
 
-    // Completion rate
     const playedGames = games.filter((game) =>
       ["beat", "playing", "dropped"].includes(game.status)
     ).length;
@@ -45,35 +41,38 @@ export class StatsController {
     const completionRate =
       playedGames > 0 ? Math.round((beatGames / playedGames) * 100) : 0;
 
-    // Yearly breakdown
-    const yearlyBreakdown: { [year: number]: number } = {};
+    // First collect the data in a regular object
+    const yearCounts: { [year: string]: number } = {};
     games.forEach((game) => {
       if (game.yearPlayed) {
-        yearlyBreakdown[game.yearPlayed] =
-          (yearlyBreakdown[game.yearPlayed] || 0) + 1;
+        const yearKey = String(game.yearPlayed);
+        yearCounts[yearKey] = (yearCounts[yearKey] || 0) + 1;
       }
     });
 
-    // Most played genres
+    // Create an array of year/count pairs sorted by year (descending)
+    const yearlyBreakdown = Object.entries(yearCounts)
+      .map(([year, count]) => ({ year, count }))
+      .sort((a, b) => parseInt(b.year, 10) - parseInt(a.year, 10));
+
+    console.log("yearlyBreakdown array:", yearlyBreakdown);
+
     const mostPlayedGenres = Object.entries(genreBreakdown)
       .map(([genre, count]) => ({ genre, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 5);
 
-    // Most played platforms
     const mostPlayedPlatforms = Object.entries(platformBreakdown)
       .map(([platform, count]) => ({ platform, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 5);
 
-    // Recent activity - last 6 months
     const recentActivity: { monthYear: string; count: number }[] = [];
     const now = new Date();
     const currentYear = now.getFullYear();
     const currentMonth = now.getMonth() + 1;
 
-    // Generate the last 6 months
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 4; i++) {
       let month = currentMonth - i;
       let year = currentYear;
 
@@ -87,11 +86,19 @@ export class StatsController {
       });
       const monthYearString = `${monthName} ${year}`;
 
-      const count = games.filter(
-        (game) => game.monthPlayed === month && game.yearPlayed === year
-      ).length;
+      const gamesThisMonth = games.filter((game) => {
+        const gameMonth = String(game.monthPlayed);
+        const gameYear = String(game.yearPlayed);
+        const filterMonth = String(month);
+        const filterYear = String(year);
 
-      recentActivity.unshift({ monthYear: monthYearString, count });
+        return gameMonth === filterMonth && gameYear === filterYear;
+      });
+
+      recentActivity.unshift({
+        monthYear: monthYearString,
+        count: gamesThisMonth.length,
+      });
     }
 
     return {

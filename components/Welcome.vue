@@ -58,7 +58,7 @@ const { data: gamesCount } = await useAsyncData(
         </div>
       </NuxtLink>
     </div>
-    <NuxtLink to="/stats" class="flex items-center gap-2">
+    <NuxtLink v-if="loggedIn" to="/stats" class="flex items-center gap-2">
       <UIcon name="i-ph-chart-bar-duotone" class="w-8 h-8 text-white" />
       <div class="flex flex-col items-center">
         <p>Game Stats</p>

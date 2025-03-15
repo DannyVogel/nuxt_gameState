@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   try {
     await DbController.addLog({
       type: "save-test",
-      query: body.text,
+      query: body ? body.text : "yeah it works",
     });
     return {
       statusCode: 200,

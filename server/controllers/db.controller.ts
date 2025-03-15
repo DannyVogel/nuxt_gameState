@@ -49,4 +49,13 @@ export class DbController {
     updates[`gameState/users/${UID}/gameList/${game.id}`] = mergedGame;
     await db.ref().update(updates);
   }
+
+  static async addTextToDb(key: string, text: string) {
+    try {
+      const dbRef = db.ref(key);
+      await dbRef.set(text);
+    } catch (error) {
+      console.log("failed to add text to db", error);
+    }
+  }
 }

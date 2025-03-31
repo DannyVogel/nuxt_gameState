@@ -16,16 +16,13 @@ const props = defineProps({
   },
 });
 
-const { getGameById } = useGameList();
+const { getGameById, updateGameById } = useGameList();
 
-const {
-  data: game,
-  status,
-  error,
-  refresh,
-} = await useAsyncData("game", () => getGameById(props.id.toString()), {
-  lazy: true,
-});
+const { data: game, status } = await useAsyncData(
+  "game",
+  () => getGameById(props.id.toString()),
+  { lazy: true }
+);
 
 const isUserGame = (game: Game | UserGame): game is UserGame =>
   (game as UserGame).status !== undefined;
@@ -35,10 +32,22 @@ const isReleased = (date: string) => {
 };
 
 const platformList = computed(() => {
-  return game.value?.platforms
+  if (!game.value) return "";
+  if (!game.value.platforms) return "";
+  if (game.value.platforms.length === 0) return "";
+  return game.value.platforms
     .map((platform) => platformShortName(platform))
     .join(", ");
 });
+
+const updateGame = async () => {
+  try {
+    const res = await updateGameById(props.id.toString());
+    if (res) game.value = res;
+  } catch (error) {
+    console.error("Error updating game", error);
+  }
+};
 </script>
 
 <template>
@@ -46,7 +55,10 @@ const platformList = computed(() => {
     class="w-full overflow-hidden backdrop-blur-sm bg-black/30 hover:bg-black/40 transition-all duration-300"
   >
     <template #header>
-      <GameGallery v-if="status === 'success' && game" :game="game" />
+      <GameGallery
+        v-if="status === 'success' && game"
+        :game="game"
+      />
     </template>
     <div
       v-if="status === 'pending'"
@@ -59,10 +71,20 @@ const platformList = computed(() => {
         class="mx-auto"
       />
     </div>
-    <div v-if="status === 'success' && game" class="flex flex-col gap-2 px-4">
-      <h1 class="text-2xl font-bold text-white drop-shadow-lg">
-        {{ game.name }}
-      </h1>
+    <div
+      v-if="status === 'success' && game"
+      class="flex flex-col gap-2 px-4"
+    >
+      <div class="flex justify-between">
+        <h1 class="text-2xl font-bold text-white drop-shadow-lg">
+          {{ game.name }}
+        </h1>
+        <UIcon
+          name="i-ph-arrows-clockwise"
+          class="cursor-pointer hover:text-primary-500 transition-colors duration-200 hover:animate-spin"
+          @click="updateGame"
+        />
+      </div>
       <div class="flex gap-2 flex-wrap">
         <template v-for="genre in game.genres">
           <div
@@ -75,12 +97,16 @@ const platformList = computed(() => {
 
       <div class="space-y-2">
         <div class="flex items-center gap-2 text-sm">
-          <UIcon name="i-ph-game-controller" class="flex-shrink-0" />
+          <UIcon
+            name="i-ph-game-controller"
+            class="flex-shrink-0"
+          />
           <p class="text-sm font-medium">{{ platformList }}</p>
         </div>
         <div class="flex items-center gap-2 text-sm text-gray-300">
           <UIcon name="i-ph-calendar-blank" />
-          <span>
+          <span v-if="game.released === 'TBA'">TBA</span>
+          <span v-else>
             {{
               new Date(game.released).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -90,16 +116,25 @@ const platformList = computed(() => {
             }}
           </span>
         </div>
-        <div v-if="view === 'played' && isUserGame(game)" class="space-y-2">
+        <div
+          v-if="view === 'played' && isUserGame(game)"
+          class="space-y-2"
+        >
           <div class="flex items-center gap-2 text-sm text-gray-300">
-            <UIcon name="i-ph-trophy" class="flex-shrink-0" />
+            <UIcon
+              name="i-ph-trophy"
+              class="flex-shrink-0"
+            />
             <span>{{ game.monthPlayed + " - " + game.yearPlayed }}</span>
           </div>
           <div
             v-if="game.comments"
             class="flex items-start gap-2 text-sm text-gray-300"
           >
-            <UIcon name="i-ph-chat-circle" class="mt-1 flex-shrink-0" />
+            <UIcon
+              name="i-ph-chat-circle"
+              class="mt-1 flex-shrink-0"
+            />
             <p>{{ game.comments }}</p>
           </div>
         </div>
@@ -116,7 +151,10 @@ const platformList = computed(() => {
     </div>
 
     <template #footer>
-      <div v-if="status === 'success' && game" class="px-4">
+      <div
+        v-if="status === 'success' && game"
+        class="px-4"
+      >
         <slot name="buttons" />
       </div>
     </template>

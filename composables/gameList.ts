@@ -81,6 +81,16 @@ export const useGameList = () => {
     return res.payload;
   };
 
+  const updateGameById = async (gameId: string) => {
+    const res = await fetch<NitroResponse<GameListPayload>>(
+      `/api/game-list/${gameId}`,
+      {
+        method: "PATCH",
+      }
+    );
+    return res.payload?.gameList.find((game) => game.id.toString() === gameId);
+  };
+
   const updateGames = async (gameIds: number[]) => {
     const res = await fetch<NitroResponse<GameListPayload>>(
       `/api/game-list/${gameIds.join(",")}`,
@@ -123,6 +133,7 @@ export const useGameList = () => {
     getGamesToPlay,
     getGamesPlayed,
     getGameById,
+    updateGameById,
     addToList,
     removeFromList,
     updateGames,

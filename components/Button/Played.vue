@@ -2,6 +2,8 @@
 import type { Game, GameUserData, UserGame } from "~/types/game.interfaces";
 
 const emit = defineEmits(["played"]);
+const loading = defineModel<boolean>("loading", { default: false });
+
 defineProps({
   state: {
     type: Object as PropType<Game>,
@@ -23,6 +25,7 @@ const handleSubmit = (gameUserData: GameUserData) => {
     color="teal"
     variant="outline"
     class="w-28 justify-center"
+    :loading="loading"
     >Played</UButton
   >
   <UModal v-model="isOpen">

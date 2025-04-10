@@ -18,21 +18,24 @@ const props = defineProps({
 
 const toast = useToast();
 const { removeFromList, addToList } = useGameList();
-const isLoading = ref(false);
+const isRemoveLoading = ref(false);
+const isPlayedLoading = ref(false);
+const isEditLoading = ref(false);
+const isToPlayLoading = ref(false);
 
 const handleRemove = async () => {
-  isLoading.value = true;
+  isRemoveLoading.value = true;
   try {
     await removeFromList(props.game.id);
     toast.add({ title: "Game removed", color: "rose" });
     emit("close");
   } finally {
-    isLoading.value = false;
+    isRemoveLoading.value = false;
   }
 };
 
 const handleToPlay = async () => {
-  isLoading.value = true;
+  isToPlayLoading.value = true;
   try {
     const userGame = { ...props.game, status: "toPlay" };
     await addToList(userGame);
@@ -42,12 +45,12 @@ const handleToPlay = async () => {
     });
     emit("close");
   } finally {
-    isLoading.value = false;
+    isToPlayLoading.value = false;
   }
 };
 
 const handlePlayed = async (gameUserData: GameUserData) => {
-  isLoading.value = true;
+  isPlayedLoading.value = true;
   try {
     const userGame = { ...props.game, ...gameUserData };
     await addToList(userGame);
@@ -62,19 +65,19 @@ const handlePlayed = async (gameUserData: GameUserData) => {
     toast.add({ title, color: "teal" });
     emit("close");
   } finally {
-    isLoading.value = false;
+    isPlayedLoading.value = false;
   }
 };
 
 const handleEdit = async (gameUserData: GameUserData) => {
-  isLoading.value = true;
+  isEditLoading.value = true;
   try {
     const userGame = { ...props.game, ...gameUserData };
     await addToList(userGame);
     toast.add({ title: "Game data updated", color: "sky" });
     emit("close");
   } finally {
-    isLoading.value = false;
+    isEditLoading.value = false;
   }
 };
 </script>
@@ -82,27 +85,27 @@ const handleEdit = async (gameUserData: GameUserData) => {
 <template>
   <div class="flex justify-between gap-4 px-2">
     <template v-if="view === 'to-play'">
-      <ButtonRemove @remove="handleRemove" v-model:loading="isLoading" />
+      <ButtonRemove @remove="handleRemove" v-model:loading="isRemoveLoading" />
       <ButtonPlayed
         @played="handlePlayed"
         :state="game"
-        v-model:loading="isLoading"
+        v-model:loading="isPlayedLoading"
       />
     </template>
     <template v-else-if="view === 'played'">
-      <ButtonRemove @remove="handleRemove" v-model:loading="isLoading" />
+      <ButtonRemove @remove="handleRemove" v-model:loading="isRemoveLoading" />
       <ButtonEdit
         @edited="handleEdit"
         :game-user-data="(game as UserGame)"
-        v-model:loading="isLoading"
+        v-model:loading="isEditLoading"
       />
     </template>
     <template v-else-if="view === 'search-query'">
-      <ButtonToPlay @to-play="handleToPlay" />
+      <ButtonToPlay @to-play="handleToPlay" v-model:loading="isToPlayLoading" />
       <ButtonPlayed
         @played="handlePlayed"
         :state="game"
-        v-model:loading="isLoading"
+        v-model:loading="isPlayedLoading"
       />
     </template>
   </div>

@@ -6,8 +6,12 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: "en",
       },
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        { rel: "manifest", href: "/site.webmanifest" },
+      ],
     },
+    pageTransition: { name: "page", mode: "out-in" },
   },
   tailwindcss: {
     viewer: false,
@@ -21,12 +25,6 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "nuxt-auth-utils",
   ],
-  app: {
-    pageTransition: { name: "page", mode: "out-in" },
-    head: {
-      link: [{ rel: "manifest", href: "/site.webmanifest" }],
-    },
-  },
   image: {
     domains: ["images.igdb.com", "media.rawg.io"],
   },

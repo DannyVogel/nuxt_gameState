@@ -1,6 +1,6 @@
 {
   "name": "game-state",
-  "version": "0.10.2",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {

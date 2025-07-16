@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import loggedUser from "../../public/icons/loggedInUser.png";
-import loggedOutUser from "../../public/icons/loggedOutUser.png";
-
+const loggedUser = "/icons/loggedInUser.png";
+const loggedOutUser = "/icons/loggedOutUser.png";
 const { loggedIn } = useUserSession();
 
 const isOpen = ref(false);

@@ -13,6 +13,6 @@ export default oauthGoogleEventHandler({
       secure: tokens.id_token,
       loggedInAt: new Date(),
     });
-    return sendRedirect(event, "/");
+    return sendRedirect(event, "/?loading=true");
   },
 });

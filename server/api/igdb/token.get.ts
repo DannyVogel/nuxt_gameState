@@ -1,5 +1,4 @@
-import { setToken } from "~/server/services/tokenManagers/igdb";
-import { TokenResponse } from "~/types/auth.interfaces";
+import { setToken } from "../../services/tokenManagers/igdb";
 
 export default eventHandler(async (event) => {
   console.log("/api/igdb/token.get.ts");

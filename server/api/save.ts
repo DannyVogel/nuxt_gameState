@@ -1,4 +1,4 @@
-import { DbController } from "~/server/controllers/db.controller";
+import { DbController } from "../controllers/db.controller";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
       statusCode: 200,
       message: "Text added to db",
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Failed to add text to db", error);
     throw createError({
       statusCode: 500,

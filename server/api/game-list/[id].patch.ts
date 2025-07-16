@@ -1,8 +1,7 @@
-import { getToken } from "~/server/services/tokenManagers/igdb";
-import { GameDTO } from "~/server/utils/gameState.class";
-import { DbController } from "~/server/controllers/db.controller";
-import type { Game } from "~/types/game.interfaces";
-import { GameListController } from "~/server/controllers/gameList.controller";
+import { getToken } from "../../services/tokenManagers/igdb";
+import { GameDTO } from "../../utils/gameState.class";
+import { DbController } from "../../controllers/db.controller";
+import { GameListController } from "../../controllers/gameList.controller";
 
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event).catch((error) => {

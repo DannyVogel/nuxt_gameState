@@ -1,5 +1,4 @@
-import { UserController } from "~/server/controllers/user.controller";
-import { DisplayNamePayload, NitroResponse } from "~/types/auth.interfaces";
+import { UserController } from "../../controllers/user.controller";
 
 export default defineEventHandler(
   async (event): Promise<NitroResponse<DisplayNamePayload>> => {

@@ -1,5 +1,5 @@
-import { DbController } from "~/server/controllers/db.controller";
-import { GameListController } from "~/server/controllers/gameList.controller";
+import { DbController } from "../../controllers/db.controller";
+import { GameListController } from "../../controllers/gameList.controller";
 
 type QueryParams = {
   page?: string;

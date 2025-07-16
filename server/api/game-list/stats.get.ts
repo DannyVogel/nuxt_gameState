@@ -1,5 +1,5 @@
-import { DbController } from "~/server/controllers/db.controller";
-import { StatsController } from "~/server/controllers/stats.controller";
+import { DbController } from "../../controllers/db.controller";
+import { StatsController } from "../../controllers/stats.controller";
 
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event).catch((error) => {

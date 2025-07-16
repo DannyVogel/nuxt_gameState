@@ -1,4 +1,4 @@
-import { DbController } from "~/server/controllers/db.controller";
+import { DbController } from "../../controllers/db.controller";
 
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event).catch((error) => {

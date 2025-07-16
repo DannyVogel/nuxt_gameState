@@ -1,6 +1,6 @@
-import { UserGameDTO } from "~/server/utils/gameState.class";
-import { DbController } from "~/server/controllers/db.controller";
-import { getToken } from "~/server/services/tokenManagers/igdb";
+import { UserGameDTO } from "../../utils/gameState.class";
+import { DbController } from "../../controllers/db.controller";
+import { getToken } from "../../services/tokenManagers/igdb";
 
 export default eventHandler(async (event) => {
   console.log("search game");

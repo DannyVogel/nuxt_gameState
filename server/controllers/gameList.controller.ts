@@ -1,5 +1,3 @@
-import { UserGame } from "~/types/game.interfaces";
-
 export class GameListController {
   static filterByList(
     games: UserGame[],

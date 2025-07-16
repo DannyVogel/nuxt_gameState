@@ -1,4 +1,3 @@
-import type { Game, UserGame } from "~/types/game.interfaces";
 import { db } from "../services/firebase";
 
 export class DbController {

@@ -1,4 +1,3 @@
-import { GameStats, UserGame } from "~/types/game.interfaces";
 
 export class StatsController {
   static generateGameStats(games: UserGame[]): GameStats {

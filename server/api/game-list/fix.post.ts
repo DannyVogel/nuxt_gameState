@@ -1,5 +1,4 @@
-import { DbController } from "~/server/controllers/db.controller";
-import type { Game } from "~/types/game.interfaces";
+import { DbController } from "../../controllers/db.controller";
 
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event).catch((error) => {

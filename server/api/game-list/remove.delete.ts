@@ -1,6 +1,4 @@
-import { DbController } from "~/server/controllers/db.controller";
-import { NitroResponse } from "~/types/auth.interfaces";
-import { UserGame } from "~/types/game.interfaces";
+import { DbController } from "../../controllers/db.controller";
 
 export default defineEventHandler(
   async (event): Promise<NitroResponse<UserGame[]>> => {

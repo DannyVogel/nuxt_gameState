@@ -2,6 +2,8 @@
 import { AtomSpinner } from "epic-spinners";
 
 const emit = defineEmits(["applyFilters", "clearFilters"]);
+const route = useRoute();
+const router = useRouter();
 
 const isOpen = ref(false);
 const isLoading = ref(false);
@@ -38,10 +40,18 @@ const commentsOptions = [
   },
 ];
 
+// Initialize filters from URL query parameters
 const filters = reactive<Filters>({
-  status: undefined,
-  year: undefined,
-  comments: undefined,
+  status: route.query.status as string | undefined,
+  year: route.query.year ? Number(route.query.year) : undefined,
+  comments: route.query.comments as string | undefined,
+});
+
+// Apply initial filters if any query parameters exist
+onMounted(() => {
+  if (route.query.status || route.query.year || route.query.comments) {
+    filterGames();
+  }
 });
 
 const hasActiveFilters = computed(() => {
@@ -55,11 +65,24 @@ const hasActiveFilters = computed(() => {
 const filterGames = async () => {
   isLoading.value = true;
   try {
-    emit("applyFilters", {
+    const filterParams = {
       status: filters.status || null,
       year: filters.year || null,
       comments: filters.comments ? filters.comments === "true" : null,
+    };
+
+    // Update URL query parameters
+    await router.replace({
+      query: {
+        ...(filterParams.status && { status: filterParams.status }),
+        ...(filterParams.year && { year: filterParams.year }),
+        ...(filterParams.comments !== null && {
+          comments: filterParams.comments.toString(),
+        }),
+      },
     });
+
+    emit("applyFilters", filterParams);
     isOpen.value = false;
   } catch (error) {
     console.error("Error filtering games:", error);
@@ -68,11 +91,15 @@ const filterGames = async () => {
   }
 };
 
-const clearFilters = () => {
+const clearFilters = async () => {
   isLoading.value = true;
   filters.status = undefined;
   filters.year = undefined;
   filters.comments = undefined;
+
+  // Clear URL query parameters
+  await router.replace({ query: {} });
+
   emit("clearFilters");
   isOpen.value = false;
   isLoading.value = false;
@@ -113,10 +140,7 @@ const clearFilters = () => {
       <div class="space-y-4">
         <div class="flex flex-col gap-2">
           <label class="text-sm text-gray-300 flex items-center gap-2">
-            <UIcon
-              name="i-ph-flag"
-              class="flex-shrink-0"
-            />
+            <UIcon name="i-ph-flag" class="flex-shrink-0" />
             <span>Status</span>
           </label>
           <USelect
@@ -129,10 +153,7 @@ const clearFilters = () => {
 
         <div class="flex flex-col gap-2">
           <label class="text-sm text-gray-300 flex items-center gap-2">
-            <UIcon
-              name="i-ph-calendar"
-              class="flex-shrink-0"
-            />
+            <UIcon name="i-ph-calendar" class="flex-shrink-0" />
             <span>Year</span>
           </label>
           <UInput
@@ -147,10 +168,7 @@ const clearFilters = () => {
 
         <div class="flex flex-col gap-2">
           <label class="text-sm text-gray-300 flex items-center gap-2">
-            <UIcon
-              name="i-ph-chat-circle"
-              class="flex-shrink-0"
-            />
+            <UIcon name="i-ph-chat-circle" class="flex-shrink-0" />
             <span>Comments</span>
           </label>
           <USelect
@@ -168,10 +186,7 @@ const clearFilters = () => {
           class="flex-1 justify-center bg-primary/80 hover:bg-primary transition-colors duration-200"
           @click="filterGames"
         >
-          <UIcon
-            name="i-ph-funnel"
-            class="mr-1"
-          />
+          <UIcon name="i-ph-funnel" class="mr-1" />
           Apply Filters
         </UButton>
         <UButton
@@ -180,10 +195,7 @@ const clearFilters = () => {
           class="flex-1 justify-center"
           @click="clearFilters"
         >
-          <UIcon
-            name="i-ph-x"
-            class="mr-1"
-          />
+          <UIcon name="i-ph-x" class="mr-1" />
           Clear
         </UButton>
       </div>

@@ -24,7 +24,7 @@ export default eventHandler(async (event) => {
         "Client-ID": IGDBClientId,
         Authorization: `Bearer ${token}`,
       },
-      body: `fields slug, name, id, genres.name, first_release_date, screenshots.image_id, artworks.image_id, platforms.name; search "${query}";limit 50;where keywords != (2004, 1617, 24124) & category != (5,12);`,
+      body: `fields slug, name, id, genres.name, first_release_date, screenshots.image_id, artworks.image_id, platforms.name; search "${query}";limit 50;where keywords != (2004, 1617, 24124) & game_type != (5,12);`,
     }
   ).catch((error) => {
     console.error("error", error);
